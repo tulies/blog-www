@@ -11,7 +11,7 @@ const port = process.env.PORT || 2000
 let config = require('../nuxt.config.js')
 config.dev = !(app.env === 'production')
 
-async function start() {
+async function start () {
   // Instantiate nuxt.js
   const nuxt = new Nuxt(config)
 

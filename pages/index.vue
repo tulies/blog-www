@@ -2,8 +2,8 @@
 <!-- <div > -->
   <!-- <div class="page-main"><index-main/></div>
   <div class="page-aside hidden-sm-and-down"><index-aside/></div> -->
-<el-container class="main-container">
-  <el-main class="page-main">
+<el-container class="default-page-container">
+  <el-main class="default-page-main">
     <cover/>
     <main-title-bar
       title="文章推荐"
@@ -13,7 +13,7 @@
     <article-list :list="articleList"/>
 
   </el-main>
-  <el-aside width="300px" style="padding: 0 5px 0 15px;">
+  <el-aside class="default-page-aside">
     <!-- <aside-nav/> -->
     <aside-article-rec
       title="热门文章"
@@ -82,16 +82,3 @@ export default {
   middleware: ['hotArticleRec', 'newArticleRec']
 }
 </script>
-
-<style scoped lang="scss">
-.main-container{
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  .page-main{
-    padding: 0;
-  // .page-aside
-  // width 240px
-  }
-}
-</style>

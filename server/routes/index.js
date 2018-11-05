@@ -7,9 +7,6 @@ const router = require('koa-router')({
 
 // xxx.com/weapp/demo
 const controllers = require('../controllers')
-
-console.log(controllers.article.getArticleList)
-
 // --- 文章相关接口 --- //
 // GET  查询文章list
 router.get('/article/list', controllers.article.getArticleList)

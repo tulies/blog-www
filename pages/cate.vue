@@ -3,14 +3,14 @@
 <!-- <div > -->
   <!-- <div class="page-main"><index-main/></div>
   <div class="page-aside hidden-sm-and-down"><index-aside/></div> -->
-<el-container class="main-container">
-  <el-main class="page-main">
+<el-container class="default-page-container">
+  <el-main class="default-page-main">
     <main-breadcrumb :breadcrumb="breadcrumb" :mores="categoryChilds" v-if="breadcrumb.length>0"/>
     <article-list :list="list" :total="total" :pageSize="pageSize"/>
      <div class="article-pagination">
       <el-pagination
         background
-        layout="total, prev, pager, next, jumper"
+        layout="total, prev, pager, next"
         :page-size="pageSize"
         :current-page.sync="pageNum"
         :total="total"
@@ -18,7 +18,7 @@
       </el-pagination>
     </div>
   </el-main>
-  <el-aside width="300px" style="padding: 0 5px 0 15px;">
+  <el-aside class="default-page-aside">
     <!-- <aside-nav/> -->
     <aside-article-rec
       title="热门文章"
@@ -66,7 +66,8 @@ export default {
       }
     })
     if (status === 200 && data.code === 0) {
-      state = { ...state,
+      state = {
+        ...state,
         list: data.data.list,
         total: data.data.total,
         pageSize: data.data.size,
@@ -75,7 +76,9 @@ export default {
     }
 
     // 获取面包屑导航--- 根据分类节点id获取父亲节点
-    const { status: status2, data: data2 } = await ctx.$axios.get(`/api/article/categoryUp/${id}`)
+    const { status: status2, data: data2 } = await ctx.$axios.get(
+      `/api/article/categoryUp/${id}`
+    )
     const breadcrumb = []
     if (status2 === 200 && data2.code === 0) {
       breadcrumb.push({
@@ -107,25 +110,31 @@ export default {
     }
 
     // 右边的more导航
-    const { status: status3, data: data3 } = await ctx.$axios.get(`/api/article/categoryChild/${id}`)
+    const { status: status3, data: data3 } = await ctx.$axios.get(
+      `/api/article/categoryChild/${id}`
+    )
     if (status3 === 200 && data3.code === 0) {
-      let categoryChilds = data3.data.sort((a, b) => {
-        if (a.sort > b.sort) {
-          return 1
-        } else if (a.sort < b.sort) {
-          return -1
-        } else {
-          return 0
-        }
-      }).map(v => ({
-        name: v.name,
-        url: `/cate?id=${v.id}`
-      }))
+      let categoryChilds = data3.data
+        .sort((a, b) => {
+          if (a.sort > b.sort) {
+            return 1
+          } else if (a.sort < b.sort) {
+            return -1
+          } else {
+            return 0
+          }
+        })
+        .map(v => ({
+          name: v.name,
+          url: `/cate?id=${v.id}`
+        }))
       if (!categoryChilds || categoryChilds.length <= 0) {
-        categoryChilds = [{
-          name: '查看更多>>',
-          url: '/'
-        }]
+        categoryChilds = [
+          {
+            name: '查看更多>>',
+            url: '/'
+          }
+        ]
       }
       state = { ...state, categoryChilds }
     }
@@ -155,20 +164,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '@/assets/css/config.scss';
-
-.main-container{
-  max-width: $maxWeight;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  .page-main{
-    padding: 0;
-  // .page-aside
-  // width 240px
-    .article-pagination {
-      padding: 10px 5px;
-    }
-  }
+.article-pagination {
+  padding: 10px 5px;
 }
 </style>

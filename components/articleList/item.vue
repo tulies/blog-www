@@ -1,9 +1,9 @@
 <template>
-<el-row class="article-item">
-  <el-col :span="6" class="article-cover">
+<div class="article-item">
+  <div class="article-cover">
     <img :src="item.poster">
-    </el-col>
-  <el-col :span="18" class="article-detail">
+  </div>
+  <div class="article-detail">
     <h3>{{item.title}}</h3>
     <p class="desc">{{item.description}}</p>
     <dl class="extinfo">
@@ -16,8 +16,8 @@
         <span class="ml5"><i class="el-icon-view"></i> 浏览(<a href="javascript:;">{{item.pv}}</a>)</span>
       </dd>
     </dl>
-  </el-col>
-</el-row>
+  </div>
+</div>
 </template>
 <script>
 export default {
@@ -33,15 +33,28 @@ export default {
 .article-item {
   padding: 10px 2px;
   border-bottom: 1px solid #E5E5E5;
+  display: flex;
+
   >.article-cover {
     padding: 3px 10px 0 0;
     overflow: hidden;
+    flex: 1;
+    @media screen and  (max-width:768px){
+      flex: 0;
+      display: none
+    }
     >img {
       border-radius: 4px;
       width: 100%;
     }
   }
   >.article-detail {
+    flex: 3;
+    overflow: hidden;
+    // @media screen and  (max-width:768px){
+    //   flex: 0;
+    //   display: none
+    // }
     h3 {
       color: #000000;
       font-size: 16px;

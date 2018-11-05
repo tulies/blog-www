@@ -2,14 +2,14 @@
 <!-- <div > -->
   <!-- <div class="page-main"><index-main/></div>
   <div class="page-aside hidden-sm-and-down"><index-aside/></div> -->
-<el-container class="main-container">
-  <el-main class="page-main">
+<el-container class="default-page-container">
+  <el-main class="default-page-main">
     <main-breadcrumb :breadcrumb="breadcrumb" v-if="breadcrumb.length>0"/>
     <article-list :list="list" :total="total" :pageSize="pageSize"/>
      <div class="article-pagination">
       <el-pagination
         background
-        layout="total, prev, pager, next, jumper"
+        layout="total, prev, pager, next"
         :page-size="pageSize"
         :current-page.sync="pageNum"
         :total="total"
@@ -17,7 +17,7 @@
       </el-pagination>
     </div>
   </el-main>
-  <el-aside width="300px" style="padding: 0 5px 0 15px;">
+  <el-aside class="default-page-aside">
     <!-- <aside-nav/> -->
     <aside-article-rec
       title="热门文章"

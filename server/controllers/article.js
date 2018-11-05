@@ -31,7 +31,6 @@ module.exports = {
   },
   async getArticleByTags (ctx) {
     const { page, size, tags, sortProp, sortOrder } = ctx.request.query
-    console.log(tags)
     // 这边调用数据库的操作方法
     const list = await articleDAO.getArticleByTags({
       page: Number(page),
@@ -87,6 +86,15 @@ module.exports = {
       }
       return false
     }
+    // 调用一下增加pv
+    const res = await articleDAO.incrementArticlePv({ id })
+    if (!res) {
+      ctx.body = {
+        code: -1,
+        msg: '数据不存在'
+      }
+      return false
+    }
     // 这边调用数据库的操作方法
     const article = await articleDAO.getArticle({ id })
     if (!article) {
@@ -96,6 +104,7 @@ module.exports = {
       }
       return false
     }
+
     ctx.body = {
       code: 0,
       msg: '成功',

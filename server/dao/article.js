@@ -89,7 +89,6 @@ const getArticleByTags = async ({ page, size, tags, sortProp, sortOrder }) => {
   // 如果分类id存在，我们就要去查一下分类id有没有子节点，我们要遍历下面所有的子节点
   const whereBuilder = (builder) => {
     let i = 0
-    console.log('---------', tags.split(','))
     tags.split(',').forEach(tag => {
       if (i === 0) {
         if (tag === 'java') {
@@ -148,6 +147,13 @@ const getArticle = async ({ id }) => {
   }
 
   return article
+}
+// 增加文章的点击pv
+const incrementArticlePv = async ({ id }) => {
+  let result = await mysql('blog_article')
+    .where('id', id)
+    .increment('pv', 1)
+  return result
 }
 
 // 根据id查询单个category信息
@@ -230,5 +236,6 @@ module.exports = {
   getCategoryTree,
   getArticleByTag,
   getCategoryChild,
-  getArticleByTags
+  getArticleByTags,
+  incrementArticlePv
 }

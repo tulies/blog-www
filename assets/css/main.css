@@ -132,3 +132,37 @@ table {
   text-align: center;
   cursor:pointer;
 }
+
+.layout-default{
+    -webkit-font-smoothing: antialiased;
+    font-family: "-apple-system",
+    BlinkMacSystemFont,
+    Roboto,
+    "Helvetica Neue",
+    "MIcrosoft YaHei",
+    sans-serif !important;
+    background-color: #FFFFFF;
+}
+.layout-default-maxarea{
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 8px
+}
+.default-page-container{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.default-page-container .default-page-main{
+  padding: 0;
+  overflow: hidden;
+}
+.default-page-container .default-page-aside{
+  width: 300px;
+  padding: 0 0 0 15px;
+}
+@media screen and  (max-width:768px){
+  .default-page-container .default-page-aside{
+    display: none;
+  }
+}

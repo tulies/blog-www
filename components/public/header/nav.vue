@@ -1,49 +1,78 @@
 <template>
 <el-menu
-  :default-active="activeIndex"
+  :default-active="active"
   class="el-menu-demo"
   mode="horizontal"
   @select="handleSelect">
-  <el-menu-item index="1">首页</el-menu-item>
-  <el-submenu index="2">
-    <template slot="title">前端技术</template>
-    <el-menu-item index="2-1">选项1</el-menu-item>
-    <el-menu-item index="2-2">选项2</el-menu-item>
-    <el-menu-item index="2-3">选项3</el-menu-item>
-    <!-- <el-submenu index="2-4">
-      <template slot="title">后端技术</template>
-      <el-menu-item index="2-4-1">选项1</el-menu-item>
-      <el-menu-item index="2-4-2">选项2</el-menu-item>
-      <el-menu-item index="2-4-3">选项3</el-menu-item>
-    </el-submenu> -->
-  </el-submenu>
-  <el-submenu index="3">
-    <template slot="title">后端技术</template>
-    <el-menu-item index="3-1">JAVA</el-menu-item>
-    <el-menu-item index="3-2">PHP</el-menu-item>
-    <el-menu-item index="3-3">GO</el-menu-item>
-  </el-submenu>
-  <el-submenu index="4">
-    <template slot="title">其他技术</template>
-    <el-menu-item index="4-1">Linux</el-menu-item>
-    <el-menu-item index="4-2">数据库</el-menu-item>
-  </el-submenu>
-  <el-menu-item index="5">WIKI</el-menu-item>
-  <el-menu-item index="6">生活日记</el-menu-item>
-  <el-menu-item index="7">关于我</el-menu-item>
-  <el-menu-item index="8"><a target="_blank">留言板</a></el-menu-item>
+  <el-menu-item v-for="nav in navs" :index="nav.index" :key="nav.index">{{nav.name}}</el-menu-item>
 </el-menu>
 </template>
 <script>
 export default {
-  data () {
-    return {
-      activeIndex: '1'
+  porps: {
+    activeIndex: {
+      type: String,
+      default: ''
     }
   },
+  data () {
+    return {
+      // activeIndex: '0',
+      active: '',
+      navs: [
+        {
+          index: '0',
+          name: '首页',
+          url: '/'
+        },
+        {
+          index: '1',
+          name: '技术频道',
+          url: '/cate?id=1'
+        },
+        {
+          index: '2',
+          name: '杂记',
+          url: '/cate?id=22'
+        },
+        {
+          index: '3',
+          name: '留言板',
+          url: '/message'
+        },
+        {
+          index: '4',
+          name: '关于',
+          url: '/about'
+        }
+      ]
+    }
+  },
+
   methods: {
-    handleSelect (key, keyPath) {
-      console.log(key, keyPath)
+    handleSelect (index) {
+      window.location.href = this.navs[index].url
+    }
+
+  },
+  // computed: {
+  //   active () {
+  //     if (this.activeIndex !== undefined) {
+  //       return this.activeIndex
+  //     }
+  //     console.log(this)
+  //     // const curnav = this.navs.filter(v => window.location.href.indexOf(v.url) !== -1)
+  //     // return curnav[0].index
+  //     return '0'
+  //   }
+  // },
+  mounted () {
+    this.active = this.activeIndex
+    if (this.active === undefined) {
+      const curnav = this.navs.filter(v => (window.location.href.indexOf(v.url) !== -1 && v.url !== '/') || (window.location.pathname === '/' && v.url === '/'))
+      if (curnav && curnav.length > 0) {
+        this.active = curnav[0].index
+      }
     }
   }
 

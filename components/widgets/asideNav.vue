@@ -1,6 +1,6 @@
 <template>
-<el-card class="box-card">
-  <div slot="header" class="clearfix">
+<!-- <el-card class="aside-box-card" shadow="hover"> -->
+  <!-- <div slot="header" class="clearfix">
     <span>{{title}}</span>
   </div>
   <el-row>
@@ -8,8 +8,12 @@
       <p><img :src="item.cover" /></p>
       <h3>{{item.title}}</h3>
     </el-col>
-  </el-row>
-</el-card>
+  </el-row> -->
+
+<!-- </el-card> -->
+ <div>
+    <!-- <img src="http://tp.nty.tv189.com/h5/bl/adv-aliyun-600-300.jpg" width="100%" /> -->
+  </div>
 </template>
 <script>
 import incoNav1 from '../../assets/img/ico_nav1.jpg'
@@ -47,9 +51,8 @@ export default {
   }
 }
 </script>
-
 <style lang="scss" scoped>
-.box-card {
+.aside-box-card {
   .item {
     text-align: center;
     img {

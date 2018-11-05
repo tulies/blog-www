@@ -1,33 +1,41 @@
 <template>
 
-
-  <dl class="title-bar">
-  <dt>
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-      <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-      <el-breadcrumb-item>活动详情</el-breadcrumb-item>
-    </el-breadcrumb>
-  </dt>
-</dl>
+<div class="title-bar">
+  <el-breadcrumb class="pull-left" separator-class="el-icon-arrow-right">
+    <el-breadcrumb-item><a href="/">首页</a></el-breadcrumb-item>
+    <el-breadcrumb-item v-for="item in breadcrumb" :key="item.name"><a :href="item.url">{{item.name}}</a></el-breadcrumb-item>
+  </el-breadcrumb>
+  <dl class="pull-right">
+    <dd v-for="item in mores" :key="item.name"><a :href="item.url">{{item.name}}</a></dd>
+  </dl>
+</div>
 </template>
 <script>
 export default {
-
+  props: {
+    breadcrumb: {
+      type: Array,
+      default: []
+    },
+    mores: {
+      type: Array,
+      default: []
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
-@import '@/assets/css/config.scss';
-dl.title-bar {
+@import "@/assets/css/config.scss";
+.title-bar {
   // height: 44px;
   // line-height: 44px;
-  display: flex;
+  // display: flex;
   box-sizing: border-box;
   font-size: 14px;
   border-bottom: $mainColor 2px solid;
   padding: 10px 0;
-  cursor:pointer;
+  overflow: hidden;
+  // cursor:pointer;
   dt {
     font-size: 18px;
     // margin-left: 13px;
@@ -38,25 +46,20 @@ dl.title-bar {
   dd {
     padding: 0 5px;
     position: relative;
-    color #888888
-    &:after {
-      position: absolute;
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-bottom: 7px solid #fff;
-      content: " ";
-      display: block;
-      width: 2px;
-      height: 0;
-      top: 37px;
-      left: 0;
-      right: 0;
-      margin: auto;
-      display: none;
+    color: #888888;
+    float: right;
+    a {
+      color: #888888;
+      text-decoration: none;
     }
 
-    &.active:after {
-      display: block;
+    a:focus,
+    a:hover {
+      color: #66b1ff;
+    }
+
+    a:active {
+      color: #3a8ee6;
     }
   }
 }

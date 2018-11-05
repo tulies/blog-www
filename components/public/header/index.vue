@@ -1,7 +1,7 @@
 <template>
 <div class="header">
   <div class="container">
-    <div class="logo"><logo/> <span class="desc">做一个有理想的码农</span></div>
+    <div class="logo"><logo/> <span class="desc">致力做一个有理想的码农</span></div>
     <div class="topnav"><top-nav/></div>
   </div>
   <div class="line"></div>
@@ -9,7 +9,7 @@
 </div>
 </template>
 <script>
-import Logo from '~/components/Logo.vue'
+import Logo from './logo.vue'
 import TopNav from './nav'
 
 export default {

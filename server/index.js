@@ -1,7 +1,15 @@
+// import Koa from 'koa'
+// import consola from 'consola'
+// import { Nuxt, Builder } from 'nuxt'
+// import bodyParser from 'koa-bodyparser'
+// // import response from './middlewares/response'
+// import router from './routes'
 
 const Koa = require('koa')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
+const bodyParser = require('koa-bodyparser')
+const router = require('./routes')
 
 const app = new Koa()
 const host = process.env.HOST || '127.0.0.1'
@@ -20,6 +28,17 @@ async function start () {
     const builder = new Builder(nuxt)
     await builder.build()
   }
+
+  // 使用响应处理中间件
+  // app.use(response)
+
+  // 解析请求体
+  // app.use(bodyParser())
+  app.use(bodyParser({
+    extendTypes: ['json', 'form', 'text']
+  }))
+  // 引入路由分发
+  app.use(router.routes())
 
   app.use(ctx => {
     ctx.status = 200 // koa defaults to 404 when it sees that status is unset

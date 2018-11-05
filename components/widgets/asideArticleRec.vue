@@ -1,78 +1,62 @@
 <template>
-<el-card class="box-card">
+<el-card class="aside-box-card" shadow="hover">
   <div slot="header" class="clearfix">
     <span>{{title}}</span>
-    <el-button style="float: right; padding: 3px 0" type="text">{{more.title}}</el-button>
+    <el-button v-if="more" style="float: right; padding: 0" type="text">{{more.title}}</el-button>
   </div>
   <dl v-for="item in list" :key="item.id" class="item">
-    <dt>{{item.title}}</dt>
+    <dt><a :href="`/article?id=${item.id}`">{{item.title}}</a></dt>
     <dd v-if="item.desc">{{item.desc}}</dd>
   </dl>
 </el-card>
 </template>
 <script>
 export default {
-  data () {
-    return {
-      title: '热门文章',
-      more: {
-        title: '更多精彩'
-      },
-      list: [
-        {
-          id: '323443',
-          title: '用AI给黑白照片上色，复现记忆中的旧时光',
-          desc: '阅读量：48230'
-        },
-        {
-          id: '324353',
-          title: '用AI给黑白照片上色，复现记忆中的旧时光',
-          desc: '阅读量：48230'
-        },
-        {
-          id: '322333',
-          title: '用AI给黑白照片上色，复现记忆中的旧时光',
-          desc: '阅读量：48230'
-        },
-        {
-          id: '32433',
-          title: '用AI给黑白照片上色，复现记忆中的旧时光',
-          desc: '阅读量：48230'
-        },
-        {
-          id: '32333',
-          title: '用AI给黑白照片上色，复现记忆中的旧时光',
-          desc: '阅读量：48230'
-        },
-        {
-          title: '用AI给黑白照片上色，复现记忆中的旧时光',
-          desc: '阅读量：48230'
-        }
-      ]
+  props: {
+    title: {
+      type: String
+    },
+    more: {
+      type: Object,
+      default: null
+    },
+    list: {
+      type: Array
     }
   }
+  // data () {
+  //   return {
+  //     // title: '热门文章',
+  //     // more: {
+  //     //   title: '更多精彩'
+  //     // }
+  //   }
+  // }
 }
 </script>
 
 <style lang="scss" scoped>
-.box-card {
-
-  // .clearfix:before,
-  // .clearfix:after {
-  //   display: table;
-  //   content: "";
-  // }
-  // .clearfix:after {
-  //   clear: both
-  // }
+@import '@/assets/css/config.scss';
+.aside-box-card {
   .item {
     font-size: 14px;
-    margin-bottom: 18px;
+    margin-bottom: 10px;
     line-height: 20px;
-    >dd {
+    >dt a{
+      color: #303133;
+
+      &:hover{
+        color: $mainColor;
+      }
+    }
+    >dd{
       color: #888888;
       font-size: 12px;
     }
+    &:last-of-type{
+      margin-bottom: 0;
+    }
   }
 }
+
 </style>

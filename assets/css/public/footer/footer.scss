@@ -72,16 +72,17 @@
 
 .com-footer .footer-content .footer-copyright .footer-copyright-cert {
   text-align: left;
-  padding-top: 6px
+  // padding-top: 6px
 }
 
 .com-footer .footer-content .footer-copyright .footer-copyright-cert a.sp-ft {
   display: inline-block;
   overflow: hidden;
-  text-indent: -1000px;
+  // text-indent: -1000px;
+  width: 200px;
   height: 38px;
-  background-repeat: no-repeat;
-  background-image: url(https://s0.meituan.net/bs/fe-web-meituan/ab0d275/img/sprites/footer.png);
+  // background-repeat: no-repeat;
+  // background-image: url(https://s0.meituan.net/bs/fe-web-meituan/ab0d275/img/sprites/footer.png);
   margin-right: 2px;
 
 }

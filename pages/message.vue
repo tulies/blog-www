@@ -19,26 +19,46 @@
       </dl>
     </div>
 
-    <div><img src="../assets/img/adv-1200-120.jpg" width="100%"/></div>
-
-    <article-comment/>
+    <div><a href="https://s.click.taobao.com/dolIbKw"><img src="http://tp.nty.tv189.com/h5/bl/adv-aliyun-1200-120.jpg" width="100%"/></a></div>
+    <el-alert
+      style="margin-top:40px;"
+      title="对不起，留言功能暂未开放，正在开发中，敬请期待！"
+      :closable="false"
+      type="error"
+      center
+      show-icon>
+    </el-alert>
+    <!-- <article-comment/> -->
   </el-main>
-  <el-aside width="320px" style="padding: 0 5px 0 15px;"><index-aside/></el-aside>
+  <el-aside width="300px" style="padding: 0 5px 0 15px;">
+    <!-- <aside-nav/> -->
+    <aside-article-rec
+      title="热门文章"
+      :list="$store.state.article.hotrec"/>
+    <div style="padding: 15px 0 0 0" ><a href="https://s.click.taobao.com/Kb3GbKw"><img src="http://tp.nty.tv189.com/h5/bl/adv-aliyun-463-224-2.jpg" style="width:100%;border-radius:4px"/></a></div>
+    <aside-article-rec
+      title="最新文章"
+      :list="$store.state.article.newrec"
+      style="margin-top: 15px;"/>
+  </el-aside>
 </el-container>
 <!-- </div> -->
 </template>
 
 <script>
-import IndexAside from '@/components/index/aside.vue'
 import ArticleComment from '@/components/article/comment.vue'
 import MainBreadcrumb from '@/components/widgets/mainBreadcrumb'
+import AsideNav from '@/components/widgets/asideNav'
+import AsideArticleRec from '@/components//widgets/asideArticleRec'
 
 export default {
   components: {
     ArticleComment,
-    IndexAside,
-    MainBreadcrumb
-  }
+    MainBreadcrumb,
+    AsideNav,
+    AsideArticleRec
+  },
+  middleware: ['hotArticleRec', 'newArticleRec']
 }
 </script>
 

@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   layout: 'blank',
   props: {
@@ -77,7 +78,7 @@ export default {
           console.log('error submit!!')
           return false
         }
-        self.$axios.post('/api/user/register', {
+        axios.post('/api/user/register', {
           nickname: self.form.nickname,
           username: self.form.username,
           password: self.form.password

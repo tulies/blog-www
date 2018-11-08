@@ -33,6 +33,7 @@
 </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
   props: {
     // 登录成功回调
@@ -70,7 +71,7 @@ export default {
           console.log('error submit!!')
           return false
         }
-        self.$axios.post('/api/user/login', {
+        axios.post('/api/user/login', {
           username: self.form.username,
           password: self.form.password
         }).then(({ status, data }) => {

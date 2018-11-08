@@ -56,6 +56,7 @@ module.exports = {
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
     port: '2000'
+    // host: 'www.wangjiayang.cn'
   },
 
   /*

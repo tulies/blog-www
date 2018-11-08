@@ -1,23 +1,46 @@
-// import Koa from 'koa'
-// import consola from 'consola'
-// import { Nuxt, Builder } from 'nuxt'
-// import bodyParser from 'koa-bodyparser'
-// // import response from './middlewares/response'
-// import router from './routes'
-
 const Koa = require('koa')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
 const bodyParser = require('koa-bodyparser')
+const Redis = require('koa-redis')
+const session = require('koa-generic-session')
+const json = require('koa-json')
 const router = require('./routes')
+const passport = require('./utils/passport')
 
 const app = new Koa()
 const host = process.env.HOST || '0.0.0.0'
 const port = process.env.PORT || 2000
+const redis = new Redis({
+  host: '127.0.0.1', // 安装好的redis服务器地址
+  port: 6379, // 端口
+  prefix: 'blog:' // 存诸前缀
+  // ttl: 60 * 60 * 23, // 过期时间
+  // db: 0
+})
 
 // Import and Set Nuxt.js options
 let config = require('../nuxt.config.js')
 config.dev = !(app.env === 'production')
+
+app.keys = ['blog', 'keyskeys']
+app.proxy = true
+// 启用session +redis
+app.use(session({ key: 'blog', prefix: 'blog:uid', store: redis }))
+app.use(json())
+
+// passport登录
+app.use(passport.initialize())
+app.use(passport.session())
+
+// 使用响应处理中间件
+// app.use(response)
+
+// 解析请求体
+// app.use(bodyParser())
+app.use(bodyParser({
+  extendTypes: ['json', 'form', 'text']
+}))
 
 async function start () {
   // Instantiate nuxt.js
@@ -29,14 +52,6 @@ async function start () {
     await builder.build()
   }
 
-  // 使用响应处理中间件
-  // app.use(response)
-
-  // 解析请求体
-  // app.use(bodyParser())
-  app.use(bodyParser({
-    extendTypes: ['json', 'form', 'text']
-  }))
   // 引入路由分发
   app.use(router.routes())
 

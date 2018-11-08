@@ -1,8 +1,5 @@
 
 <template>
-<!-- <div > -->
-  <!-- <div class="page-main"><index-main/></div>
-  <div class="page-aside hidden-sm-and-down"><index-aside/></div> -->
 <el-container class="default-page-container">
   <el-main class="default-page-main">
     <main-breadcrumb :breadcrumb="breadcrumb" :mores="categoryChilds" v-if="breadcrumb.length>0"/>
@@ -30,7 +27,6 @@
       style="margin-top: 15px;"/>
   </el-aside>
 </el-container>
-<!-- </div> -->
 </template>
 
 <script>

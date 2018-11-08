@@ -4,17 +4,20 @@ body {
     font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
     font-weight: normal;
     /* font-size: 14px; */
+    font-size: 14px;
+    /* line-height: 1.42858; */
     color: #000;
     -webkit-font-smoothing: antialiased
 }
 
 a {
-    color: #409EFF;
+    color: #0375F4;
     text-decoration: none
 }
 
 a:focus,a:hover {
-    color: #66b1ff
+    color: #09529f
+    /* #66b1ff */
 }
 
 a:active {
@@ -22,7 +25,8 @@ a:active {
 }
 
 h1,h2,h3,h4,h5,h6 {
-    color: #606266;
+    /* color: #606266; */
+    color: #444444;
     font-weight: inherit
 }
 

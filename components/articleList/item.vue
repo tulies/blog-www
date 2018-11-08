@@ -9,7 +9,7 @@
     <dl class="extinfo">
       <dt>
         <span><i class="el-icon-date"></i> {{item.create_time}} </span>
-        <a class="article-tag" v-for="tag in item.tags.split(',')" :key="tag" :href="`/tag?tag=${tag}`">{{tag}}</a>
+        <a class="article-tag ml5" v-for="tag in item.tags.split(',')" :key="tag" :href="`/tag?tag=${tag}`">{{tag}}</a>
       </dt>
       <dd>
         <!-- <span><i class="el-icon-edit-outline"></i> 评论(<a href="">200</a>)   </span> -->

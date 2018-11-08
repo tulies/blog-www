@@ -1,0 +1,168 @@
+*,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body * {
+  margin: 0;
+  padding: 0;
+}
+
+/* body {
+  line-height: 1;
+} */
+
+/* ol, ul {
+	list-style: none;
+} */
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.hide {
+  display: none;
+}
+
+.pull-right {
+  float: right !important;
+}
+
+.pull-left {
+  float: left !important;
+}
+
+.ml10 {
+  margin-left: 10px !important;
+}
+
+.mb10,
+.mb-10 {
+  margin-bottom: 10px !important;
+}
+
+.mr4,
+.mr-4 {
+  margin-right: 4px !important;
+}
+
+.ml5,
+.ml-5 {
+  margin-left: 5px !important;
+}
+
+.ml15,
+.ml-15 {
+  margin-left: 15px !important;
+}
+
+.mr20,
+.mr-20 {
+  margin-right: 20px !important;
+}
+
+.mt15,
+.mt-15 {
+  margin-top: 15px !important;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.aside-box-card .el-card__header {
+  padding: 15px 14px;
+}
+
+.aside-box-card .el-card__body {
+  padding: 14px;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+
+.clearfix:after {
+  clear: both
+}
+
+
+.article-tag {
+  font-weight: normal;
+  /* margin: 0 5px 0 0; */
+  font-size: 12px;
+  height: 16px;
+  line-height: 16px;
+  padding: 0 4px;
+  display: inline-block;
+  color: #0375F4;
+  background-color: #ecf5ff;
+  text-align: center;
+  cursor: pointer;
+
+
+}
+.article-tag:focus,
+.article-tag:hover {
+  color: #ffffff;
+  background-color: #0375F4;
+    /* #66b1ff */
+}
+.layout-default {
+  -webkit-font-smoothing: antialiased;
+  font-family: "-apple-system",
+    BlinkMacSystemFont,
+    Roboto,
+    "Helvetica Neue",
+    "MIcrosoft YaHei",
+    sans-serif !important;
+  background-color: #FFFFFF;
+}
+
+.layout-default-maxarea {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 8px
+}
+
+.default-page-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.default-page-container .default-page-main {
+  padding: 0;
+  overflow: hidden;
+}
+
+.default-page-container .default-page-aside {
+  width: 300px;
+  padding: 0 0 0 15px;
+}
+
+@media screen and (max-width:768px) {
+  .default-page-container .default-page-aside {
+    display: none;
+  }
+}

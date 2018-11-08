@@ -1,0 +1,55 @@
+
+// 登录注册页面
+.form-user-sign {
+  width: 300px;
+  margin: 0 auto;
+  .submitBtn {
+    margin-top: 10px;
+  }
+  .more-login-area {
+    margin-top: 30px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #eee;
+    color: #777;
+    text-align: center;
+    position: relative;
+  }
+
+  .more-login-area .more-login-words {
+    position: absolute;
+    left: calc(50% - 52px);
+    top: -10px;
+    padding: 0 10px;
+    background: #fff;
+    font-size: 14px;
+  }
+  .widget-login {
+    text-align: center;
+    [class*="icon-sn-"] {
+      display: inline-block;
+      background-image: url(../../assets/img/login-other.png);
+      background-repeat: no-repeat;
+      width: 30px;
+      height: 30px;
+      vertical-align: middle;
+      background-size: auto 73px;
+      margin: 0 20px;
+    }
+    .icon-sn-weixin {
+      background-position: -102px 0;
+    }
+    .icon-sn-qq {
+      background-position: -51px 0;
+    }
+    .icon-sn-sinaweibo {
+      background-position: 0 0;
+    }
+  }
+ .el-form-item {
+    margin-bottom: 10px;
+  }
+  .el-form--label-top .el-form-item__label {
+    padding-bottom: 0;
+    font-weight: bold;
+  }
+}

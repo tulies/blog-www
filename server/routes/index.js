@@ -31,4 +31,8 @@ router.get('/article/categoryTree/:id', controllers.article.getCategoryTree)
 // GET  查询当前分类下的所有叶子子节点信息 -- 只返回叶子节点
 router.get('/article/categoryLeaf/:id', controllers.article.getCategoryLeaf)
 
+// --- 用户相关接口 --- //
+router.post('/user/register', controllers.user.register)
+router.post('/user/login', controllers.user.login)
+router.get('/user/queryUserInfo', controllers.user.queryUserInfo)
 module.exports = router

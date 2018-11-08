@@ -8,7 +8,7 @@ module.exports = {
     title: '王嘉炀个人博客',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'viewport', content: 'width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' },
       { hid: 'description', name: 'description', content: '王嘉炀个人博客 - 一个有理想的码农的个人博客，专注前沿技术的研究和学习。' }
     ],
     link: [
@@ -27,9 +27,13 @@ module.exports = {
   css: [
     // 'element-ui/lib/theme-chalk/reset.css',
     '@/assets/css/reset.css',
-    'element-ui/lib/theme-chalk/index.css',
-    'element-ui/lib/theme-chalk/display.css',
-    '@/assets/css/main.css'
+    // 'element-ui/lib/theme-chalk/index.css',
+    // 'element-ui/lib/theme-chalk/display.css',
+    // '@/assets/element-#0375F4/index.css',
+    // '@/assets/element-#0375F4/display.css',
+    '@/assets/element/index.css',
+    '@/assets/element/display.css',
+    '@/assets/css/index.scss'
   ],
 
   /*

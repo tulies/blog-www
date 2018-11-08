@@ -19,7 +19,6 @@
       title="最新文章"
       :list="$store.state.article.newrec"
       style="margin-top: 15px;"/>
-
   </el-aside>
 </el-container>
 <!-- </div> -->

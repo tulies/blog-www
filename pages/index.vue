@@ -1,7 +1,5 @@
 <template>
-<!-- <div > -->
-  <!-- <div class="page-main"><index-main/></div>
-  <div class="page-aside hidden-sm-and-down"><index-aside/></div> -->
+
 <el-container class="default-page-container">
   <el-main class="default-page-main">
     <cover/>
@@ -26,7 +24,6 @@
 
   </el-aside>
 </el-container>
-<!-- </div> -->
 </template>
 
 <script>

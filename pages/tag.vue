@@ -1,15 +1,12 @@
 <template>
-<!-- <div > -->
-  <!-- <div class="page-main"><index-main/></div>
-  <div class="page-aside hidden-sm-and-down"><index-aside/></div> -->
-<el-container class="main-container">
-  <el-main class="page-main">
+<el-container class="default-page-container">
+  <el-main class="default-page-main">
     <main-breadcrumb :breadcrumb="breadcrumb" v-if="breadcrumb.length>0"/>
     <article-list :list="list" :total="total" :pageSize="pageSize"/>
      <div class="article-pagination">
       <el-pagination
         background
-        layout="total, prev, pager, next, jumper"
+        layout="total, prev, pager, next"
         :page-size="pageSize"
         :current-page.sync="pageNum"
         :total="total"
@@ -17,7 +14,7 @@
       </el-pagination>
     </div>
   </el-main>
-  <el-aside width="300px" style="padding: 0 5px 0 15px;">
+  <el-aside class="default-page-aside">
     <!-- <aside-nav/> -->
     <aside-article-rec
       title="热门文章"
@@ -29,7 +26,6 @@
       style="margin-top: 15px;"/>
   </el-aside>
 </el-container>
-<!-- </div> -->
 </template>
 
 <script>
@@ -77,7 +73,7 @@ export default {
       {
         id: 1,
         name: '标签',
-        url: `/tag`
+        url: `/tags`
       },
       {
         id: 2,
@@ -86,25 +82,6 @@ export default {
       }
     ]
     state = { ...state, breadcrumb }
-    // const { status: status2, data: data2 } = await ctx.$axios.get(`/api/article/categoryUp/${id}`)
-    // if (status2 === 200 && data2.code === 0) {
-    //   breadcrumb.push({
-    //     id: data2.data.id,
-    //     name: data2.data.name,
-    //     url: `/cate?id=${data2.data.id}`
-    //   })
-    //   // 因为我们最多分2层，所以我这里就简单点写了。
-    //   if (data2.data.parent) {
-    //     if (data2.data.parent.id !== 1) {
-    //       breadcrumb.unshift({
-    //         id: data2.data.parent.id,
-    //         name: data2.data.parent.name,
-    //         url: `/cate?id=${data2.data.parent.id}`
-    //       })
-    //     }
-    //   }
-    //   state = { ...state, breadcrumb }
-    // }
     return state
   },
   methods: {
@@ -130,21 +107,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '@/assets/css/config.scss';
-
-.main-container{
-  max-width: $maxWeight;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  .page-main{
-    padding: 0;
-  // .page-aside
-  // width 240px
-    .article-pagination {
-      padding: 10px 5px;
-    }
-  }
+.article-pagination {
+  padding: 10px 5px;
 }
 </style>
 

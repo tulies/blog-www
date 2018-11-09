@@ -33,7 +33,6 @@ import MainBreadcrumb from '@/components/widgets/mainBreadcrumb'
 import AsideNav from '@/components/widgets/asideNav'
 import AsideArticleRec from '@/components//widgets/asideArticleRec'
 import ArticleList from '@/components/articleList/index.vue'
-
 export default {
   components: {
     ArticleList,
@@ -42,7 +41,7 @@ export default {
     AsideArticleRec
   },
   async asyncData (ctx) {
-    const { tag } = ctx.query
+    const { name: tag } = ctx.params
     let state = {
       tag,
       list: [],
@@ -73,7 +72,7 @@ export default {
       {
         id: 1,
         name: '标签',
-        url: `/tags`
+        url: `/tag`
       },
       {
         id: 2,

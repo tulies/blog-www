@@ -1,12 +1,12 @@
 export default {
   article (id) {
-    return `/article?id=${id}`
+    return `/article/${id}`
   },
   tag (name) {
-    return `/tag?tag=${name}`
+    return `/tag/${encodeURIComponent(name)}`
   },
   cate (id) {
-    return `/cate?id=${id}`
+    return `/cate/${id}`
   }
 
 }

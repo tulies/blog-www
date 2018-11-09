@@ -45,17 +45,17 @@ export default {
     return {
       keywords: [{
         name: 'Vue',
-        url: '/cate?id=1'
+        url: '/tag/vue'
       }, {
         name: 'Koa',
-        url: '/cate?id=1'
+        url: '/tag/koa'
       }, {
         name: 'ReactJs',
-        url: '/cate?id=1'
+        url: '/tag/'
       }],
       mores: [{
         name: '查看更多>>',
-        url: '/cate?id=1'
+        url: '/cate/1'
       }]
     }
   },

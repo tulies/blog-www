@@ -4,7 +4,7 @@
   <dl class="extinfo">
     <dt>
       <span><i class="el-icon-date"></i> {{article.create_time}}发布 </span>
-      <a class="ml5 article-tag" v-for="tag in article.tags.split(',')" :key="tag" :href="`/tag?tag=${tag}`">{{tag}}</a>
+      <a class="ml5 article-tag" v-for="tag in article.tags.split(',')" :key="tag" :href="`/tag/${tag}`">{{tag}}</a>
       <span><i class="el-icon-view ml5"></i> {{article.pv}}次阅读</span>
     </dt>
     <!-- <dd>

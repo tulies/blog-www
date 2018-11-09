@@ -29,7 +29,7 @@ export default {
     },
     mores: {
       type: Array,
-      default: []
+      default: () => []
     }
   }
 }

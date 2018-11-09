@@ -28,12 +28,12 @@ export default {
         {
           index: '1',
           name: '技术频道',
-          url: '/cate?id=1'
+          url: '/cate/1'
         },
         {
           index: '2',
           name: '杂记',
-          url: '/cate?id=22'
+          url: '/cate/22'
         },
         {
           index: '3',

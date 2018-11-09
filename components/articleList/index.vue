@@ -16,6 +16,8 @@
 </template>
 <script>
 import Item from './item'
+import createUrl from '@/util/createUrl'
+
 export default {
   props: {
     list: {
@@ -28,7 +30,7 @@ export default {
   },
   methods: {
     click (item) {
-      window.location.href = `/article?id=${item.id}`
+      window.location.href = createUrl.article(item.id)
     }
   }
 }

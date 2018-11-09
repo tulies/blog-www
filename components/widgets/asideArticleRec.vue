@@ -5,12 +5,14 @@
     <el-button v-if="more" style="float: right; padding: 0" type="text">{{more.title}}</el-button>
   </div>
   <dl v-for="item in list" :key="item.id" class="item">
-    <dt><a :href="`/article?id=${item.id}`">{{item.title}}</a></dt>
+    <dt><a :href="createArticleUrl(item.id)">{{item.title}}</a></dt>
     <dd v-if="item.desc">{{item.desc}}</dd>
   </dl>
 </el-card>
 </template>
 <script>
+import CreateUrl from '@/util/createUrl'
+
 export default {
   props: {
     title: {
@@ -22,6 +24,11 @@ export default {
     },
     list: {
       type: Array
+    }
+  },
+  methods: {
+    createArticleUrl (id) {
+      return CreateUrl.article(id)
     }
   }
   // data () {

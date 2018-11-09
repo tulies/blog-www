@@ -18,11 +18,11 @@ export default {
     },
     keywords: {
       type: Array,
-      default: []
+      default: () => []
     },
     mores: {
       type: Array,
-      default: null
+      default: () => []
     }
   }
 }

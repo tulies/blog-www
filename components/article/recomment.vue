@@ -2,15 +2,17 @@
 <div class="article-recomment">
   <h2>你可能感兴趣的</h2>
   <ul class="widget-links">
-    <li v-for="item in list" :key="item.id">
+    <li v-for="item in list" :key="item.id" @click="clickgo(item)">
       <a :href="item.url" :title="item.title" target="_blank">{{item.title}}</a>
-      <a v-for="t in item.tags.split(',')" :key="t" class="tag" taget="_blank" :href="'/tag?tag='+t">{{t}}</a>
+      <a v-for="t in item.tags.split(',')" :key="t" class="tag" taget="_blank" :href="createTagUrl(t)">{{t}}</a>
       <span class="text-muted">· {{item.create_time.substring(0, 10)}}</span>
     </li>
   </ul>
 </div>
 </template>
 <script>
+import CreateUrl from '@/util/createUrl'
+
 export default {
   props: {
     list: {
@@ -20,6 +22,14 @@ export default {
   },
   data () {
     return {
+    }
+  },
+  methods: {
+    createTagUrl (tag) {
+      return CreateUrl.tag(tag)
+    },
+    clickgo (article) {
+      window.location.href = CreateUrl.article(article.id)
     }
   }
 }

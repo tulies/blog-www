@@ -3,7 +3,6 @@
 //   // background: #f8f8f8
 // }
 .com-footer .footer-content {
-  max-width: $maxWeight;
   border-top: 1px solid #E5E5E5;
   margin: 0 auto;
   color: #333;
@@ -42,7 +41,7 @@
 }
 
 .com-footer .footer-content .footer-link dl a:hover {
-  color: #31BBAC
+  color: $mainColor;
 }
 
 .com-footer .footer-content .footer-copyright {
@@ -57,7 +56,7 @@
 }
 
 .com-footer .footer-content .footer-copyright a:hover {
-  color: #31BBAC
+  color: $mainColor;
 }
 
 .com-footer .footer-content .footer-copyright .footer-copyright-left {

@@ -7,7 +7,7 @@
     <article-detail :article="article"/>
     <div><a href="https://s.click.taobao.com/dolIbKw"><img src="http://tp.nty.tv189.com/h5/bl/adv-aliyun-1200-120.jpg" width="100%"/></a></div>
     <article-recomment :list="likes"/>
-    <!-- <article-comment/> -->
+    <article-comment :comments="$store.state.article.comments" :tid="id"/>
   </el-main>
   <el-aside class="default-page-aside">
     <!-- <aside-nav/> -->
@@ -42,6 +42,7 @@ export default {
   async asyncData (ctx) {
     const { id } = ctx.params
     let state = {
+      id,
       article: {},
       likes: []
     }
@@ -63,6 +64,18 @@ export default {
       state = { ...state, likes: data2.data.list }
     }
 
+    // 查询评论列表
+    const { status: status3, data: data3 } = await ctx.$axios.get(`/api/comment/getReplieds`, {
+      params: {
+        tid: id,
+        page: 0,
+        size: 10
+      }
+    })
+    if (status3 === 200 && data3.code === 0) {
+      // commit
+      ctx.store.commit('article/setComments', data3.data)
+    }
     return state
   },
   middleware: ['hotArticleRec', 'newArticleRec']

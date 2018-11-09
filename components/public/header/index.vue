@@ -24,7 +24,7 @@
   <el-dialog
   :width="dialogWidth"
   :title="dialogLoginVisible ? '登录' : '注册'"
-  :visible.sync="showLoginRegister"
+  :visible.sync="$store.state.user.showLogin"
   :before-close="handleDialogClose">
     <div>
       <login-form :gotoRegister="gotoRegister" :loginCallback="loginCallback" v-if="dialogLoginVisible"></login-form>
@@ -44,7 +44,7 @@ import RegisterForm from '@/components/user/registerForm'
 export default {
   data () {
     return {
-      dialogLoginVisible: false,
+      dialogLoginVisible: true,
       dialogRegisterVisible: false,
       dialogWidth: '400px'
     }
@@ -87,6 +87,7 @@ export default {
       // window.location = '/user/register'
       this.dialogRegisterVisible = true
       this.dialogLoginVisible = false
+      this.$store.commit('user/setShowLogin', true)
     },
     registerCallback ({ status, data }) {
       if (status === 200) {
@@ -103,13 +104,16 @@ export default {
     gotoLogin () {
       this.dialogRegisterVisible = false
       this.dialogLoginVisible = true
+      this.$store.commit('user/setShowLogin', true)
     },
     handleDialogClose () {
       this.dialogRegisterVisible = false
-      this.dialogLoginVisible = false
+      this.dialogLoginVisible = true
+      this.$store.commit('user/setShowLogin', false)
     },
     handleCommand () {
       this.dialogLoginVisible = true
+      this.$store.commit('user/setShowLogin', true)
     }
   }
 }

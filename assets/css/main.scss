@@ -64,6 +64,9 @@ table {
 .ml-5 {
   margin-left: 5px !important;
 }
+.mr5, .mr-5 {
+  margin-right: 5px !important;
+}
 
 .ml15,
 .ml-15 {
@@ -86,6 +89,9 @@ table {
 
 .inline-block {
   display: inline-block;
+}
+.text-muted-plus-plus {
+  color: #ccc;
 }
 
 .aside-box-card .el-card__header {

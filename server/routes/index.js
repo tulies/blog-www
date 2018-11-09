@@ -35,4 +35,11 @@ router.get('/article/categoryLeaf/:id', controllers.article.getCategoryLeaf)
 router.post('/user/register', controllers.user.register)
 router.post('/user/login', controllers.user.login)
 router.get('/user/queryUserInfo', controllers.user.queryUserInfo)
+router.get('/user/queryAvatar', controllers.user.queryAvatar)
+
+// --- 评论相关接口 --- //
+router.post('/comment/initTopic', controllers.comment.initTopic)
+router.post('/comment/addReplied', controllers.comment.addReplied)
+router.get('/comment/getReplieds', controllers.comment.getReplieds)
+
 module.exports = router

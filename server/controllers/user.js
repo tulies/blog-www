@@ -1,5 +1,6 @@
 const Passport = require('../utils/passport')
 const userDAO = require('../dao/user')
+const axios = require('axios')
 
 const register = async (ctx) => {
   const { nickname, username, password } = ctx.request.body
@@ -58,8 +59,20 @@ const queryUserInfo = async (ctx) => {
   }
 }
 
+const queryAvatar = async (ctx) => {
+  const { status, data } = await axios.get('http://tp.nty.tv189.com/h5/mainsite/img/gmhead/201207281823141413.jpg')
+  if (status === 200) {
+    ctx.type = 'jpg'
+    // console.log(Buffer.isBuffer(body))
+    ctx.length = Buffer.byteLength(data)
+    ctx.body = data
+  } else {
+    ctx.body = ''
+  }
+}
 module.exports = {
   register,
   login,
-  queryUserInfo
+  queryUserInfo,
+  queryAvatar
 }

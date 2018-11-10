@@ -27,7 +27,7 @@
 <script>
 import ArticleDetail from '@/components/article/detail.vue'
 import ArticleRecomment from '@/components/article/recomment.vue'
-import ArticleComment from '@/components/article/comment.vue'
+import ArticleComment from '@/components/comment/index.vue'
 import AsideNav from '@/components/widgets/asideNav'
 import AsideArticleRec from '@/components//widgets/asideArticleRec'
 

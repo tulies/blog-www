@@ -72,8 +72,18 @@
             color: #999;
             font-size: 13px;
             visibility: hidden;
+            .comments-zan {
+              // color: $mainColor;
+              cursor: pointer;
+            }
+            .comments-zan.comments-zan--active{
+              color:$mainColor
+            }
             .comments-zan-value {
               color: $mainColor;
+            }
+            .comments-reply-btn{
+              cursor: pointer;
             }
             .islike0-10 {
               color: #9e9e9e;

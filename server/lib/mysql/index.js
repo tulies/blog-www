@@ -4,6 +4,7 @@ const knex = require('knex')
 const configs = require('../../config')
 
 module.exports = knex({
+  // debug: 'true',
   client: 'mysql',
   connection: {
     host: configs.mysql.host,

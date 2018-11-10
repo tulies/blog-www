@@ -78,20 +78,32 @@
                     <a class="reply-more-btn" href="javascript:;">显示更多</a>
                   </span>
               </div>
-              <form class="reply-form" action="/api/comment/1050000016778191/reply">
-                <!-- <button type="button" class="btn btn-default pull-right reply-btn">添加回复</button>
-                <button class="hide" type="button" ></button> -->
-                <el-button size="small" class="pull-right reply-btn">添加回复</el-button>
+              <el-form
+                class="reply-form"
+                ref="rootForm"
+                :model="rootForm"
+                :rules="rules"
+                label-width="80px"
+                label-position="top"
+                size="small"
+                >
+                <el-button size="small" class="pull-right reply-btn" @click="onRootReply('rootForm')" >添加回复</el-button>
+
                 <div class="form-group">
-                  <el-input
-                    class="reply-text"
-                    type="textarea"
-                    autosize
-                    placeholder="文明社会，理性评论"
-                  >
-                  </el-input>
+                  <el-form-item prop="content" >
+                    <el-input
+                      @focus="focusCommetInput"
+                      v-model="rootForm.content"
+                      class="reply-text"
+                      type="textarea"
+                      autosize
+                      placeholder="文明社会，理性评论"
+                    >
+                    </el-input>
+                  </el-form-item>
                 </div>
-              </form>
+              </el-form>
+
             </div>
           </div>
         </div>
@@ -113,7 +125,7 @@
             >
           <!-- <form action="/api/article/1190000016756466/comments/add"> -->
             <div class="form-group mb0">
-              <el-form-item prop="content">
+              <el-form-item prop="content" >
                 <el-input
                   @focus="focusCommetInput"
                   v-model="rootForm.content"
@@ -123,7 +135,7 @@
                 </el-input>
               </el-form-item>
               <div class="mt15 text-right">
-                <el-button type="primary" @click="onSubmit('rootForm')" size="small">发布评论</el-button>
+                <el-button type="primary" @click="onRootReply('rootForm')" size="small">发布评论</el-button>
               </div>
             </div>
           <!-- </form> -->
@@ -158,17 +170,42 @@ export default {
           { required: true, message: '评论内容不能为空' },
           { min: 3, max: 200, message: '评论的字数过少，请详细撰写', trigger: 'blur' }
         ]
+      },
+      childForm: {
+        content: ''
       }
     }
   },
   methods: {
-    focusCommetInput () {
+    focusCommetInput (event) {
+      console.log(event)
       // 先判断是否登录
       if (this.$store.state.user.userinfo.uid === 0) {
         this.$store.commit('user/setShowLogin', true)
+        event.preventDefault()
+        event.stopPropagation()
+        event.target.blur()
       }
     },
-    onSubmit (formName) {
+    onRootReply (formName) {
+      const self = this
+      console.log(self.$store.state.user.userinfo)
+
+      this.$refs[formName].validate((valid, formdata) => {
+        if (!valid) {
+          console.log('error submit!!')
+          return false
+        }
+        console.log(formdata)
+        axios.post('/api/comment/addReplied', {
+          tid: self.tid,
+          content: '哈哈哈哈'
+        }).then(({ status, data }) => {
+          console.log({ status, data })
+        })
+      })
+    },
+    onChildReply (formName) {
       const self = this
       console.log(self.$store.state.user.userinfo)
 
@@ -186,7 +223,6 @@ export default {
         })
       })
     }
-
   }
 }
 </script>

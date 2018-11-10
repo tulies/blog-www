@@ -39,7 +39,10 @@ router.get('/user/queryAvatar', controllers.user.queryAvatar)
 
 // --- 评论相关接口 --- //
 router.post('/comment/initTopic', controllers.comment.initTopic)
-router.post('/comment/addReplied', controllers.comment.addReplied)
+router.post('/comment/addRootReplied', controllers.comment.addRootReplied)
+router.post('/comment/addChildReplied', controllers.comment.addChildReplied)
 router.get('/comment/getReplieds', controllers.comment.getReplieds)
+router.get('/comment/support/:repliedId', controllers.comment.support)
+router.get('/comment/unsupport/:repliedId', controllers.comment.unsupport)
 
 module.exports = router

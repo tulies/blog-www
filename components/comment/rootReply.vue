@@ -8,7 +8,7 @@
         <div class="pull-right comment-option">
             <a class="hide" href="javascript:;"><span class="ml10 comment-edit-btn"><span class="iconfont icon-brush_fill" aria-hidden="true"></span></span>
             </a>
-            <a href="#911" class="ml10" data-toggle="modal" data-target="#911" data-action="report" data-action-text="举报" data-module="comment" data-id="1050000016778191" data-typetext="评论" data-placement="top" title="举报">
+            <a href="#911" class="ml10 report" title="举报">
               <span class="iconfont icon-flag_fill" aria-hidden="true"></span>
             </a>
             <a class="hide" href="javascript:;"><span class="ml10 comment-delete-btn"><span class="iconfont icon-trash_fill" aria-hidden="true"></span></span>
@@ -21,7 +21,7 @@
     <div class="fmt mb10" v-html="reply.content"></div>
     <p class="comment-ops not-reply">
         <span class="comments-zan" :class="{'comments-zan--active': reply.is_support}" @click="handleZan">
-            <i class="iconfont icon-praise_fill" aria-hidden="true"></i>
+            <i class="comments-zan-icon iconfont icon-praise_fill" aria-hidden="true"></i>
             <span class="comments-zan-text">{{reply.is_support?'已赞':'赞'}}</span>
             <span class="comments-zan-value" v-if="reply.support_count>0">+{{reply.support_count}}</span>
         </span>

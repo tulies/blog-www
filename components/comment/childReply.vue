@@ -3,7 +3,7 @@
     <span class="pull-left comment-ops" style="position:absolute;">
         <span class="mr20 comments-zan" :class="{'comments-zan--active': reply.is_support}" @click="handleZan">
             <span class="comments-zan-value comment-showhide islike0-10">{{reply.support_count}}</span>
-            <i class="iconfont icon-praise_fill comment-showhide ml5" aria-hidden="true"></i>
+            <i class="comments-zan-icon iconfont icon-praise_fill comment-showhide ml5" aria-hidden="true"></i>
         </span>
     </span>
 

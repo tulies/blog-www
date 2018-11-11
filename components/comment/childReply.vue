@@ -8,7 +8,8 @@
     </span>
 
     <div class="reply-content-block">
-        <div class="reply-content" v-html="reply.content"></div>
+        <div class="reply-content markdown-body" v-html="markedContent(reply.content)"></div>
+
         <div class="comment-func inline-block">
             <span class="pull-right commentTools ml15">
                 <a href="javascript:void(0);" @click="atReply(reply)" class="comment-reply-btn comments-reply-user-btn" :data-username="reply.username" :data-userid="reply.userid">
@@ -32,6 +33,8 @@
 </template>
 <script>
 import axios from 'axios'
+import marked from 'marked'
+
 export default {
   props: {
     reply: {
@@ -65,6 +68,9 @@ export default {
           }
         })
       }
+    },
+    markedContent (content) {
+      return marked(content)
     }
   }
 }

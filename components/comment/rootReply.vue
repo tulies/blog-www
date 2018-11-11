@@ -18,7 +18,7 @@
 
         <span class="comments-isAuthor" v-if="reply.is_author">作者</span> <span>  ·  {{reply.create_time}}</span>
     </div>
-    <div class="fmt mb10" v-html="reply.content"></div>
+    <div class="fmt mb10 markdown-body" v-html="markedContent(reply.content)"></div>
     <p class="comment-ops not-reply">
         <span class="comments-zan" :class="{'comments-zan--active': reply.is_support}" @click="handleZan">
             <i class="comments-zan-icon iconfont icon-praise_fill" aria-hidden="true"></i>
@@ -38,8 +38,8 @@
       </template>
       <div class="reply-item reply-item--ops"  v-if="!showReplyForm && reply.replyList && reply.replyList.total > 0">
           <a class="reply-inner-btn" href="javascript:;" @click="gotoReply">添加回复</a>
-          <span class="reply-more" ><span class="text-muted-plus-plus mr5 ml5">|</span>
-            <a class="reply-more-btn" href="javascript:;">显示更多</a>
+          <span class="reply-more" v-if="showMore"><span class="text-muted-plus-plus mr5 ml5">|</span>
+            <a class="reply-more-btn" href="javascript:;" @click="loadmore">显示更多</a>
           </span>
       </div>
       <el-form
@@ -73,6 +73,7 @@
 </template>
 <script>
 import axios from 'axios'
+import marked from 'marked'
 import ChildReply from './childReply'
 export default {
   props: {
@@ -105,11 +106,13 @@ export default {
   computed: {
     showops () {
       return !this.showReplyForm && this.reply.replyList && this.reply.replyList.total > 0
+    },
+    showMore () {
+      return (this.reply.replyList.total > this.reply.replyList.list.length) && !this.showLoading
     }
   },
   methods: {
     focusCommetInput (event) {
-      console.log(event)
       // 先判断是否登录
       if (this.$store.state.user.userinfo.uid === 0) {
         this.$store.commit('user/setShowLogin', true)
@@ -125,27 +128,22 @@ export default {
           console.log('error submit!!')
           return false
         }
-        console.log(formdata)
         axios.post('/api/comment/addChildReplied', {
           parentid: self.replyObj.id,
           content: self.replyForm.content
         }).then(({ status, data }) => {
-          console.log({ status, data })
-          console.log(this.reply.replyList)
           if (status === 200 && data.code === 0) {
-            this.$alert('评论发送成功', '信息提示', {
-              confirmButtonText: '确定'
-            })
-            if (this.reply.replyList.list) {
+            // this.$alert('评论发送成功', '信息提示', {
+            //   confirmButtonText: '确定'
+            // })
+            if (this.reply.replyList && this.reply.replyList.list) {
               this.reply.replyList.list.unshift(data.data)
             } else {
-              this.reply = {
-                replyList: {
-                  total: 1,
-                  page: 0,
-                  size: 5,
-                  list: [data.data]
-                }
+              this.reply.replyList = {
+                total: 1,
+                page: 0,
+                size: 5,
+                list: [data.data]
               }
             }
             this.replyForm.content = ''
@@ -191,6 +189,37 @@ export default {
             this.reply.is_support = true
           }
         })
+      }
+    },
+    markedContent (content) {
+      return marked(content)
+    },
+    async loadmore () {
+      const self = this
+      const page = this.reply.replyList.page || 0
+      const size = this.reply.replyList.size || 5
+      if (this.showLoading) {
+        return false
+      }
+      this.showLoading = true
+      // 查询评论列表
+      const { status: status3, data: data3 } = await axios.get(`/api/comment/getChildReplieds`, {
+        params: {
+          tid: self.tid,
+          rootid: this.reply.id,
+          page: page + 1,
+          size
+        }
+      })
+
+      this.showLoading = false
+      if (status3 === 200 && data3.code === 0) {
+        let list = this.reply.replyList.list || []
+        list.push.apply(list, data3.data.list)
+        this.reply.replyList.total = data3.data.total
+        this.reply.replyList.page = data3.data.page
+        this.reply.replyList.size = data3.data.size
+        this.reply.replyList.list = list
       }
     }
   }

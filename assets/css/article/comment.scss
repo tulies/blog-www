@@ -47,14 +47,18 @@
           .comments-content .comment-trigger .comment-option {
             visibility: visible;
             color: #666;
+
             a {
-              color:#666;
+              color: #666;
             }
           }
-          .comments-content>.comment-ops .comments-zan, .comments-content>.comment-ops .comments-zan-value, .comments-content>.comment-ops .comments-reply-btn{
+
+          .comments-content>.comment-ops .comments-zan,
+          .comments-content>.comment-ops .comments-zan-value,
+          .comments-content>.comment-ops .comments-reply-btn {
             color: #666666;
 
-              /* #66b1ff */
+            /* #66b1ff */
           }
         }
 
@@ -71,13 +75,17 @@
 
             .comment-option {
               // visibility: hidden;
-              color:#999999;
-              a{
-                color:#999999;
-                &:focus,&:hover {
+              color: #999999;
+
+              a {
+                color: #999999;
+
+                &:focus,
+                &:hover {
                   color: $mainColor
-                  /* #66b1ff */
+                    /* #66b1ff */
                 }
+
                 &:active {
                   color: #09529f
                 }
@@ -105,6 +113,7 @@
             margin: 0;
             color: #999;
             font-size: 13px;
+
             // visibility: hidden;
             .comments-zan {
               // color: $mainColor;
@@ -114,14 +123,19 @@
             .comments-zan.comments-zan--active {
               color: $mainColor
             }
+
             .comments-zan-value {
               color: $mainColor;
             }
-            .comments-zan-icon{
-              &:focus,&:hover {
-                  color: $mainColor
+
+            .comments-zan-icon {
+
+              &:focus,
+              &:hover {
+                color: $mainColor
                   /* #66b1ff */
               }
+
               &:active {
                 color: #09529f
               }
@@ -129,14 +143,18 @@
 
             .comments-reply-btn {
               cursor: pointer;
-              &:focus,&:hover {
+
+              &:focus,
+              &:hover {
                 color: $mainColor
-                /* #66b1ff */
+                  /* #66b1ff */
               }
+
               &:active {
                 color: #09529f
               }
             }
+
             .islike0-10 {
               color: #9e9e9e;
             }
@@ -184,7 +202,8 @@
                   margin-bottom: 5px;
                 }
               }
-              .comment-func{
+
+              .comment-func {
                 margin-top: 5px;
                 display: table;
               }
@@ -261,5 +280,26 @@
         padding-left: 47px;
       }
     }
+  }
+
+  .markdown-body {
+    font-size: 14px;
+    color: #333333;
+  }
+
+  .reply-content.markdown-body {
+    font-size: 13px;
+    line-height: 1.42858;
+  }
+
+  .comments-more {
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  .comments-loading {
+    color: #999;
+    text-align: center;
+    padding: 20px 0;
   }
 }

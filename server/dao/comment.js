@@ -44,6 +44,8 @@ const getReplied = async ({ id }) => {
 const getReplieds = async ({ tid, userid, parentid, rootid, page, size, sortProp, sortOrder }) => {
   page = page || 0
   size = size || 10
+  page = Number(page)
+  size = Number(size)
   const whereBuilder = (builder) => {
     if (tid) {
       builder.where('tid', tid)
@@ -58,12 +60,24 @@ const getReplieds = async ({ tid, userid, parentid, rootid, page, size, sortProp
       builder.where('rootid', rootid)
     }
   }
-  var model = mysql('comment_replied').where(whereBuilder)
+  let model = mysql('comment_replied').where(whereBuilder)
   const totalCount = await model.clone().count('id as count')
+
+  sortProp = sortProp || 'id'
+  let sp = sortProp.split(',')
+  let so = sortOrder.split(',')
+  if (sp.length > 0) {
+    sp.forEach((p, index) => {
+      model.orderBy(p, so[index] === 'asc' ? 'asc' : 'desc')
+    })
+  } else {
+    model.orderBy(sortProp || 'id', sortOrder === 'asc' ? 'asc' : 'desc')
+  }
   const list = await model.clone()
     .limit(size)
     .offset(page * size)
-    .orderBy(sortProp || 'id', sortOrder === 'ascending' ? 'asc' : 'desc')
+    // .orderBy('support_count', 'desc')
+    // .orderBy(sortProp || 'id', sortOrder === 'ascending' ? 'asc' : 'desc')
     .map(row => ({
       ...row,
       update_time: moment(row.update_time).format('YYYY-MM-DD HH:mm:ss'),

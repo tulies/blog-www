@@ -42,6 +42,7 @@ router.post('/comment/initTopic', controllers.comment.initTopic)
 router.post('/comment/addRootReplied', controllers.comment.addRootReplied)
 router.post('/comment/addChildReplied', controllers.comment.addChildReplied)
 router.get('/comment/getReplieds', controllers.comment.getReplieds)
+router.get('/comment/getChildReplieds', controllers.comment.getChildReplieds)
 router.get('/comment/support/:repliedId', controllers.comment.support)
 router.get('/comment/unsupport/:repliedId', controllers.comment.unsupport)
 

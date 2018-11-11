@@ -5,10 +5,12 @@ const moment = require('moment')
 const mysql = require('../lib/mysql')
 const configs = require('../config')
 
-// 查询文章列表 ascending descending
+// 查询文章列表 asc descending
 const getArticleList = async ({ page, size, categoryId, sortProp, sortOrder }) => {
   page = page || 0
   size = size || 10
+  page = Number(page)
+  size = Number(size)
   categoryId = categoryId || undefined
 
   // 如果分类id存在，我们就要去查一下分类id有没有子节点，我们要遍历下面所有的子节点
@@ -29,7 +31,7 @@ const getArticleList = async ({ page, size, categoryId, sortProp, sortOrder }) =
   let list = await model.clone()
     .limit(size)
     .offset(page * size)
-    .orderBy(sortProp || 'id', sortOrder === 'ascending' ? 'asc' : 'desc')
+    .orderBy(sortProp || 'id', sortOrder === 'asc' ? 'asc' : 'desc')
     .map(row => ({
       ...row,
       poster: row.poster.startsWith('http') ? row.poster : configs.hosts.fileUrlHost + row.poster,
@@ -45,11 +47,12 @@ const getArticleList = async ({ page, size, categoryId, sortProp, sortOrder }) =
   }
 }
 
-// 根据标签查询文章列表 ascending descending
+// 根据标签查询文章列表 asc descending
 const getArticleByTag = async ({ page, size, tag, sortProp, sortOrder }) => {
   page = page || 0
   size = size || 10
-
+  page = Number(page)
+  size = Number(size)
   // 如果分类id存在，我们就要去查一下分类id有没有子节点，我们要遍历下面所有的子节点
   const whereBuilder = (builder) => {
     if (tag === 'java') {
@@ -65,7 +68,7 @@ const getArticleByTag = async ({ page, size, tag, sortProp, sortOrder }) => {
   let list = await model.clone()
     .limit(size)
     .offset(page * size)
-    .orderBy(sortProp || 'id', sortOrder === 'ascending' ? 'asc' : 'desc')
+    .orderBy(sortProp || 'id', sortOrder === 'asc' ? 'asc' : 'desc')
     .map(row => ({
       ...row,
       poster: row.poster.startsWith('http') ? row.poster : configs.hosts.fileUrlHost + row.poster,
@@ -85,7 +88,8 @@ const getArticleByTag = async ({ page, size, tag, sortProp, sortOrder }) => {
 const getArticleByTags = async ({ page, size, tags, sortProp, sortOrder }) => {
   page = page || 0
   size = size || 10
-
+  page = Number(page)
+  size = Number(size)
   // 如果分类id存在，我们就要去查一下分类id有没有子节点，我们要遍历下面所有的子节点
   const whereBuilder = (builder) => {
     let i = 0
@@ -109,7 +113,7 @@ const getArticleByTags = async ({ page, size, tags, sortProp, sortOrder }) => {
   let list = await model.clone()
     .limit(size)
     .offset(page * size)
-    .orderBy(sortProp || 'id', sortOrder === 'ascending' ? 'asc' : 'desc')
+    .orderBy(sortProp || 'id', sortOrder === 'asc' ? 'asc' : 'desc')
     .map(row => ({
       ...row,
       poster: row.poster.startsWith('http') ? row.poster : configs.hosts.fileUrlHost + row.poster,

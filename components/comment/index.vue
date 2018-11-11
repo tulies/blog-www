@@ -3,9 +3,9 @@
     <dl class="titlebar">
       <dt>评论 {{comments.list.length}}条评论</dt>
       <dd>
-        <el-radio-group  v-model="defaultSort" size="mini">
-          <el-radio-button label="默认排序"></el-radio-button>
-          <el-radio-button label="时间排序"></el-radio-button>
+        <el-radio-group  v-model="defaultSort" size="mini" @change="sortChange">
+          <el-radio-button label="default">默认排序</el-radio-button>
+          <el-radio-button label="create">时间排序</el-radio-button>
         </el-radio-group>
       </dd>
     </dl>
@@ -45,8 +45,8 @@
       <div class="comments-list">
         <root-reply v-for="reply in comments.list" :key="reply.id" :reply="reply"></root-reply>
       </div>
-      <div class="comments-loading hide">载入中...</div>
-      <div class="comments-more hide"><a href="javascript:;">显示更多评论</a></div>
+      <div class="comments-loading" v-if="showLoading">载入中...</div>
+      <div class="comments-more" v-if="showMore"><a href="javascript:;" @click="loadmore">显示更多评论</a></div>
 
     </div>
   </div>
@@ -62,13 +62,15 @@ export default {
     comments: {
       type: Object,
       default: () => {
-        return {}
+        return {
+        }
       }
     }
   },
   data () {
     return {
-      defaultSort: '默认排序',
+      showLoading: false,
+      defaultSort: 'default',
       replyForm: {
         content: ''
       },
@@ -88,7 +90,6 @@ export default {
   },
   methods: {
     focusCommetInput (event) {
-      console.log(event)
       // 先判断是否登录
       if (this.$store.state.user.userinfo.uid === 0) {
         this.$store.commit('user/setShowLogin', true)
@@ -99,24 +100,31 @@ export default {
     },
     onReply (formName) {
       const self = this
-      console.log(self.$store.state.user.userinfo)
-
       this.$refs[formName].validate((valid, formdata) => {
         if (!valid) {
           console.log('error submit!!')
           return false
         }
-        console.log(formdata)
         axios.post('/api/comment/addRootReplied', {
           tid: self.tid,
           content: self.replyForm.content
         }).then(({ status, data }) => {
-          console.log({ status, data })
           if (status === 200 && data.code === 0) {
-            this.$alert('评论发送成功', '信息提示', {
-              confirmButtonText: '确定'
-            })
-            this.comments.list.unshift(data.data)
+            // this.$alert('评论发送成功', '信息提示', {
+            //   confirmButtonText: '确定'
+            // })
+            if (this.comments.list) {
+              // this.reply.replyList.list.unshift(data.data)
+              this.comments.list.unshift(data.data)
+            } else {
+              this.comments = {
+                total: 1,
+                page: 0,
+                size: 5,
+                list: [data.data]
+              }
+            }
+
             this.replyForm.content = ''
           } else {
             this.$alert(data.msg, '信息提示', {
@@ -129,6 +137,72 @@ export default {
           })
         })
       })
+    },
+    async loadmore () {
+      const self = this
+      const page = this.comments.page || 0
+      const size = this.comments.size || 10
+      if (this.showLoading) {
+        return false
+      }
+      this.showLoading = true
+      // 查询评论列表
+      const { status: status3, data: data3 } = await axios.get(`/api/comment/getReplieds`, {
+        params: {
+          tid: self.tid,
+          page: page + 1,
+          size,
+          sort: self.sort
+        }
+      })
+      this.showLoading = false
+      if (status3 === 200 && data3.code === 0) {
+        let list = this.comments.list || []
+        list.push.apply(list, data3.data.list)
+        this.comments.total = data3.data.total
+        this.comments.page = data3.data.page
+        this.comments.size = data3.data.size
+        this.comments.list = list
+
+        // this.comments = {
+        //   total: data3.data.total,
+        //   page: data3.data.page,
+        //   size: data3.data.size,
+        //   list
+        // }
+        // commit
+        // ctx.store.commit('article/setComments', data3.data)
+      }
+    },
+    async sortChange () {
+      const self = this
+      const page = 0
+      const size = this.comments.size || 10
+      if (this.showLoading) {
+        return false
+      }
+      this.showLoading = true
+      // 查询评论列表
+      const { status: status3, data: data3 } = await axios.get(`/api/comment/getReplieds`, {
+        params: {
+          tid: self.tid,
+          page,
+          size,
+          sort: self.defaultSort
+        }
+      })
+      this.showLoading = false
+      if (status3 === 200 && data3.code === 0) {
+        this.comments.total = data3.data.total
+        this.comments.page = data3.data.page
+        this.comments.size = data3.data.size
+        this.comments.list = data3.data.list
+      }
+    }
+  },
+  computed: {
+    showMore () {
+      return (this.comments.total > this.comments.list.length) && !this.showLoading
     }
   }
 }

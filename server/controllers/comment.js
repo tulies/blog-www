@@ -91,8 +91,16 @@ const addChildReplied = async (ctx) => {
 }
 const getReplieds = async (ctx) => {
   // 查询文章下的评论
-  const { tid, page, size, sortProp, sortOrder } = ctx.request.query
-
+  const { tid, page, size, sort } = ctx.request.query
+  let sortProp = 'support_count,id'
+  let sortOrder = 'desc,desc'
+  if (sort === 'default') {
+    sortProp = 'support_count,id'
+    sortOrder = 'desc,desc'
+  } else if (sort === 'create') {
+    sortProp = 'id'
+    sortOrder = 'desc'
+  }
   // 先查询出主评论
   const result = await commentDAO.getReplieds({ tid, page, size, sortProp, sortOrder, parentid: 0 })
   let islogin = false
@@ -120,7 +128,7 @@ const getReplieds = async (ctx) => {
     }
 
     for (let i = 0; i < result.list.length; i++) {
-      const childs = await commentDAO.getReplieds({ tid, page: 0, size: 2, sortProp, sortOrder, rootid: result.list[i].id })
+      const childs = await commentDAO.getReplieds({ tid, page: 0, size: 5, sortProp: 'id', sortOrder: 'asc', rootid: result.list[i].id })
       if (childs.total > 0 && childs.list.length > 0) {
         // 先统一赋值成未👍
         childs.list = childs.list.map(v => ({ ...v, is_support: false, is_author: v.userid === configs.author.uid }))
@@ -142,6 +150,51 @@ const getReplieds = async (ctx) => {
     //   v.replyList = childs
     //   return v
     // })
+  }
+  ctx.body = {
+    code: 0,
+    msg: '查询评论列表成功',
+    data: result
+  }
+}
+const getChildReplieds = async (ctx) => {
+  // 查询文章下的评论
+  const { tid, page, rootid, size } = ctx.request.query
+  // let sortProp = 'support_count,id'
+  // let sortOrder = 'desc,desc'
+  // if (sort === 'default') {
+  //   sortProp = 'support_count,id'
+  //   sortOrder = 'desc,desc'
+  // } else if (sort === 'created') {
+  //   sortProp = 'id'
+  //   sortOrder = 'desc'
+  // }
+  let sortProp = 'id'
+  let sortOrder = 'asc'
+  const result = await commentDAO.getReplieds({ tid, page, size, sortProp, sortOrder, rootid })
+  let islogin = false
+  let uid = 0
+  if (ctx.isAuthenticated()) {
+    islogin = true
+    uid = ctx.session.passport.user.uid
+    // uid = '1541605134550'
+  }
+
+  /** **  实在是没有时间，我直接拷贝了。。。。这边应该要代码提取的。。。。 */
+  // 然后再遍历出子评论
+  if (result.total > 0 && result.list.length > 0) {
+    // 先统一赋值成未👍
+    result.list = result.list.map(v => ({ ...v, is_support: false, is_author: v.userid === configs.author.uid }))
+    // 如果是登录用户
+    if (islogin) {
+      // 再根据ids查询下是否点赞过。
+      const ids = result.list.map(v => v.id)
+      const suplist = await commentDAO.queryMySupport({ uid, ids })
+      if (suplist && suplist.length > 0) {
+        const supids = suplist.map(v => v.replied_id)
+        result.list = result.list.map(v => ({ ...v, is_support: supids.indexOf(v.id) >= 0 }))
+      }
+    }
   }
   ctx.body = {
     code: 0,
@@ -259,6 +312,7 @@ module.exports = {
   initTopic,
   addReplied,
   getReplieds,
+  getChildReplieds,
   addRootReplied,
   addChildReplied,
   support,

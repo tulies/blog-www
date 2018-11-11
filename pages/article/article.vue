@@ -50,7 +50,6 @@ export default {
     if (status === 200 && data.code === 0) {
       state = { ...state, article: data.data }
     }
-    console.log(state.article.tags)
     // 查询猜你喜欢，根据tag去检索
     const { status: status2, data: data2 } = await ctx.$axios.get(`/api/article/listByTags`, {
       params: {

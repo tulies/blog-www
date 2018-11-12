@@ -44,7 +44,7 @@ module.exports = {
   */
   plugins: [
     '@/plugins/element-ui',
-    '@/plugins/baiduGa.js' /* 百度统计 */
+    { src: '@/plugins/baiduGa.js', ssr: false } /* 百度统计 */
   ],
 
   /*

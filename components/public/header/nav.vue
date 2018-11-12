@@ -1,6 +1,5 @@
 <template>
 <el-menu
-  :trigger="trigger"
   :default-active="active"
   class="el-menu-demo"
   mode="horizontal"
@@ -21,7 +20,6 @@ export default {
     return {
       // activeIndex: '0',
       active: '',
-      trigger: 'click',
       navs: [
         {
           index: '0',
@@ -69,11 +67,6 @@ export default {
   //     return '0'
   //   }
   // },
-  beforeMount () {
-    if (!window.navigator.userAgent.match(/AppleWebKit.*Mobile.*/)) {
-      this.trigger = 'hover'
-    }
-  },
   mounted () {
     // if (!window.navigator.userAgent.match(/AppleWebKit.*Mobile.*/)) {
     //   this.trigger = 'hover'

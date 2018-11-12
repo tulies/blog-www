@@ -8,7 +8,7 @@
       <span class="desc">致力做一个有理想的码农</span></div>
     <div class="header-right">
       <div style="topnav"><top-nav/></div>
-      <el-dropdown @command="handleCommand">
+      <el-dropdown @command="handleCommand" :trigger="trigger">
         <div class="user">
           <i class="avatar" v-if="$store.state.user.userinfo.nickname">{{$store.state.user.userinfo.nickname}}</i>
           <i class="avatar icon iconfont icon-people" v-else style="font-size:20px;"></i>
@@ -44,6 +44,7 @@ import RegisterForm from '@/components/user/registerForm'
 export default {
   data () {
     return {
+      trigger: 'click',
       dialogLoginVisible: true,
       dialogRegisterVisible: false,
       dialogWidth: '400px'
@@ -60,6 +61,11 @@ export default {
     showLoginRegister: function () {
       // `this` 指向 vm 实例
       return this.dialogLoginVisible || this.dialogRegisterVisible
+    }
+  },
+  beforeMount () {
+    if (!window.navigator.userAgent.match(/AppleWebKit.*Mobile.*/)) {
+      this.trigger = 'hover'
     }
   },
   mounted () {

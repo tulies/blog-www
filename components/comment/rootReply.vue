@@ -97,8 +97,8 @@ export default {
       },
       rules: {
         content: [
-          { required: true, message: '评论内容不能为空' },
-          { min: 3, max: 200, message: '评论的字数过少，请详细撰写', trigger: 'blur' }
+          { required: true, message: '评论内容不能为空', trigger: 'change' },
+          { max: 200, message: '最多评论字数1000', trigger: 'no' }
         ]
       }
     }
@@ -146,7 +146,8 @@ export default {
                 list: [data.data]
               }
             }
-            this.replyForm.content = ''
+            this.$refs[formName].resetFields()
+            // this.replyForm.content = ''
           } else {
             this.$alert(data.msg, '信息提示', {
               confirmButtonText: '确定'

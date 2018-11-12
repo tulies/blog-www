@@ -1,8 +1,10 @@
 <template>
 <el-menu
+  :trigger="trigger"
   :default-active="active"
   class="el-menu-demo"
   mode="horizontal"
+  hide-on-click="true"
   @select="handleSelect">
   <el-menu-item v-for="nav in navs" :index="nav.index" :key="nav.index">{{nav.name}}</el-menu-item>
 </el-menu>
@@ -19,6 +21,7 @@ export default {
     return {
       // activeIndex: '0',
       active: '',
+      trigger: 'click',
       navs: [
         {
           index: '0',
@@ -66,7 +69,15 @@ export default {
   //     return '0'
   //   }
   // },
+  beforeMount () {
+    if (!window.navigator.userAgent.match(/AppleWebKit.*Mobile.*/)) {
+      this.trigger = 'hover'
+    }
+  },
   mounted () {
+    // if (!window.navigator.userAgent.match(/AppleWebKit.*Mobile.*/)) {
+    //   this.trigger = 'hover'
+    // }
     this.active = this.activeIndex
     if (this.active === undefined) {
       const curnav = this.navs.filter(v => (window.location.href.indexOf(v.url) !== -1 && v.url !== '/') || (window.location.pathname === '/' && v.url === '/'))

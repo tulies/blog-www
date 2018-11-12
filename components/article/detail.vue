@@ -22,7 +22,7 @@
         placement="top"
         title=""
         width="150"
-        trigger="hover">
+        :trigger="trigger">
           <div style="display:flex;  overflow:hidden">
             <span style="flex:1; padding: 5px;"><img src="../../assets/img/ewm_wx.png" style="width:100%"/></span>
             <!-- <span style="flex:1; padding: 5px;"><img src="../../assets/img/ewm_zfb.png"  style="width:100%" /></span> -->
@@ -40,6 +40,16 @@ export default {
     article: {
       type: Object,
       default: {}
+    }
+  },
+  data () {
+    return {
+      trigger: 'click'
+    }
+  },
+  beforeMount () {
+    if (!navigator.userAgent.match(/AppleWebKit.*Mobile.*/)) {
+      this.trigger = 'hover'
     }
   }
 }

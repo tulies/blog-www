@@ -65,11 +65,11 @@ export default {
 
     a:focus,
     a:hover {
-      color: #66b1ff;
+      color: $mainColor;
     }
 
     a:active {
-      color: #3a8ee6;
+      color: $plusColor;
     }
   }
 

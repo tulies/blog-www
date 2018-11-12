@@ -13,6 +13,9 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ],
+    script: [
+      { src: 'https://hm.baidu.com/hm.js?4ad4bbdc6358179dcaa8730e908d407a' } /* 引入百度统计的js */
     ]
   },
 
@@ -40,7 +43,8 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/element-ui'
+    '@/plugins/element-ui',
+    '@/plugins/baiduGa.js' /* 百度统计 */
   ],
 
   /*

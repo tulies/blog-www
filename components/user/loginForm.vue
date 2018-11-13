@@ -6,7 +6,7 @@
       :rules="rules"
       label-width="80px"
       label-position="top"
-      size="medium"
+      size="small"
       >
     <el-form-item label="手机号 或 Email" prop="username">
       <el-input v-model="form.username" placeholder="11位手机号 或 Email"></el-input>
@@ -26,7 +26,7 @@
       <a href="/user/oauth/qq" ><span class="icon-sn-qq"></span></a>
       <a href="/user/oauth/weibo" ><span class="icon-sn-sinaweibo"></span></a>
     </div>
-    <el-form-item style="padding:20px 0;">
+    <el-form-item style="padding:10px 0;">
       <el-button  @click="gotoRegister" style="width:100%">注册新账号</el-button>
     </el-form-item>
   </el-form>

@@ -36,6 +36,8 @@ router.post('/user/register', controllers.user.register)
 router.post('/user/login', controllers.user.login)
 router.get('/user/queryUserInfo', controllers.user.queryUserInfo)
 router.get('/user/queryAvatar', controllers.user.queryAvatar)
+router.post('/user/verify', controllers.user.verify)
+router.get('/user/exit', controllers.user.exit)
 
 // --- 评论相关接口 --- //
 router.post('/comment/initTopic', controllers.comment.initTopic)

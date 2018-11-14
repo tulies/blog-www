@@ -15,7 +15,7 @@ const verify = async (ctx, next) => {
     ctx.body = { code: -1, msg: '缺少账号' }
     return false
   }
-  const rediskey = `nodemail:${CryptoJS.MD5(username)}`
+  const rediskey = `nodemail:${CryptoJS.MD5(username).toString()}`
   const saveExpire = await redis.hget(rediskey, 'expire')
   if (saveExpire && saveExpire - new Date().getTime() > 14 * 60 * 1000) {
     ctx.body = {
@@ -78,7 +78,7 @@ const register = async (ctx) => {
     ctx.body = { code: -1, msg: '请填写验证码' }
     return false
   }
-  const rediskey = `nodemail:${CryptoJS.MD5(username)}`
+  const rediskey = `nodemail:${CryptoJS.MD5(username).toString()}`
   const saveCode = await redis.hget(rediskey, 'code')
   const saveExpire = await redis.hget(rediskey, 'expire')
   if (code !== saveCode) {

@@ -11,8 +11,8 @@ z    >
     <el-form-item label="你的名字" prop="nickname">
       <el-input v-model="registerForm.nickname" placeholder="真实姓名或常用名称"></el-input>
     </el-form-item>
-    <el-form-item label="手机号 或 Email" prop="username">
-      <el-input v-model="registerForm.username" placeholder="11位手机号 或 Email"></el-input>
+    <el-form-item label="Email" prop="username">
+      <el-input v-model="registerForm.username" placeholder="Email"></el-input>
     </el-form-item>
     <el-form-item label="密码" prop="password">
       <el-input type="password" v-model="registerForm.password" placeholder="不少于6位的密码"></el-input>

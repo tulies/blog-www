@@ -5,11 +5,11 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: '王嘉炀个人博客',
+    title: '王嘉炀·个人博客',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' },
-      { hid: 'description', name: 'description', content: '王嘉炀个人博客 - 一个有理想的码农的个人博客，专注前沿技术的研究和学习。' }
+      { hid: 'description', name: 'description', content: '王嘉炀·个人博客 - 一个有理想的码农的个人博客，专注前沿技术的研究和学习，一直在快乐学习的路上。' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }

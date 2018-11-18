@@ -8,9 +8,9 @@
         <div class="pull-right comment-option">
             <a class="hide" href="javascript:;"><span class="ml10 comment-edit-btn"><span class="iconfont icon-brush_fill" aria-hidden="true"></span></span>
             </a>
-            <a href="#911" class="ml10 report" title="举报">
+            <!-- <a href="#911" class="hide ml10 report" title="举报">
               <span class="iconfont icon-flag_fill" aria-hidden="true"></span>
-            </a>
+            </a> -->
             <a class="hide" href="javascript:;"><span class="ml10 comment-delete-btn"><span class="iconfont icon-trash_fill" aria-hidden="true"></span></span>
             </a>
         </div>
@@ -176,6 +176,10 @@ export default {
     },
     handleZan () {
       console.log('👍操作')
+      // 先判断是否登录
+      if (this.$store.state.user.userinfo.uid === 0) {
+        this.$store.commit('user/setShowLogin', true)
+      }
       if (this.reply.is_support) {
         axios.get(`/api/comment/unsupport/${this.reply.id}`).then(({ status, data }) => {
           if (status === 200 && data.code === 0) {

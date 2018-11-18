@@ -10,10 +10,7 @@
         </div>
       </div>
 
-      <dl class="giveme">
-        <dt><el-button type="primary" plain style="width:100%">赞赏支持</el-button></dt>
-        <dd>如果觉得我的文章对你有用，请随意赞赏</dd>
-      </dl>
+      <zan/>
     </div>
 
     <div><a href="https://s.click.taobao.com/dolIbKw"><img src="http://tp.nty.tv189.com/h5/bl/adv-aliyun-1200-120.jpg" width="100%"/></a></div>
@@ -46,13 +43,15 @@ import ArticleComment from '@/components/article/comment.vue'
 import MainBreadcrumb from '@/components/widgets/mainBreadcrumb'
 import AsideNav from '@/components/widgets/asideNav'
 import AsideArticleRec from '@/components//widgets/asideArticleRec'
+import Zan from '@/components/widgets/zan'
 
 export default {
   components: {
     ArticleComment,
     MainBreadcrumb,
     AsideNav,
-    AsideArticleRec
+    AsideArticleRec,
+    Zan
   },
   middleware: ['hotArticleRec', 'newArticleRec']
 }

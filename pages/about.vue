@@ -10,7 +10,7 @@
           <p>我也没什么牛逼的经历，前端、后端都会搞搞，这里就不献丑了；但是我和你一样，拥有一颗爱进取的心~~</p>
 
           <h2 id="articleHeader1">关于本博客</h2>
-          <blockquote>写在最前：本博客前端门户采用nuxt构建的项目（vue2.x+koa2），文章发布平台采用的springBoot+reactjs。<br/><a href="#">本博客的前端静态代码github开源,有兴趣的随意fork，欢迎指正。</a>不过请记得给我挂个友情链接。</blockquote>
+          <!-- <blockquote>写在最前：本博客前端门户采用nuxt构建的项目（vue2.x+koa2），文章发布平台采用的springBoot+reactjs。<br/><a href="#">本博客的前端静态代码github开源,有兴趣的随意fork，欢迎指正。</a>不过请记得给我挂个友情链接。</blockquote> -->
           <p>一直以来，我都有一个博客梦。还记得这几年断断续续亲手敲代码搞过好几个博客，最后都觉得不是自己想要的，也没写过几篇文章就放弃了。</p>
           <p>曾经也想用现有的博客平台，比如csdn、掘金、segmentfault等，但是总觉得牵制于人，非常不习惯，最后又是一度放弃了。</p>
           <p>再后来就随便找了个云笔记写写，比如为知笔记（支持linux、mac、windows），也还不错，记录了很多学习笔记，可更多是直接复制黏贴别人的知识点。</p>
@@ -34,11 +34,8 @@
 
         </div>
       </div>
+      <zan/>
 
-      <dl class="giveme">
-        <dt><el-button type="primary" plain style="width:100%">赞赏支持</el-button></dt>
-        <dd>如果觉得我的文章对你有用，请随意赞赏</dd>
-      </dl>
     </div>
 
     <div><a href="https://s.click.taobao.com/dolIbKw"><img src="http://tp.nty.tv189.com/h5/bl/adv-aliyun-1200-120.jpg" width="100%"/></a></div>
@@ -64,13 +61,15 @@ import ArticleComment from '@/components/article/comment.vue'
 import MainBreadcrumb from '@/components/widgets/mainBreadcrumb'
 import AsideNav from '@/components/widgets/asideNav'
 import AsideArticleRec from '@/components//widgets/asideArticleRec'
+import Zan from '@/components/widgets/zan'
 
 export default {
   components: {
     ArticleComment,
     MainBreadcrumb,
     AsideNav,
-    AsideArticleRec
+    AsideArticleRec,
+    Zan
   },
   middleware: ['hotArticleRec', 'newArticleRec']
 }

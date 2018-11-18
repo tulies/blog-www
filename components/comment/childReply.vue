@@ -9,16 +9,7 @@
 
     <div class="reply-content-block">
         <div class="reply-content markdown-body" v-html="markedContent(reply.content)"></div>
-
         <div class="comment-func inline-block">
-            <span class="pull-right commentTools ml15">
-                <a href="javascript:void(0);" @click="atReply(reply)" class="comment-reply-btn comments-reply-user-btn" :data-username="reply.username" :data-userid="reply.userid">
-                    <span class="iconfont icon-message_fill" aria-hidden="true"></span>
-                </a>
-                <a href="#911" class="ml10" data-toggle="modal" data-target="#911" data-module="comment" data-id="1050000016784080" data-action="report" data-typetext="评论" data-placement="top" title="举报">
-                    <span class="iconfont icon-flag_fill" aria-hidden="true"></span>
-                </a>
-            </span>
             <span class="comment-meta inline-block">
                 <span> — </span>
                 <a target="_blank" href="/u/aoyangyudakong">
@@ -26,6 +17,14 @@
                 </a>
                 <span class="comments-isAuthor" v-if="reply.is_author">作者</span>
                 <span class="text-muted-plus">  · {{reply.create_time}}</span>
+            </span>
+             <span class="pull-right commentTools ml15">
+                <a href="javascript:void(0);" @click="atReply(reply)" class="comment-reply-btn comments-reply-user-btn" :data-username="reply.username" :data-userid="reply.userid" title="回复">
+                    <span class="iconfont icon-message_fill" aria-hidden="true"></span>
+                </a>
+                <!-- <a href="#911" class="ml10" data-toggle="modal" data-target="#911" data-module="comment" data-id="1050000016784080" data-action="report" data-typetext="评论" data-placement="top" title="举报">
+                    <span class="iconfont icon-flag_fill" aria-hidden="true"></span>
+                </a> -->
             </span>
         </div>
     </div>
@@ -53,6 +52,10 @@ export default {
   methods: {
     handleZan () {
       console.log('👍操作')
+      // 先判断是否登录
+      if (this.$store.state.user.userinfo.uid === 0) {
+        this.$store.commit('user/setShowLogin', true)
+      }
       if (this.reply.is_support) {
         axios.get(`/api/comment/unsupport/${this.reply.id}`).then(({ status, data }) => {
           if (status === 200 && data.code === 0) {

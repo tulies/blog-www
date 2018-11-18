@@ -117,8 +117,15 @@ export default {
       this.dialogLoginVisible = true
       this.$store.commit('user/setShowLogin', false)
     },
-    handleCommand () {
-      this.dialogLoginVisible = true
+    handleCommand (command) {
+      console.log(command)
+      if (command === 'register') {
+        this.dialogRegisterVisible = true
+        this.dialogLoginVisible = false
+      } else {
+        this.dialogLoginVisible = true
+        this.dialogRegisterVisible = false
+      }
       this.$store.commit('user/setShowLogin', true)
     }
   }

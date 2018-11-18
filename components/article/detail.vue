@@ -14,27 +14,14 @@
     </dd> -->
   </dl>
   <div class="article-content">
-    <div class="markdown-body" v-html="article.content"></div>
+    <div class="markdown-body" v-html="markedContent(article.content)"></div>
   </div>
-  <dl class="giveme">
-    <dt>
-      <el-popover
-        placement="top"
-        title=""
-        width="150"
-        :trigger="trigger">
-          <div style="display:flex;  overflow:hidden">
-            <span style="flex:1; padding: 5px;"><img src="../../assets/img/ewm_wx.png" style="width:100%"/></span>
-            <!-- <span style="flex:1; padding: 5px;"><img src="../../assets/img/ewm_zfb.png"  style="width:100%" /></span> -->
-          </div>
-          <el-button type="primary" plain style="width:100%" slot="reference">赞赏支持</el-button>
-      </el-popover>
-      </dt>
-    <dd>如果觉得我的文章对你有用，请随意赞赏</dd>
-  </dl>
+  <zan/>
 </div>
 </template>
 <script>
+import marked from 'marked'
+import Zan from '../widgets/zan'
 export default {
   props: {
     article: {
@@ -42,16 +29,15 @@ export default {
       default: {}
     }
   },
-  data () {
-    return {
-      trigger: 'click'
-    }
+  components: {
+    Zan
   },
-  beforeMount () {
-    if (!navigator.userAgent.match(/AppleWebKit.*Mobile.*/)) {
-      this.trigger = 'hover'
+  methods: {
+    markedContent (content) {
+      return marked(content)
     }
   }
+
 }
 </script>
 
@@ -84,19 +70,6 @@ export default {
   .article-content {
     padding: 30px 0;
     clear: both;
-  }
-  .giveme {
-    text-align: center;
-    padding: 10px 0;
-    >dt{
-      width: 200px;
-      margin: 0 auto;
-    }
-    >dd{
-      padding: 10px 0;
-      color: #888888;
-      font-size: 12px;
-    }
   }
 }
 

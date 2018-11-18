@@ -8,8 +8,9 @@
       label-position="top"
       size="small"
       >
-    <el-form-item label="手机号 或 Email" prop="username">
-      <el-input v-model="form.username" placeholder="11位手机号 或 Email"></el-input>
+      <!-- 手机号 或  11位手机号 或  -->
+    <el-form-item label="Email" prop="username">
+      <el-input v-model="form.username" placeholder="Email"></el-input>
     </el-form-item>
 
     <el-form-item label="密码" prop="password">
@@ -18,14 +19,14 @@
     <el-form-item>
       <el-button type="primary" @click="onSubmit('form')" class="submitBtn" style="width:100%">登录</el-button>
     </el-form-item>
-    <div class="text-muted text-center more-login-area">
+    <!-- <div class="text-muted text-center more-login-area">
         <span class="more-login-words">更多登录方式</span>
     </div>
     <div class="widget-login mb15 text-center">
       <a href="/user/oauth/weixin" ><span class="icon-sn-weixin"></span></a>
       <a href="/user/oauth/qq" ><span class="icon-sn-qq"></span></a>
       <a href="/user/oauth/weibo" ><span class="icon-sn-sinaweibo"></span></a>
-    </div>
+    </div> -->
     <el-form-item style="padding:10px 0;">
       <el-button  @click="gotoRegister" style="width:100%">注册新账号</el-button>
     </el-form-item>

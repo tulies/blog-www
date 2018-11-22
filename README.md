@@ -20,3 +20,8 @@ $ yarn run generate
 ```
 
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
+
+
+node-sass 安装
+
+sudo npm install node-sass --save-dev

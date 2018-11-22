@@ -13,7 +13,10 @@
           <i class="avatar" v-if="$store.state.user.userinfo.nickname">{{$store.state.user.userinfo.nickname}}</i>
           <i class="avatar icon iconfont icon-people" v-else style="font-size:20px;"></i>
         </div>
-        <el-dropdown-menu slot="dropdown">
+        <el-dropdown-menu slot="dropdown" v-if="$store.state.user.userinfo.nickname">
+          <el-dropdown-item command="logout">注销</el-dropdown-item>
+        </el-dropdown-menu>
+        <el-dropdown-menu slot="dropdown" v-else>
           <el-dropdown-item command="login">登录</el-dropdown-item>
           <el-dropdown-item command="register">注册</el-dropdown-item>
         </el-dropdown-menu>
@@ -40,7 +43,7 @@ import Logo from './logo.vue'
 import TopNav from './nav'
 import LoginForm from '@/components/user/loginForm.vue'
 import RegisterForm from '@/components/user/registerForm'
-
+import axios from 'axios'
 export default {
   data () {
     return {
@@ -122,11 +125,17 @@ export default {
       if (command === 'register') {
         this.dialogRegisterVisible = true
         this.dialogLoginVisible = false
-      } else {
+        this.$store.commit('user/setShowLogin', true)
+      } else if (command === 'login') {
         this.dialogLoginVisible = true
         this.dialogRegisterVisible = false
+        this.$store.commit('user/setShowLogin', true)
+      } else if (command === 'logout') {
+        axios.get('/api/user/exit').then(() => {
+          window.location.reload(true)
+        })
+        // this.$store.commit('user/setShowLogin', true)
       }
-      this.$store.commit('user/setShowLogin', true)
     }
   }
 }

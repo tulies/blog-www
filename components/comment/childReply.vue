@@ -8,17 +8,17 @@
     </span>
 
     <div class="reply-content-block">
-        <div class="reply-content markdown-body" v-html="markedContent(reply.content)"></div>
+        <div class="reply-content markdown-body" v-html="markedContent(reply)"></div>
         <div class="comment-func inline-block">
-            <span class="comment-meta inline-block">
+            <span class="comment-meta">
                 <span> — </span>
-                <a target="_blank" href="/u/aoyangyudakong">
+                <a target="_blank" href="###">
                     <strong>{{reply.username}}</strong>
                 </a>
                 <span class="comments-isAuthor" v-if="reply.is_author">作者</span>
                 <span class="text-muted-plus">  · {{reply.create_time}}</span>
             </span>
-             <span class="pull-right commentTools ml15">
+             <span class="commentTools ml10">
                 <a href="javascript:void(0);" @click="atReply(reply)" class="comment-reply-btn comments-reply-user-btn" :data-username="reply.username" :data-userid="reply.userid" title="回复">
                     <span class="iconfont icon-message_fill" aria-hidden="true"></span>
                 </a>
@@ -72,8 +72,12 @@ export default {
         })
       }
     },
-    markedContent (content) {
-      return marked(content)
+    markedContent (reply) {
+      marked.setOptions({ breaks: true })
+      if (reply.parentid !== reply.rootid) {
+        return marked(`[@${reply.relate_username}](###) ${reply.content}`)
+      }
+      return marked(reply.content)
     }
   }
 }

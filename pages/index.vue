@@ -1,7 +1,7 @@
 <template>
 
-<el-container class="default-page-container">
-  <el-main class="default-page-main">
+<div class="default-page-container">
+  <section class="default-page-main">
     <cover/>
     <main-title-bar
       title="文章推荐"
@@ -10,8 +10,8 @@
       />
     <article-list :list="articleList"/>
 
-  </el-main>
-  <el-aside class="default-page-aside">
+  </section>
+  <aside class="default-page-aside">
     <!-- <aside-nav/> -->
     <aside-article-rec
       title="热门文章"
@@ -22,8 +22,8 @@
       :list="$store.state.article.newrec"
       style="margin-top: 15px;"/>
 
-  </el-aside>
-</el-container>
+  </aside>
+</div>
 </template>
 
 <script>

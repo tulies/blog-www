@@ -6,7 +6,6 @@ const CryptoJS = require('crypto-js')
 const Passport = require('../utils/passport')
 const userDAO = require('../dao/user')
 const configs = require('../config')
-
 const redis = new Redis().client
 
 const verify = async (ctx, next) => {
@@ -153,15 +152,57 @@ const queryUserInfo = async (ctx) => {
 }
 
 const queryAvatar = async (ctx) => {
-  const { status, data } = await axios.get('http://tp.nty.tv189.com/h5/mainsite/img/gmhead/201207281823141413.jpg')
-  if (status === 200) {
-    ctx.type = 'jpg'
-    // console.log(Buffer.isBuffer(body))
-    ctx.length = Buffer.byteLength(data)
-    ctx.body = data
+  const { uid } = ctx.params
+  const user = await userDAO.queryUser({ uid })
+  if (user) {
+    const { status, data } = await axios.get('http://tp.nty.tv189.com/h5/mainsite/img/gmhead/201207281823141413.jpg', {
+      responseType: 'arraybuffer'
+    })
+    if (status === 200) {
+      ctx.status = 200
+      ctx.type = 'jpg'
+      // console.log(Buffer.isBuffer(data))
+      ctx.length = Buffer.byteLength(data)
+      ctx.body = data
+    } else {
+      ctx.body = ''
+    }
   } else {
-    ctx.body = ''
+    const { status, data } = await axios.get('http://tp.nty.tv189.com/h5/mainsite/img/gmhead/201207281823141413.jpg', {
+      responseType: 'arraybuffer'
+    })
+    if (status === 200) {
+      ctx.status = 200
+      ctx.type = 'jpg'
+      // console.log(Buffer.isBuffer(data))
+      ctx.length = Buffer.byteLength(data)
+      ctx.body = data
+    } else {
+      ctx.body = ''
+    }
   }
+
+  // await new Promise(function (resolve, reject) {
+  //   // var req =
+  //   request({
+  //     method: 'GET',
+  //     encoding: null,
+  //     uri: 'http://tp.nty.tv189.com/h5/mainsite/img/gmhead/201207281823141413.jpg'
+  //   }, function (err, response, body) {
+  //     if (err) {
+  //       return reject(err)
+  //     }
+  //     resolve(body)
+  //   })
+  // }).then((body) => {
+  //   ctx.status = 200
+  //   ctx.type = 'jpg'
+  //   console.log(Buffer.isBuffer(body))
+  //   ctx.length = Buffer.byteLength(body)
+  //   ctx.body = body
+  // }).catch((err) => {
+  //   console.error(err)
+  // })
 }
 module.exports = {
   register,

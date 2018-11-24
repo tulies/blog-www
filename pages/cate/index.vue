@@ -1,7 +1,7 @@
 
 <template>
-<el-container class="default-page-container">
-  <el-main class="default-page-main">
+<div class="default-page-container">
+  <section class="default-page-main">
     <main-breadcrumb :breadcrumb="breadcrumb" :mores="categoryChilds" v-if="breadcrumb.length>0"/>
     <article-list :list="list" :total="total" :pageSize="pageSize"/>
      <div class="article-pagination">
@@ -14,8 +14,8 @@
         @current-change="handleCurrentChange">
       </el-pagination>
     </div>
-  </el-main>
-  <el-aside class="default-page-aside">
+  </section>
+  <aside class="default-page-aside">
     <!-- <aside-nav/> -->
     <aside-article-rec
       title="热门文章"
@@ -25,8 +25,8 @@
       title="最新文章"
       :list="$store.state.article.newrec"
       style="margin-top: 15px;"/>
-  </el-aside>
-</el-container>
+  </aside>
+</div>
 </template>
 
 <script>

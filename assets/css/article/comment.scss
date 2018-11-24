@@ -29,6 +29,7 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
+    border: 1px solid #efefef;
   }
 
   .comments-container {
@@ -42,6 +43,10 @@
       .comments-item {
         padding: 15px 20px;
         border-bottom: 1px solid rgba(0, 0, 0, 0.09);
+
+        @media screen and (max-width:768px) {
+          padding: 15px 5px;
+        }
 
         &:hover {
           .comments-content .comment-trigger .comment-option {
@@ -57,14 +62,14 @@
           .comments-content>.comment-ops .comments-zan-value,
           .comments-content>.comment-ops .comments-reply-btn {
             color: #666666;
-
             /* #66b1ff */
           }
         }
-
-
         .comments-content {
           padding-left: 47px;
+          @media screen and (max-width:768px) {
+            padding-left: 40px;
+          }
 
           .comment-trigger {
             margin-bottom: 10px;
@@ -167,6 +172,7 @@
           .commentTools {
             // visibility: hidden;
             color: #999;
+            // margin-top: 2px;
 
             a {
               color: #999;
@@ -206,6 +212,7 @@
               .comment-func {
                 margin-top: 5px;
                 display: table;
+                line-height: 18px;
               }
 
               .comment-meta {

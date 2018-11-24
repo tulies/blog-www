@@ -1,7 +1,9 @@
 <template>
 <div class="article-item">
   <div class="article-cover">
-    <img :src="item.poster">
+    <div class="imgcont">
+      <img :src="item.poster">
+    </div>
   </div>
   <div class="article-detail">
     <h3>{{item.title}}</h3>
@@ -47,20 +49,39 @@ export default {
   display: flex;
 
   >.article-cover {
-    padding: 3px 10px 0 0;
+    margin: 3px 10px 0 0;
     overflow: hidden;
-    flex: 1;
-    @media screen and  (max-width:768px){
+    position: relative;
+    // width: 20%;
+    width: 150px;
+    // flex: 1;
+    @media screen and  (max-width:900px){
       flex: 0;
       display: none
     }
-    >img {
-      border-radius: 4px;
+    // @media screen and  (max-width:768px){
+    //   flex: 0;
+    //   display: none
+    // }
+    >.imgcont{
       width: 100%;
+      padding-top:56.25%;
+      border-radius: 4px;
+      overflow: hidden;
+      >img {
+        width: 100%;
+        vertical-align: middle;
+        position:absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+      }
+
     }
+
   }
   >.article-detail {
-    flex: 3;
+    flex: 1;
     overflow: hidden;
     // @media screen and  (max-width:768px){
     //   flex: 0;
@@ -69,14 +90,22 @@ export default {
     h3 {
       color: #000000;
       font-size: 16px;
-      line-height: 30px;
+      line-height: 24px;
       cursor:pointer;
       display: inline-block;
     }
     .desc{
       color: #888888;
-      font-size: 14px;
+      font-size: 13px;
       line-height: 20px;
+      max-height: 39px;
+      display: -webkit-box;
+      word-break: normal;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      text-overflow: ellipsis;
+
     }
     >.extinfo{
       color: #444444;

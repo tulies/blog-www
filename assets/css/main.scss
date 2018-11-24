@@ -1,3 +1,5 @@
+@import './config.scss';
+
 *,
 body {
   margin: 0;
@@ -146,7 +148,7 @@ table {
 }
 
 .layout-default-maxarea {
-  max-width: 1100px;
+  max-width: $maxWeight;
   margin: 0 auto;
   padding: 0 8px
 }
@@ -160,15 +162,22 @@ table {
 .default-page-container .default-page-main {
   padding: 0;
   overflow: hidden;
+  flex: 1;
 }
 
 .default-page-container .default-page-aside {
-  width: 300px;
+  width: 276px;
   padding: 0 0 0 15px;
 }
 
 @media screen and (max-width:768px) {
   .default-page-container .default-page-aside {
+    width: 250px;
+  }
+}
+@media screen and (max-width:680px) {
+  .default-page-container .default-page-aside {
     display: none;
   }
 }
+

@@ -22,8 +22,14 @@ const register = async ({ nickname, username, password }) => {
   return result
 }
 
-const queryUser = async ({ username }) => {
-  const result = await mysql('sso_user').first(['uid', 'nickname', 'username', 'password', 'salt']).where('username', username)
+// 根据uid或者username获取用户信息
+const queryUser = async ({ uid, username }) => {
+  let result
+  if (uid) {
+    result = await mysql('sso_user').first(['uid', 'nickname', 'username', 'password', 'salt']).where('uid', uid)
+  } else if (username) {
+    result = await mysql('sso_user').first(['uid', 'nickname', 'username', 'password', 'salt']).where('username', username)
+  }
   return result
 }
 

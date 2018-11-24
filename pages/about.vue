@@ -1,7 +1,7 @@
 <template>
 
-<el-container class="default-page-container">
-  <el-main class="default-page-main">
+<div class="default-page-container">
+  <section class="default-page-main">
     <div class="article-detail">
       <div class="article-content">
         <div class="markdown-body">
@@ -41,8 +41,8 @@
     <div><a href="https://s.click.taobao.com/dolIbKw"><img src="http://tp.nty.tv189.com/h5/bl/adv-aliyun-1200-120.jpg" width="100%"/></a></div>
 
     <!-- <article-comment/> -->
-  </el-main>
-  <el-aside class="default-page-aside">
+  </section>
+  <aside class="default-page-aside">
     <!-- <aside-nav/> -->
     <aside-article-rec
       title="热门文章"
@@ -52,8 +52,8 @@
       title="最新文章"
       :list="$store.state.article.newrec"
       style="margin-top: 15px;"/>
-  </el-aside>
-</el-container>
+  </aside>
+</div>
 </template>
 
 <script>

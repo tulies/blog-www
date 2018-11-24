@@ -18,7 +18,7 @@ const addReplied = async (ctx) => {
     }
     return false
   }
-  const { uid: userid, username } = ctx.session.passport.user
+  const { uid: userid, nickname: username } = ctx.session.passport.user
   const { tid, content, grade, relateUserid, relateUsername, parentid, rootid } = ctx.request.body
   const result = await commentDAO.addReplied({ tid, content, grade, userid, username, relateUserid, relateUsername, parentid, rootid })
 
@@ -36,13 +36,13 @@ const addRootReplied = async (ctx) => {
     }
     return false
   }
-  const { uid: userid, username } = ctx.session.passport.user
+  const { uid: userid, nickname: username } = ctx.session.passport.user
   const { tid, content } = ctx.request.body
   const result = await commentDAO.addReplied({ tid, content, userid, username })
   const newid = result[0]
   let reply = await commentDAO.getReplied({ id: newid })
   if (reply) {
-    reply = { ...reply, is_support: 0, is_author: true }
+    reply = { ...reply, is_support: 0, is_author: reply.userid === configs.author.uid }
   }
   ctx.body = {
     code: 0,
@@ -58,7 +58,7 @@ const addChildReplied = async (ctx) => {
     }
     return false
   }
-  const { uid: userid, username } = ctx.session.passport.user
+  const { uid: userid, nickname: username } = ctx.session.passport.user
   const { content, parentid } = ctx.request.body
 
   // 先查询下评论详情
@@ -81,7 +81,7 @@ const addChildReplied = async (ctx) => {
   const newid = result[0]
   let reply = await commentDAO.getReplied({ id: newid })
   if (reply) {
-    reply = { ...reply, is_support: 0, is_author: true }
+    reply = { ...reply, is_support: 0, is_author: reply.userid === configs.author.uid }
   }
   ctx.body = {
     code: 0,

@@ -1,7 +1,7 @@
 <template>
 <div class="comments-item" :data-id="reply.id">
   <div class="pull-left">
-      <a target="_blank" href="/u/chakhsu"><img class="avatar-32 " src="https://avatar-static.segmentfault.com/159/356/1593567914-586917341dc42_big64" alt=""></a>
+      <a target="_blank" href="###"><img class="avatar-32 " :src="`/api/user/avatar/${reply.userid}`" alt=""></a>
   </div>
   <div class="comments-content">
     <div class="comment-trigger">
@@ -14,7 +14,7 @@
             <a class="hide" href="javascript:;"><span class="ml10 comment-delete-btn"><span class="iconfont icon-trash_fill" aria-hidden="true"></span></span>
             </a>
         </div>
-        <strong><a target="_blank" href="/u/chakhsu">{{reply.username}}</a></strong>
+        <strong><a target="_blank" href="###">{{reply.username}}</a></strong>
 
         <span class="comments-isAuthor" v-if="reply.is_author">作者</span> <span>  ·  {{reply.create_time}}</span>
     </div>
@@ -137,7 +137,7 @@ export default {
             //   confirmButtonText: '确定'
             // })
             if (this.reply.replyList && this.reply.replyList.list) {
-              this.reply.replyList.list.unshift(data.data)
+              this.reply.replyList.list.push(data.data)
             } else {
               this.reply.replyList = {
                 total: 1,
@@ -197,6 +197,7 @@ export default {
       }
     },
     markedContent (content) {
+      marked.setOptions({ breaks: true })
       return marked(content)
     },
     async loadmore () {

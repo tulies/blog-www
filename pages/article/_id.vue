@@ -2,14 +2,14 @@
 <!-- <div > -->
   <!-- <div class="page-main"><index-main/></div>
   <div class="page-aside hidden-sm-and-down"><index-aside/></div> -->
-<el-container class="default-page-container">
-  <el-main class="default-page-main">
+<div class="default-page-container">
+  <section class="default-page-main">
     <article-detail :article="article"/>
     <div><a href="https://s.click.taobao.com/dolIbKw"><img src="http://tp.nty.tv189.com/h5/bl/adv-aliyun-1200-120.jpg" width="100%"/></a></div>
     <article-recomment :list="likes"/>
     <article-comment :comments="$store.state.article.comments" :tid="id"/>
-  </el-main>
-  <el-aside class="default-page-aside">
+  </section>
+  <aside class="default-page-aside">
     <!-- <aside-nav/> -->
     <aside-article-rec
       title="热门文章"
@@ -19,8 +19,8 @@
       title="最新文章"
       :list="$store.state.article.newrec"
       style="margin-top: 15px;"/>
-  </el-aside>
-</el-container>
+  </aside>
+</div>
 <!-- </div> -->
 </template>
 
@@ -71,9 +71,15 @@ export default {
         size: 10
       }
     })
-    if (status3 === 200 && data3.code === 0) {
-      // commit
-      ctx.store.commit('article/setComments', data3.data)
+    if (status3 === 200) {
+      if (data3.code === 0) {
+        // commit
+        ctx.store.commit('article/setComments', data3.data)
+
+        // /api/comment/initTopic
+      } else if (data3.code === 401) {
+
+      }
     }
     return state
   },

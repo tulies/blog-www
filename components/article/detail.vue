@@ -34,6 +34,7 @@ export default {
   },
   methods: {
     markedContent (content) {
+      marked.setOptions({ breaks: true })
       return marked(content)
     }
   }

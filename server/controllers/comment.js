@@ -3,6 +3,16 @@ const configs = require('../config/index')
 
 const initTopic = async (ctx) => {
   const { tid, title, url, type } = ctx.request.body
+  // 查询下当前主题是否存在，如果存在则不要再继续下去了
+  const topic = await commentDAO.getCommentTopic({ tid })
+  if (topic) {
+    ctx.body = {
+      code: 0,
+      msg: '初始化评论主题成功',
+      data: topic
+    }
+    return
+  }
   const result = await commentDAO.addCommentTopic({ tid, title, url, type })
   ctx.body = {
     code: 0,
@@ -10,24 +20,7 @@ const initTopic = async (ctx) => {
     data: result
   }
 }
-const addReplied = async (ctx) => {
-  if (!ctx.isAuthenticated()) {
-    ctx.body = {
-      code: -1,
-      msg: '未登录'
-    }
-    return false
-  }
-  const { uid: userid, nickname: username } = ctx.session.passport.user
-  const { tid, content, grade, relateUserid, relateUsername, parentid, rootid } = ctx.request.body
-  const result = await commentDAO.addReplied({ tid, content, grade, userid, username, relateUserid, relateUsername, parentid, rootid })
 
-  ctx.body = {
-    code: 0,
-    msg: '发表评论成功',
-    data: result
-  }
-}
 const addRootReplied = async (ctx) => {
   if (!ctx.isAuthenticated()) {
     ctx.body = {
@@ -41,9 +34,15 @@ const addRootReplied = async (ctx) => {
   const result = await commentDAO.addReplied({ tid, content, userid, username })
   const newid = result[0]
   let reply = await commentDAO.getReplied({ id: newid })
-  if (reply) {
-    reply = { ...reply, is_support: 0, is_author: reply.userid === configs.author.uid }
+
+  if (!reply) {
+    ctx.body = { code: -1, msg: '发表评论失败' }
+    return
   }
+
+  // 执行以下 评论数加1
+  await commentDAO.incrementRepliedCount({ tid })
+  reply = { ...reply, is_support: 0, is_author: reply.userid === configs.author.uid }
   ctx.body = {
     code: 0,
     msg: '发表评论成功',
@@ -80,9 +79,15 @@ const addChildReplied = async (ctx) => {
 
   const newid = result[0]
   let reply = await commentDAO.getReplied({ id: newid })
-  if (reply) {
-    reply = { ...reply, is_support: 0, is_author: reply.userid === configs.author.uid }
+
+  if (!reply) {
+    ctx.body = { code: -1, msg: '发表评论失败' }
+    return
   }
+  // 执行以下 评论数加1
+  await commentDAO.incrementRepliedCount({ tid })
+
+  reply = { ...reply, is_support: 0, is_author: reply.userid === configs.author.uid }
   ctx.body = {
     code: 0,
     msg: '发表评论成功',
@@ -92,6 +97,7 @@ const addChildReplied = async (ctx) => {
 const getReplieds = async (ctx) => {
   // 查询文章下的评论
   const { tid, page, size, sort } = ctx.request.query
+
   let sortProp = 'support_count,id'
   let sortOrder = 'desc,desc'
   if (sort === 'default') {
@@ -150,6 +156,16 @@ const getReplieds = async (ctx) => {
     //   v.replyList = childs
     //   return v
     // })
+  } else {
+    // 查询下 这个文章的主题是否存在。 如果不存在返回一下code
+    const commentTopic = await commentDAO.getCommentTopic({ tid })
+    if (!commentTopic) {
+      ctx.body = {
+        code: 401,
+        msg: '当前评论主题暂未创建过'
+      }
+      return
+    }
   }
   ctx.body = {
     code: 0,
@@ -298,19 +314,9 @@ const unsupport = async (ctx) => {
     msg: '取消点赞成功'
   }
 }
-const getReplieds2 = async (ctx) => { //eslint-disable-line
-  const { tid, userid, parentid, rootid, page, size, sortProp, sortOrder } = ctx.request.query
-  const result = await commentDAO.getReplieds({ tid, userid, parentid, rootid, page, size, sortProp, sortOrder })
-  ctx.body = {
-    code: 0,
-    msg: '查询评论列表成功',
-    data: result
-  }
-}
 
 module.exports = {
   initTopic,
-  addReplied,
   getReplieds,
   getChildReplieds,
   addRootReplied,

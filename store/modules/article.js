@@ -1,8 +1,7 @@
 const state = () => ({
   hotrec: [],
   plrec: [],
-  newrec: [],
-  comments: []
+  newrec: []
 })
 const mutations = {
   setHotrec (state, val) {
@@ -13,11 +12,7 @@ const mutations = {
   },
   setNewrec (state, val) {
     state.newrec = val
-  },
-  setComments (state, val) {
-    state.comments = val
   }
-
 }
 const actions = {
   setHotrec: ({ commit }, hotrec) => {
@@ -28,9 +23,6 @@ const actions = {
   },
   setNewrec: ({ commit }, newrec) => {
     commit('setNewrec', newrec)
-  },
-  setComments ({ commit }, comments) {
-    commit('setComments', comments)
   }
 }
 export default {

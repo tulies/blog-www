@@ -35,7 +35,7 @@
         </div>
       </div>
       <zan/>
-
+      <article-comment :comments="comments" :tid="tid"/>
     </div>
 
     <div><a href="https://s.click.taobao.com/dolIbKw"><img src="http://tp.nty.tv189.com/h5/bl/adv-aliyun-1200-120.jpg" width="100%"/></a></div>
@@ -57,11 +57,11 @@
 </template>
 
 <script>
-import ArticleComment from '@/components/article/comment.vue'
 import MainBreadcrumb from '@/components/widgets/mainBreadcrumb'
 import AsideNav from '@/components/widgets/asideNav'
 import AsideArticleRec from '@/components//widgets/asideArticleRec'
 import Zan from '@/components/widgets/zan'
+import ArticleComment from '@/components/comment/index.vue'
 
 export default {
   components: {
@@ -71,7 +71,40 @@ export default {
     AsideArticleRec,
     Zan
   },
-  middleware: ['hotArticleRec', 'newArticleRec']
+  middleware: ['hotArticleRec', 'newArticleRec'],
+  async asyncData (ctx) {
+    let state = {
+      tid: 'message',
+      comments: {
+        total: 0,
+        page: 0,
+        size: 10,
+        list: []
+      }
+    }
+    // 查询评论列表
+    const { status: status3, data: data3 } = await ctx.$axios.get(`/api/comment/getReplieds`, {
+      params: {
+        tid: state.tid,
+        page: 0,
+        size: 10
+      }
+    })
+    if (status3 === 200) {
+      if (data3.code === 0) {
+        state.comments = data3.data
+      } else if (data3.code === 401) {
+        // 调用主题创建
+        await ctx.$axios.post(`/api/comment/initTopic`, {
+          tid: state.tid,
+          title: '留言板',
+          url: 'http://www.wangjiayang.cn/message',
+          type: ''
+        })
+      }
+    }
+    return state
+  }
 }
 </script>
 

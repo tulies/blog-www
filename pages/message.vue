@@ -9,20 +9,10 @@
           <p>有什么悄悄话，需要私聊我吗？<a href="#">这里给我私密留言吧>></a></p>
         </div>
       </div>
-
       <zan/>
     </div>
-
     <div><a href="https://s.click.taobao.com/dolIbKw"><img src="http://tp.nty.tv189.com/h5/bl/adv-aliyun-1200-120.jpg" width="100%"/></a></div>
-    <el-alert
-      style="margin-top:40px;"
-      title="对不起，留言功能暂未开放，正在开发中，敬请期待！"
-      :closable="false"
-      type="error"
-      center
-      show-icon>
-    </el-alert>
-    <!-- <article-comment/> -->
+    <article-comment :topic="commentTopic" :comments="comments"/>
   </section>
   <aside class="default-page-aside">
     <!-- <aside-nav/> -->
@@ -39,10 +29,10 @@
 </template>
 
 <script>
-import ArticleComment from '@/components/article/comment.vue'
 import MainBreadcrumb from '@/components/widgets/mainBreadcrumb'
 import AsideNav from '@/components/widgets/asideNav'
 import AsideArticleRec from '@/components//widgets/asideArticleRec'
+import ArticleComment from '@/components/comment/index.vue'
 import Zan from '@/components/widgets/zan'
 
 export default {
@@ -53,7 +43,45 @@ export default {
     AsideArticleRec,
     Zan
   },
-  middleware: ['hotArticleRec', 'newArticleRec']
+  middleware: ['hotArticleRec', 'newArticleRec'],
+  async asyncData (ctx) {
+    let state = {
+      tid: 'message',
+      commentTopic: {},
+      comments: {
+        total: 0,
+        page: 0,
+        size: 10,
+        list: []
+      }
+    }
+
+    // 调用主题创建
+    const { status, data } = await ctx.$axios.post(`/api/comment/initTopic`, {
+      tid: state.tid,
+      title: '留言板',
+      url: 'http://www.wangjiayang.cn/message',
+      type: ''
+    })
+    if (status === 200 && data.code === 0) {
+      state.commentTopic = data.data
+      // 查询评论列表
+      const { status: status3, data: data3 } = await ctx.$axios.get(`/api/comment/getReplieds`, {
+        params: {
+          tid: state.tid,
+          page: 0,
+          size: 10
+        }
+      })
+      console.log(status3, data3)
+      if (status3 === 200 && data3.code === 0) {
+        state.comments = data3.data
+      }
+    }
+
+    console.log(state)
+    return state
+  }
 }
 </script>
 

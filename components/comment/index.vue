@@ -1,7 +1,7 @@
 <template>
   <div class="article-comment">
     <dl class="titlebar">
-      <dt>评论 {{comments.list.length}}条评论</dt>
+      <dt>{{topic.replied_count?`${topic.replied_count}条评论`:'评论'}}</dt>
       <dd>
         <el-radio-group  v-model="defaultSort" size="mini" @change="sortChange">
           <el-radio-button label="default">默认排序</el-radio-button>
@@ -43,7 +43,7 @@
         </div>
       </div>
       <div class="comments-list">
-        <root-reply v-for="reply in comments.list" :key="reply.id" :reply="reply"></root-reply>
+        <root-reply v-for="reply in comments.list" :key="reply.id" :reply="reply" @on-reply-success="onReplySuccess"></root-reply>
       </div>
       <div class="comments-loading" v-if="showLoading">载入中...</div>
       <div class="comments-more" v-if="showMore"><a href="javascript:;" @click="loadmore">显示更多评论</a></div>
@@ -56,8 +56,12 @@ import axios from 'axios'
 import RootReply from '@/components/comment/rootReply.vue'
 export default {
   props: {
-    tid: {
-      type: String
+    topic: {
+      type: Object,
+      default: () => {
+        return {
+        }
+      }
     },
     comments: {
       type: Object,
@@ -106,7 +110,7 @@ export default {
           return false
         }
         axios.post('/api/comment/addRootReplied', {
-          tid: self.tid,
+          tid: self.topic.tid,
           content: self.replyForm.content
         }).then(({ status, data }) => {
           if (status === 200 && data.code === 0) {
@@ -124,6 +128,8 @@ export default {
                 list: [data.data]
               }
             }
+            // 增加评论数
+            this.onReplySuccess()
             this.$refs[formName].resetFields()
 
             // this.replyForm.content = ''
@@ -150,7 +156,7 @@ export default {
       // 查询评论列表
       const { status: status3, data: data3 } = await axios.get(`/api/comment/getReplieds`, {
         params: {
-          tid: self.tid,
+          tid: self.topic.tid,
           page: page + 1,
           size,
           sort: self.sort
@@ -186,7 +192,7 @@ export default {
       // 查询评论列表
       const { status: status3, data: data3 } = await axios.get(`/api/comment/getReplieds`, {
         params: {
-          tid: self.tid,
+          tid: self.topic.tid,
           page,
           size,
           sort: self.defaultSort
@@ -199,7 +205,11 @@ export default {
         this.comments.size = data3.data.size
         this.comments.list = data3.data.list
       }
+    },
+    onReplySuccess () {
+      this.topic.replied_count = this.topic.replied_count + 1
     }
+
   },
   computed: {
     showMore () {

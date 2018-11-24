@@ -2,14 +2,27 @@ const moment = require('moment')
 const mysql = require('../lib/mysql')
 // const configs = require('../config')
 
+// 查询主题
+const getCommentTopic = async ({ tid }) => {
+  const result = await mysql('comment_topic').first().where({ 'tid': tid })
+  return result
+}
+
 // 新增主题
 const addCommentTopic = async ({ tid, title, url, type }) => {
-  const result = await mysql('comment_topic').returning(['id', 'title', 'url', 'type', 'create_time']).insert({
+  const result = await mysql('comment_topic').returning(['id', 'title', 'url', 'type', 'replied_count', 'create_time']).insert({
     tid,
     title,
     url,
     type
   })
+  return result
+}
+// 增加评论数
+const incrementRepliedCount = async ({ tid }) => {
+  const result = await mysql('comment_topic')
+    .where('tid', tid)
+    .increment('replied_count', 1)
   return result
 }
 // 添加评论
@@ -137,6 +150,7 @@ const queryMySupport = async ({ uid, ids }) => {
 
 module.exports = {
   addCommentTopic,
+  getCommentTopic,
   addReplied,
   getReplieds,
   getReplied,
@@ -145,5 +159,6 @@ module.exports = {
   addSupportRecord,
   updateSupportRecord,
   getSupportRecord,
-  queryMySupport
+  queryMySupport,
+  incrementRepliedCount
 }

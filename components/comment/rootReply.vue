@@ -146,6 +146,8 @@ export default {
                 list: [data.data]
               }
             }
+            // 通知外部 增加评论数
+            this.$emit('on-reply-success')
             this.$refs[formName].resetFields()
             // this.replyForm.content = ''
           } else {
@@ -162,14 +164,12 @@ export default {
     },
     // 回复主评论
     gotoReply () {
-      console.log('回复主评论', this.reply)
       this.showReplyForm = true
       this.replyObj = this.reply
       this.placeholder = '文明社会，理性评论'
     },
     // 回复子评论
     gotoAtReply (parent) {
-      console.log('回复子评论', parent)
       this.showReplyForm = true
       this.replyObj = parent
       this.placeholder = `@${this.replyObj.username}   文明社会，理性评论`

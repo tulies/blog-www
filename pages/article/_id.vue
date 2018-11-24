@@ -7,7 +7,7 @@
     <article-detail :article="article"/>
     <div><a href="https://s.click.taobao.com/dolIbKw"><img src="http://tp.nty.tv189.com/h5/bl/adv-aliyun-1200-120.jpg" width="100%"/></a></div>
     <article-recomment :list="likes"/>
-    <article-comment :comments="$store.state.article.comments" :tid="id"/>
+    <article-comment :comments="comments" :topic="commentTopic"/>
   </section>
   <aside class="default-page-aside">
     <!-- <aside-nav/> -->
@@ -30,6 +30,7 @@ import ArticleRecomment from '@/components/article/recomment.vue'
 import ArticleComment from '@/components/comment/index.vue'
 import AsideNav from '@/components/widgets/asideNav'
 import AsideArticleRec from '@/components//widgets/asideArticleRec'
+import CreateUrl from '@/util/createUrl'
 
 export default {
   components: {
@@ -44,7 +45,9 @@ export default {
     let state = {
       id,
       article: {},
-      likes: []
+      likes: [],
+      commentTopic: {},
+      comments: {}
     }
     // 查询文章详情
     const { status, data } = await ctx.$axios.get(`/api/article/info/${id}`)
@@ -62,25 +65,28 @@ export default {
     if (status2 === 200 && data2.code === 0) {
       state = { ...state, likes: data2.data.list }
     }
-
-    // 查询评论列表
-    const { status: status3, data: data3 } = await ctx.$axios.get(`/api/comment/getReplieds`, {
-      params: {
-        tid: id,
-        page: 0,
-        size: 10
-      }
+    // 调用主题创建
+    const { status: status4, data: datat4 } = await ctx.$axios.post(`/api/comment/initTopic`, {
+      tid: id,
+      title: state.article.title,
+      url: 'http://www.wangjiayang.cn' + CreateUrl.article(id),
+      type: 'article'
     })
-    if (status3 === 200) {
-      if (data3.code === 0) {
-        // commit
-        ctx.store.commit('article/setComments', data3.data)
-
-        // /api/comment/initTopic
-      } else if (data3.code === 401) {
-
+    if (status4 === 200 && datat4.code === 0) {
+      state.commentTopic = datat4.data
+      // 查询评论列表
+      const { status: status3, data: data3 } = await ctx.$axios.get(`/api/comment/getReplieds`, {
+        params: {
+          tid: id,
+          page: 0,
+          size: 10
+        }
+      })
+      if (status3 === 200 && data3.code === 0) {
+        state.comments = data3.data
       }
     }
+
     return state
   },
   middleware: ['hotArticleRec', 'newArticleRec']

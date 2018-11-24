@@ -10,9 +10,10 @@
       </dd>
     </dl>
     <div class="comments-container">
-            <div class="comments-box" id="goToReplyEditor">
+       <div class="comments-box" id="goToReplyEditor">
         <div class="pull-left">
-          <img class="avatar-32 " src="https://avatar-static.segmentfault.com/159/356/1593567914-586917341dc42_big64" alt="">
+          <img class="avatar-32" v-if="$store.state.user.userinfo.avatar" :src="$store.state.user.userinfo.avatar" alt="">
+          <img class="avatar-32 " v-else src="http://stc.wangjiayang.cn/avator/2018/11/default.jpg" alt="">
         </div>
         <div class="comments-box-content">
           <el-form

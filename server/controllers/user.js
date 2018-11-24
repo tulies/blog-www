@@ -1,4 +1,3 @@
-
 const axios = require('axios')
 const Redis = require('koa-redis')
 const nodemailer = require('nodemailer')
@@ -7,6 +6,7 @@ const Passport = require('../utils/passport')
 const userDAO = require('../dao/user')
 const configs = require('../config')
 const redis = new Redis().client
+const _ = require('lodash')
 
 const verify = async (ctx, next) => {
   let username = ctx.request.body.username
@@ -95,8 +95,8 @@ const register = async (ctx) => {
     ctx.body = { code: -1, msg: '已被注册' }
     return false
   }
-
-  const result = await userDAO.register({ nickname, username, password })
+  const avatar = `/avatar/default/${_.random(0, 40)}.jpg`
+  const result = await userDAO.register({ nickname, username, password, avatar })
   if (!result) {
     ctx.body = { code: -1, msg: '注册失败' }
     return false
@@ -121,7 +121,8 @@ const login = async (ctx, next) => {
     return ctx.login({
       uid: user.uid,
       nickname: user.nickname,
-      username: user.username
+      username: user.username,
+      avatar: user.avatar
     })
   })(ctx, next)
 }
@@ -129,13 +130,14 @@ const login = async (ctx, next) => {
 // 查询用户信息
 const queryUserInfo = async (ctx) => {
   if (ctx.isAuthenticated()) {
-    const { uid, nickname, username } = ctx.session.passport.user
+    const { uid, nickname, username, avatar } = ctx.session.passport.user
     ctx.body = {
       code: 0,
       data: {
         uid,
         nickname,
-        username
+        username,
+        avatar
       }
     }
   } else {
@@ -144,7 +146,8 @@ const queryUserInfo = async (ctx) => {
       data: {
         uid: 0,
         nickname: '',
-        username: ''
+        username: '',
+        avatar: ''
 
       }
     }
@@ -155,7 +158,7 @@ const queryAvatar = async (ctx) => {
   const { uid } = ctx.params
   const user = await userDAO.queryUser({ uid })
   if (user) {
-    const { status, data } = await axios.get('http://tp.nty.tv189.com/h5/mainsite/img/gmhead/201207281823141413.jpg', {
+    const { status, data } = await axios.get(user.avatar, {
       responseType: 'arraybuffer'
     })
     if (status === 200) {
@@ -164,22 +167,20 @@ const queryAvatar = async (ctx) => {
       // console.log(Buffer.isBuffer(data))
       ctx.length = Buffer.byteLength(data)
       ctx.body = data
-    } else {
-      ctx.body = ''
+      return
     }
+  }
+  const { status, data } = await axios.get(`${configs.hosts.fileUrlHost}/avatar/2018/11/default.jpg`, {
+    responseType: 'arraybuffer'
+  })
+  if (status === 200) {
+    ctx.status = 200
+    ctx.type = 'jpg'
+    // console.log(Buffer.isBuffer(data))
+    ctx.length = Buffer.byteLength(data)
+    ctx.body = data
   } else {
-    const { status, data } = await axios.get('http://tp.nty.tv189.com/h5/mainsite/img/gmhead/201207281823141413.jpg', {
-      responseType: 'arraybuffer'
-    })
-    if (status === 200) {
-      ctx.status = 200
-      ctx.type = 'jpg'
-      // console.log(Buffer.isBuffer(data))
-      ctx.length = Buffer.byteLength(data)
-      ctx.body = data
-    } else {
-      ctx.body = ''
-    }
+    ctx.body = ''
   }
 
   // await new Promise(function (resolve, reject) {

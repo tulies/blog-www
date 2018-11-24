@@ -10,7 +10,7 @@
       <div style="topnav"><top-nav/></div>
       <el-dropdown @command="handleCommand" :trigger="trigger">
         <div class="user">
-          <i class="avatar" v-if="$store.state.user.userinfo.nickname">{{$store.state.user.userinfo.nickname}}</i>
+          <i class="avatar" v-if="$store.state.user.userinfo.avatar"><img :src="$store.state.user.userinfo.avatar" /></i>
           <i class="avatar icon iconfont icon-people" v-else style="font-size:20px;"></i>
         </div>
         <el-dropdown-menu slot="dropdown" v-if="$store.state.user.userinfo.nickname">
@@ -205,6 +205,7 @@ export default {
         display: block;
         .avatar{
           display: block;
+          overflow: hidden;
           font-style: normal;
           width: 34px;
           height: 34px;
@@ -214,6 +215,10 @@ export default {
           color: #ffffff;
           font-size: 10px;
           text-align: center;
+          >img{
+            width: 100%;
+            height: 100%;
+          }
         }
       }
     }

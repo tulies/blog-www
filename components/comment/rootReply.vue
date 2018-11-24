@@ -1,7 +1,7 @@
 <template>
 <div class="comments-item" :data-id="reply.id">
   <div class="pull-left">
-      <a target="_blank" href="###"><img class="avatar-32 " :src="`/api/user/avatar/${reply.userid}`" alt=""></a>
+      <a target="_blank" href="###"><img class="avatar-32 " :src="`/stc/avatar/${reply.userid}`" alt=""></a>
   </div>
   <div class="comments-content">
     <div class="comment-trigger">

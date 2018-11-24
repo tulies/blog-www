@@ -6,6 +6,8 @@ const Redis = require('koa-redis')
 const session = require('koa-generic-session')
 const json = require('koa-json')
 const router = require('./routes')
+const stcRouter = require('./routes/stc')
+
 const passport = require('./utils/passport')
 
 const app = new Koa()
@@ -54,6 +56,7 @@ async function start () {
 
   // 引入路由分发
   app.use(router.routes())
+  app.use(stcRouter.routes())
 
   app.use(ctx => {
     ctx.status = 200 // koa defaults to 404 when it sees that status is unset

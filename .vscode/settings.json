@@ -1,0 +1,18 @@
+{
+    "files.autoSave": "onFocusChange",
+    "editor.tabSize": 2,
+    "search.location": "panel",
+    "files.associations": {
+        "*.html": "html",
+        "*.vue": "vue"
+    },
+    "eslint.autoFixOnSave": true,
+    "eslint.validate": [
+        "javascript",{
+            "language": "vue",
+            "autoFix": true
+        },"html",
+        "vue"
+    ],
+    "javascript.updateImportsOnFileMove.enabled": "always"
+}

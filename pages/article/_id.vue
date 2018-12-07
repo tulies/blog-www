@@ -4,7 +4,7 @@
   <div class="page-aside hidden-sm-and-down"><index-aside/></div> -->
 <div class="default-page-container">
   <section class="default-page-main">
-    <article-detail :article="article"/>
+    <article-detail :article="article" @tocinit="tocinit"/>
     <div><a href="https://s.click.taobao.com/dolIbKw"><img src="http://tp.nty.tv189.com/h5/bl/adv-aliyun-1200-120.jpg" width="100%"/></a></div>
     <article-recomment :list="likes"/>
     <article-comment :comments="comments" :topic="commentTopic"/>
@@ -19,7 +19,12 @@
       title="最新文章"
       :list="$store.state.article.newrec"
       style="margin-top: 15px;"/>
+    <article-toc
+      :tocdata="tocdata"
+      style="margin-top: 15px;"/>
+
   </aside>
+
 </div>
 <!-- </div> -->
 </template>
@@ -30,6 +35,8 @@ import ArticleRecomment from '@/components/article/recomment.vue'
 import ArticleComment from '@/components/comment/index.vue'
 import AsideNav from '@/components/widgets/asideNav'
 import AsideArticleRec from '@/components//widgets/asideArticleRec'
+import ArticleToc from '@/components/article/toc.vue'
+
 import CreateUrl from '@/util/createUrl'
 
 export default {
@@ -38,7 +45,8 @@ export default {
     ArticleRecomment,
     ArticleComment,
     AsideNav,
-    AsideArticleRec
+    AsideArticleRec,
+    ArticleToc
   },
   async asyncData (ctx) {
     const { id } = ctx.params
@@ -89,6 +97,17 @@ export default {
 
     return state
   },
-  middleware: ['hotArticleRec', 'newArticleRec']
+  data () {
+    return {
+      tocdata: []
+    }
+  },
+  middleware: ['hotArticleRec', 'newArticleRec'],
+  methods: {
+    tocinit (data) {
+      console.log('toc', data)
+      this.tocdata = data
+    }
+  }
 }
 </script>

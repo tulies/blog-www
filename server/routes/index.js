@@ -9,6 +9,7 @@ const router = require('koa-router')({
 const controllers = require('../controllers')
 // --- 文章相关接口 --- //
 // GET  查询文章list
+
 router.get('/article/list', controllers.article.getArticleList)
 // GET  根据tag查询文章list
 router.get('/article/listByTag', controllers.article.getArticleByTag)

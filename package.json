@@ -13,6 +13,10 @@
     "lint-fix": "eslint --fix --ext .js,.vue,.jsx --ignore-path .gitignore .",
     "precommit": "npm run lint"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tulies/blog-www.git"
+  },
   "dependencies": {
     "@nuxtjs/axios": "^5.0.0",
     "axios": "^0.18.0",

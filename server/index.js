@@ -39,10 +39,10 @@ app.use(passport.session())
 // app.use(response)
 
 // 解析请求体
-// app.use(bodyParser())
-app.use(bodyParser({
-  extendTypes: ['json', 'form', 'text']
-}))
+app.use(bodyParser())
+// app.use(bodyParser({
+//   extendTypes: ['json', 'form', 'text'] //
+// }))
 
 async function start () {
   // Instantiate nuxt.js

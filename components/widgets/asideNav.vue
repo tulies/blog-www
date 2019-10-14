@@ -16,37 +16,37 @@
   </div>
 </template>
 <script>
-import incoNav1 from '../../assets/img/ico_nav1.jpg'
-import incoNav2 from '../../assets/img/ico_nav2.jpg'
-import incoNav3 from '../../assets/img/ico_nav3.jpg'
-import incoNav4 from '../../assets/img/ico_nav4.jpg'
+// import incoNav1 from '../../assets/img/ico_nav1.jpg'
+// import incoNav2 from '../../assets/img/ico_nav2.jpg'
+// import incoNav3 from '../../assets/img/ico_nav3.jpg'
+// import incoNav4 from '../../assets/img/ico_nav4.jpg'
 
 export default {
   data () {
     return {
-      title: '关注我们',
-      list: [
-        {
-          id: '3993',
-          title: '微信',
-          cover: incoNav1
-        },
-        {
-          id: '434',
-          title: '微博',
-          cover: incoNav2
-        },
-        {
-          id: '656',
-          title: '邮箱',
-          cover: incoNav3
-        },
-        {
-          id: '122',
-          title: 'QQ',
-          cover: incoNav4
-        }
-      ]
+      title: '关注我们'
+      // list: [
+      //   {
+      //     id: '3993',
+      //     title: '微信',
+      //     cover: incoNav1
+      //   },
+      //   {
+      //     id: '434',
+      //     title: '微博',
+      //     cover: incoNav2
+      //   },
+      //   {
+      //     id: '656',
+      //     title: '邮箱',
+      //     cover: incoNav3
+      //   },
+      //   {
+      //     id: '122',
+      //     title: 'QQ',
+      //     cover: incoNav4
+      //   }
+      // ]
     }
   }
 }

@@ -20,6 +20,7 @@ const getArticleList = async ({ page, size, categoryId, sortProp, sortOrder }) =
     categoryIds = categoryIds.map(v => v.id)
   }
   const whereBuilder = (builder) => {
+    builder.where('status', 1)
     if (categoryIds && categoryIds.length > 0) {
       builder.whereIn('category_id', categoryIds)
     }
@@ -55,6 +56,7 @@ const getArticleByTag = async ({ page, size, tag, sortProp, sortOrder }) => {
   size = Number(size)
   // 如果分类id存在，我们就要去查一下分类id有没有子节点，我们要遍历下面所有的子节点
   const whereBuilder = (builder) => {
+    builder.where('status', 1)
     if (tag === 'java') {
       builder.where('tags', 'like', `%${tag}%`).where('tags', 'not like', `%javascript%`)
     } else {
@@ -92,6 +94,8 @@ const getArticleByTags = async ({ page, size, tags, sortProp, sortOrder }) => {
   size = Number(size)
   // 如果分类id存在，我们就要去查一下分类id有没有子节点，我们要遍历下面所有的子节点
   const whereBuilder = (builder) => {
+    builder.where('status', 1)
+
     let i = 0
     tags.split(',').forEach(tag => {
       if (i === 0) {

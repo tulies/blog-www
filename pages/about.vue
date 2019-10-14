@@ -38,7 +38,7 @@
       <article-comment :comments="comments" :tid="tid"/>
     </div>
 
-    <div><a href="https://s.click.taobao.com/dolIbKw"><img src="http://tp.nty.tv189.com/h5/bl/adv-aliyun-1200-120.jpg" width="100%"/></a></div>
+    <!-- <div><a href="https://s.click.taobao.com/dolIbKw"><img src="http://tp.nty.tv189.com/h5/bl/adv-aliyun-1200-120.jpg" width="100%"/></a></div> -->
 
     <!-- <article-comment/> -->
   </section>

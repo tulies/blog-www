@@ -103,7 +103,7 @@ export default {
     text-align: center;
     [class*="icon-sn-"] {
         display: inline-block;
-        background-image: url(../../assets/img/login-other.png);
+        // background-image: url(../../assets/img/login-other.png);
         background-repeat: no-repeat;
         width: 30px;
         height: 30px;

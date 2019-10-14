@@ -13,7 +13,7 @@
        <div class="comments-box" id="goToReplyEditor">
         <div class="pull-left">
           <img class="avatar-32" v-if="$store.state.user.userinfo.avatar" :src="$store.state.user.userinfo.avatar" alt="">
-          <img class="avatar-32 " v-else src="http://stc.wangjiayang.cn/avator/2018/11/default.jpg" alt="">
+          <img class="avatar-32 " v-else src="http://stc.wangjiayang.cn/blog/avatar/2018/11/default.jpg" alt="">
         </div>
         <div class="comments-box-content">
           <el-form

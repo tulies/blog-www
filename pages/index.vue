@@ -3,9 +3,9 @@
 <div class="default-page-container">
   <section class="default-page-main">
     <!-- <cover/> -->
+    <!-- :keywords="keywords" -->
     <main-title-bar
       title="文章推荐"
-      :keywords="keywords"
       :mores="mores"
       />
     <article-list :list="articleList"/>

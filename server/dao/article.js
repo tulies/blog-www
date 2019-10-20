@@ -5,6 +5,16 @@ const moment = require('moment')
 const mysql = require('../lib/mysql')
 const configs = require('../config')
 
+const formatTags = (tags) => {
+  if (tags.startsWith(',')) {
+    tags = tags.substring(1)
+  }
+  if (tags.endsWith(',')) {
+    tags = tags.substring(0, tags.length - 1)
+  }
+  return tags
+}
+
 // 查询文章列表 asc descending
 const getArticleList = async ({ page, size, categoryId, sortProp, sortOrder }) => {
   page = page || 0
@@ -35,7 +45,8 @@ const getArticleList = async ({ page, size, categoryId, sortProp, sortOrder }) =
     .orderBy(sortProp || 'id', sortOrder === 'asc' ? 'asc' : 'desc')
     .map(row => ({
       ...row,
-      poster: row.poster.startsWith('http') ? row.poster : configs.hosts.fileUrlHost + row.poster,
+      tags: formatTags(row.tags),
+      poster: row.poster && !row.poster.startsWith('http') ? configs.hosts.fileUrlHost + row.poster : row.poster,
       update_time: moment(row.update_time).format('YYYY-MM-DD HH:mm:ss'),
       create_time: moment(row.create_time).format('YYYY-MM-DD HH:mm:ss')
     }))
@@ -57,11 +68,12 @@ const getArticleByTag = async ({ page, size, tag, sortProp, sortOrder }) => {
   // 如果分类id存在，我们就要去查一下分类id有没有子节点，我们要遍历下面所有的子节点
   const whereBuilder = (builder) => {
     builder.where('status', 1)
-    if (tag === 'java') {
-      builder.where('tags', 'like', `%${tag}%`).where('tags', 'not like', `%javascript%`)
-    } else {
-      builder.where('tags', 'like', `%${tag}%`)
-    }
+    // if (tag === 'java') {
+    //   builder.where('tags', 'like', `%${tag}%`).where('tags', 'not like', `%javascript%`)
+    // } else {
+    //   builder.where('tags', 'like', `%${tag}%`)
+    // }
+    builder.where('tags', 'like', `%,${tag},%`)
   }
 
   var model = mysql('blog_article').where(whereBuilder)
@@ -73,7 +85,8 @@ const getArticleByTag = async ({ page, size, tag, sortProp, sortOrder }) => {
     .orderBy(sortProp || 'id', sortOrder === 'asc' ? 'asc' : 'desc')
     .map(row => ({
       ...row,
-      poster: row.poster.startsWith('http') ? row.poster : configs.hosts.fileUrlHost + row.poster,
+      tags: formatTags(row.tags),
+      poster: row.poster && !row.poster.startsWith('http') ? configs.hosts.fileUrlHost + row.poster : row.poster,
       update_time: moment(row.update_time).format('YYYY-MM-DD HH:mm:ss'),
       create_time: moment(row.create_time).format('YYYY-MM-DD HH:mm:ss')
     }))
@@ -99,13 +112,15 @@ const getArticleByTags = async ({ page, size, tags, sortProp, sortOrder }) => {
     let i = 0
     tags.split(',').forEach(tag => {
       if (i === 0) {
-        if (tag === 'java') {
-          builder.where('tags', 'like', `%${tag}%`).where('tags', 'not like', `%javascript%`)
-        } else {
-          builder.where('tags', 'like', `%${tag}%`)
-        }
+        // if (tag === 'java') {
+        //   builder.where('tags', 'like', `%${tag}%`).where('tags', 'not like', `%javascript%`)
+        // } else {
+        //   builder.where('tags', 'like', `%${tag}%`)
+        // }
+        builder.where('tags', 'like', `%,${tag},%`)
       } else {
-        builder.orWhere('tags', 'like', `%${tag}%`)
+        // builder.orWhere('tags', 'like', `%${tag}%`)
+        builder.orWhere('tags', 'like', `%,${tag},%`)
       }
       i++
     })
@@ -120,7 +135,8 @@ const getArticleByTags = async ({ page, size, tags, sortProp, sortOrder }) => {
     .orderBy(sortProp || 'id', sortOrder === 'asc' ? 'asc' : 'desc')
     .map(row => ({
       ...row,
-      poster: row.poster.startsWith('http') ? row.poster : configs.hosts.fileUrlHost + row.poster,
+      tags: formatTags(row.tags),
+      poster: row.poster && !row.poster.startsWith('http') ? configs.hosts.fileUrlHost + row.poster : row.poster,
       update_time: moment(row.update_time).format('YYYY-MM-DD HH:mm:ss'),
       create_time: moment(row.create_time).format('YYYY-MM-DD HH:mm:ss')
     }))
@@ -148,7 +164,8 @@ const getArticle = async ({ id }) => {
   if (article) {
     article = {
       ...article,
-      poster: article.poster.startsWith('http') ? article.poster : configs.hosts.fileUrlHost + article.poster,
+      tags: formatTags(article.tags),
+      poster: article.poster && !article.poster.startsWith('http') ? configs.hosts.fileUrlHost + article.poster : article.poster,
       update_time: moment(article.update_time).format('YYYY-MM-DD HH:mm:ss'),
       create_time: moment(article.create_time).format('YYYY-MM-DD HH:mm:ss')
     }

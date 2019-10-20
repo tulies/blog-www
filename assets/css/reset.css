@@ -1,7 +1,45 @@
 @charset "UTF-8";
 
-body {
+
+a,
+b,
+body,
+button,
+dd,
+div,
+dl,
+em,
+footer,
+form,
+i,
+input,
+label,
+li,
+nav,
+p,
+section,
+select,
+span,
+td,
+textarea,
+u,
+ul {
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  -webkit-text-size-adjust: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none
+}
+
+body {
+  /* font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif; */
   font-weight: normal;
   /* font-size: 14px; */
   font-size: 14px;

@@ -11,6 +11,8 @@ body * {
   padding: 0;
 }
 
+
+
 /* body {
   line-height: 1;
 } */
@@ -66,7 +68,9 @@ table {
 .ml-5 {
   margin-left: 5px !important;
 }
-.mr5, .mr-5 {
+
+.mr5,
+.mr-5 {
   margin-right: 5px !important;
 }
 
@@ -92,6 +96,7 @@ table {
 .inline-block {
   display: inline-block;
 }
+
 .text-muted-plus-plus {
   color: #ccc;
 }
@@ -130,12 +135,14 @@ table {
 
 
 }
+
 .article-tag:focus,
 .article-tag:hover {
   color: #ffffff;
   background-color: #0375F4;
-    /* #66b1ff */
+  /* #66b1ff */
 }
+
 .layout-default {
   -webkit-font-smoothing: antialiased;
   font-family: "-apple-system",
@@ -175,9 +182,9 @@ table {
     width: 250px;
   }
 }
+
 @media screen and (max-width:680px) {
   .default-page-container .default-page-aside {
     display: none;
   }
 }
-

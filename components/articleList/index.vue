@@ -1,7 +1,7 @@
 <template>
 <section class="m-article-list">
   <ul v-if="list && list.length>0">
-    <li v-for="item in list" :key="item.id" @click="click(item)"><item :item="item"/></li>
+    <li v-for="it in list" :key="it.id" @click="click(it)"><item :item="it"/></li>
   </ul>
   <div v-else>
     <el-alert

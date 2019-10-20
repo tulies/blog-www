@@ -3,7 +3,9 @@
     <div class="footer-content">
       <div class="footer-copyright clearfix">
         <div class="footer-copyright-left">
-          <p>Copyright©2018 王嘉炀个人博客 wangjiayang.cn</p>
+          <p>Copyright©2018 王嘉炀·个人博客 wangjiayang.cn</p>
+        </div>
+        <div class="footer-copyright-right">
           <p><a href="http://www.miitbeian.gov.cn/publish/query/indexFirst.action">沪ICP备18041792号</a></p>
         </div>
         <!-- <div class="footer-copyright-right">

@@ -1,6 +1,6 @@
 <template>
 <div class="article-item">
-  <div class="article-cover">
+  <div class="article-cover" v-if="item.poster">
     <div class="imgcont">
       <img :src="item.poster">
     </div>

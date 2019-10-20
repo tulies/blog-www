@@ -37,7 +37,8 @@ const addReplied = async ({ tid, content, grade, checkStatus, userid, username, 
     relate_userid: relateUserid,
     relate_username: relateUsername,
     parentid: parentid || 0,
-    rootid: rootid || 0
+    rootid: rootid || 0,
+    status: 1
   })
   return result
 }
@@ -60,6 +61,7 @@ const getReplieds = async ({ tid, userid, parentid, rootid, page, size, sortProp
   page = Number(page)
   size = Number(size)
   const whereBuilder = (builder) => {
+    builder.where('status', 1)
     if (tid) {
       builder.where('tid', tid)
     }

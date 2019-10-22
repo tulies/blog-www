@@ -68,11 +68,6 @@ const getArticleByTag = async ({ page, size, tag, sortProp, sortOrder }) => {
   // 如果分类id存在，我们就要去查一下分类id有没有子节点，我们要遍历下面所有的子节点
   const whereBuilder = (builder) => {
     builder.where('status', 1)
-    // if (tag === 'java') {
-    //   builder.where('tags', 'like', `%${tag}%`).where('tags', 'not like', `%javascript%`)
-    // } else {
-    //   builder.where('tags', 'like', `%${tag}%`)
-    // }
     builder.where('tags', 'like', `%,${tag},%`)
   }
 
@@ -108,15 +103,11 @@ const getArticleByTags = async ({ page, size, tags, sortProp, sortOrder }) => {
   // 如果分类id存在，我们就要去查一下分类id有没有子节点，我们要遍历下面所有的子节点
   const whereBuilder = (builder) => {
     builder.where('status', 1)
-
+  }
+  const tagsBuilder = (builder) => {
     let i = 0
     tags.split(',').forEach(tag => {
       if (i === 0) {
-        // if (tag === 'java') {
-        //   builder.where('tags', 'like', `%${tag}%`).where('tags', 'not like', `%javascript%`)
-        // } else {
-        //   builder.where('tags', 'like', `%${tag}%`)
-        // }
         builder.where('tags', 'like', `%,${tag},%`)
       } else {
         // builder.orWhere('tags', 'like', `%${tag}%`)
@@ -126,7 +117,7 @@ const getArticleByTags = async ({ page, size, tags, sortProp, sortOrder }) => {
     })
   }
 
-  var model = mysql('blog_article').where(whereBuilder)
+  var model = mysql('blog_article').where(whereBuilder).andWhere(tagsBuilder)
 
   const totalCount = await model.clone().count('id as count')
   let list = await model.clone()
@@ -159,7 +150,7 @@ const getArticle = async ({ id }) => {
     ])
     .leftJoin('blog_article_ext', 'blog_article.id', 'blog_article_ext.article_id')
     .leftJoin('blog_category', 'blog_article.category_id', 'blog_category.id')
-    .where({ 'blog_article.id': id })
+    .where({ 'blog_article.id': id, 'blog_article.status': 1 })
 
   if (article) {
     article = {

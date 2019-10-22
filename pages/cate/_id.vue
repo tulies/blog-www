@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 import MainBreadcrumb from '@/components/widgets/mainBreadcrumb'
 import AsideNav from '@/components/widgets/asideNav'
 import AsideArticleRec from '@/components//widgets/asideArticleRec'
@@ -142,7 +144,7 @@ export default {
     async handleCurrentChange (val) {
       const self = this
 
-      const { status, data } = await self.$axios.get(`/api/article/list`, {
+      const { status, data } = await axios.get(`/api/article/list`, {
         params: {
           page: val - 1,
           size: self.pageSize,

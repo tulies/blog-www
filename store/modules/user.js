@@ -17,6 +17,7 @@ const actions = {
   setShowLogin: ({ commit }, showLogin) => {
     commit('setShowLogin', showLogin)
   }
+
 }
 export default {
   namespaced: true,

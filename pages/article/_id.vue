@@ -103,6 +103,15 @@ export default {
       tocdata: []
     }
   },
+  head () {
+    return {
+      title: this.article.title + ' - 王嘉炀·个人博客',
+      meta: [
+        { hid: 'description', name: 'description', content: this.article.description.substring(0, 120) },
+        { hid: 'keywords', name: 'keywords', content: this.article.tags + ',个人博客,王嘉炀个人博客，个人网站' }
+      ]
+    }
+  },
   middleware: ['hotArticleRec', 'newArticleRec'],
   methods: {
     tocinit (data) {

@@ -48,7 +48,11 @@
   color: #999;
   padding-top: 15px;
   padding-bottom: 10px;
-  line-height: 1.6
+  line-height: 1.6;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+
 }
 
 .com-footer .footer-content .footer-copyright a {

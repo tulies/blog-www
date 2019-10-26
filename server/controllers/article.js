@@ -2,19 +2,25 @@
 const articleDAO = require('../dao/article')
 module.exports = {
   async getArticleList (ctx) {
-    const { page, size, categoryId } = ctx.request.query
-    console.log(ctx.request.query)
-    // 这边调用数据库的操作方法
-    const list = await articleDAO.getArticleList({
-      page: Number(page),
-      size: Number(size),
-      categoryId: Number(categoryId)
-    })
+    // console.log(ctx.request.query)
+
     ctx.body = {
       code: 0,
       msg: '成功',
-      data: list
+      data: ctx.request.query
     }
+    // const { page, size, categoryId } = ctx.request.query
+    // 这边调用数据库的操作方法
+    // const list = await articleDAO.getArticleList({
+    //   page: Number(page),
+    //   size: Number(size),
+    //   categoryId: Number(categoryId)
+    // })
+    // ctx.body = {
+    //   code: 0,
+    //   msg: '成功',
+    //   data: list
+    // }
   },
   async getArticleByTag (ctx) {
     const { page, size, tag } = ctx.request.query

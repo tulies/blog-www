@@ -25,3 +25,6 @@ For detailed explanation on how things work, checkout [Nuxt.js docs](https://nux
 node-sass 安装
 
 sudo npm install node-sass --save-dev
+
+
+pm2 start npm --name "blog-nuxt" -- run start

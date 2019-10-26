@@ -1,3 +1,6 @@
+// const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+
 module.exports = {
   mode: 'universal',
 
@@ -67,36 +70,24 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    // extractCSS: { allChunks: true },
-    // optimization: {
-    //   runtimeChunk: 'single',
-
-    //   minimize: true,
-    //   minimizer: [
-    //     // terser-webpack-plugin
-    //     // optimize-css-assets-webpack-plugin
-    //   ],
-    //   splitChunks: {
-    //     chunks: 'all',
-    //     automaticNameDelimiter: '.',
-    //     name: undefined,
-    //     cacheGroups: {}
-    //   }
-    // },
+    extractCSS: true,
     optimization: {
-      runtimeChunk: true,
       splitChunks: {
-        chunks: 'all',
         cacheGroups: {
           styles: {
             name: 'styles',
-            test: /\.css$/,
+            test: /\.(css|vue)$/,
             chunks: 'all',
             enforce: true
           }
         }
       }
     },
+    // filenames: {
+    //   app: "[name].js?id=[chunkhash]",
+    //   chunk: "[name]_vendor.js?id=[chunkhash]",
+    //   css: "[name].css?id=[contenthash]"
+    // }
     /*
     ** You can extend webpack config here
     */

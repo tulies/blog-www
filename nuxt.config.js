@@ -67,7 +67,36 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    extractCSS: { allChunks: true },
+    // extractCSS: { allChunks: true },
+    // optimization: {
+    //   runtimeChunk: 'single',
+
+    //   minimize: true,
+    //   minimizer: [
+    //     // terser-webpack-plugin
+    //     // optimize-css-assets-webpack-plugin
+    //   ],
+    //   splitChunks: {
+    //     chunks: 'all',
+    //     automaticNameDelimiter: '.',
+    //     name: undefined,
+    //     cacheGroups: {}
+    //   }
+    // },
+    optimization: {
+      runtimeChunk: true,
+      splitChunks: {
+        chunks: 'all',
+        cacheGroups: {
+          styles: {
+            name: 'styles',
+            test: /\.css$/,
+            chunks: 'all',
+            enforce: true
+          }
+        }
+      }
+    },
     /*
     ** You can extend webpack config here
     */

@@ -2,6 +2,7 @@
 const articleDAO = require('../dao/article')
 module.exports = {
   async getArticleList (ctx) {
+    // console.log(ctx.request.query)
     const { page, size, categoryId } = ctx.request.query
     // 这边调用数据库的操作方法
     const list = await articleDAO.getArticleList({

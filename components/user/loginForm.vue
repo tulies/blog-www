@@ -4,19 +4,20 @@
       ref="form"
       :model="form"
       :rules="rules"
-      label-width="80px"
       label-position="top"
-      size="small"
+      size="large"
       >
+      <!-- label-width="80px" -->
+
       <!-- 手机号 或  11位手机号 或  -->
-    <el-form-item label="Email" prop="username">
-      <el-input v-model="form.username" placeholder="Email"></el-input>
+    <el-form-item prop="username">
+      <el-input v-model="form.username" placeholder="请输入您的邮箱"></el-input>
     </el-form-item>
 
-    <el-form-item label="密码" prop="password">
-      <el-input type="password" placeholder="不少于6位的密码" v-model="form.password"></el-input>
+    <el-form-item prop="password">
+      <el-input type="password" placeholder="请输入登录密码" v-model="form.password"></el-input>
     </el-form-item>
-    <el-form-item>
+    <el-form-item style="margin-bottom: 10px;">
       <el-button type="primary" @click="onSubmit('form')" class="submitBtn" style="width:100%">登录</el-button>
     </el-form-item>
     <!-- <div class="text-muted text-center more-login-area">
@@ -27,7 +28,7 @@
       <a href="/user/oauth/qq" ><span class="icon-sn-qq"></span></a>
       <a href="/user/oauth/weibo" ><span class="icon-sn-sinaweibo"></span></a>
     </div> -->
-    <el-form-item style="padding:10px 0;">
+    <el-form-item style="padding:10px 0;margin-bottom: 10px;">
       <el-button  @click="gotoRegister" style="width:100%">注册新账号</el-button>
     </el-form-item>
   </el-form>
@@ -56,7 +57,7 @@ export default {
       },
       rules: {
         username: [
-          { required: true, message: '请输入手机号或Email', trigger: 'blur' }
+          { required: true, message: '请输入您的邮箱', trigger: 'blur' }
         ],
         password: [
           { required: true, message: '请输入登录密码', trigger: 'blur' }

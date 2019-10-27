@@ -28,8 +28,9 @@
   :width="dialogWidth"
   :title="dialogLoginVisible ? '登录' : '注册'"
   :visible.sync="$store.state.user.showLogin"
+  :close-on-click-modal="false"
   :before-close="handleDialogClose">
-    <div>
+    <div style="margin-top:10px;">
       <login-form :gotoRegister="gotoRegister" :loginCallback="loginCallback" v-if="dialogLoginVisible"></login-form>
       <register-form :gotoLogin="gotoLogin" :registerCallback="registerCallback" v-if="dialogRegisterVisible"/>
     </div>
@@ -50,7 +51,7 @@ export default {
       trigger: 'click',
       dialogLoginVisible: true,
       dialogRegisterVisible: false,
-      dialogWidth: '400px'
+      dialogWidth: '320px'
     }
   },
   components: {
@@ -72,12 +73,13 @@ export default {
     }
   },
   mounted () {
-    const clientWidth = document.body.clientWidth
-    if (clientWidth < 480) {
-      this.dialogWidth = Math.max(320, clientWidth * 0.8) + 'px'
-    } else {
-      this.dialogWidth = Math.min(400, clientWidth * 0.8) + 'px'
-    }
+    // const clientWidth = document.body.clientWidth
+    // if (clientWidth < 480) {
+    //   this.dialogWidth = Math.max(320, clientWidth * 0.8) + 'px'
+    // } else {
+    //   this.dialogWidth = Math.min(400, clientWidth * 0.8) + 'px'
+    // }
+
   },
   methods: {
     loginCallback ({ status, data }) {

@@ -45,7 +45,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .panel-header{
   padding: 20px;
   text-align: center;
@@ -66,7 +66,7 @@ export default {
   }
 }
 .panel-login{
-  width: 500px;
+  width: 400px;
   margin: 20px auto;
   .panel-title{
     font-size: 16px;

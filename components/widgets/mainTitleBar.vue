@@ -56,7 +56,6 @@ export default {
     color: #888888;
     text-decoration: none;
   }
-
   a:focus,
   a:hover {
     color: #66b1ff;

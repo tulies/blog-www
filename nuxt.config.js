@@ -70,8 +70,11 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    extractCSS: true,
+    // extractCSS: true,
+    // https://github.com/nuxt/nuxt.js/issues/4885#issuecomment-533015230
+    extractCSS: { ignoreOrder: true },
     optimization: {
+
       splitChunks: {
         cacheGroups: {
           styles: {
@@ -83,11 +86,6 @@ module.exports = {
         }
       }
     },
-    // filenames: {
-    //   app: "[name].js?id=[chunkhash]",
-    //   chunk: "[name]_vendor.js?id=[chunkhash]",
-    //   css: "[name].css?id=[contenthash]"
-    // }
     /*
     ** You can extend webpack config here
     */

@@ -29,8 +29,8 @@
 <script>
 import Cover from '@/components/index/cover.vue'
 import MainTitleBar from '@/components/widgets/mainTitleBar'
-import ArticleList from '@/components/articleList/index.vue'
 import AsideNav from '@/components/widgets/asideNav'
+import ArticleList from '@/components/articleList/index.vue'
 import AsideArticleRec from '@/components//widgets/asideArticleRec'
 
 export default {

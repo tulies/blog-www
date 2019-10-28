@@ -67,10 +67,10 @@ import ArticleComment from '@/components/comment/index.vue'
 
 export default {
   components: {
-    ArticleComment,
     MainBreadcrumb,
     AsideNav,
     AsideArticleRec,
+    ArticleComment,
     Zan
   },
   middleware: ['hotArticleRec', 'newArticleRec'],

@@ -31,12 +31,12 @@
 </template>
 
 <script>
+import AsideNav from '@/components/widgets/asideNav'
+import ArticleToc from '@/components/article/toc.vue'
 import ArticleDetail from '@/components/article/detail.vue'
 import ArticleRecomment from '@/components/article/recomment.vue'
-import ArticleComment from '@/components/comment/index.vue'
-import AsideNav from '@/components/widgets/asideNav'
 import AsideArticleRec from '@/components//widgets/asideArticleRec'
-import ArticleToc from '@/components/article/toc.vue'
+import ArticleComment from '@/components/comment/index.vue'
 
 import CreateUrl from '@/util/createUrl'
 

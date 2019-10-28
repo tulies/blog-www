@@ -52,7 +52,7 @@ export default {
     margin: 3px 10px 0 0;
     overflow: hidden;
     position: relative;
-    // width: 20%;
+    width: 20%;
     width: 150px;
     // flex: 1;
     @media screen and  (max-width:900px){

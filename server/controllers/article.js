@@ -32,7 +32,6 @@ module.exports = {
   },
   async getArticleByTags (ctx) {
     const { page, size, tags, sortProp, sortOrder } = ctx.request.query
-    console.log(tags)
     // 这边调用数据库的操作方法
     const list = await articleDAO.getArticleByTags({
       page: Number(page),

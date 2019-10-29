@@ -52,7 +52,6 @@ const createNonceStr = (length = 16) => {
 }
 
 const jssdkConfig = async ({ url }) => {
-  console.log(url)
   url = decodeURIComponent(url)
   const wxticket = await getticket()
   const timestamp = Math.floor(new Date().getTime() / 1000)

@@ -33,6 +33,8 @@ import AsideNav from '@/components/widgets/asideNav'
 import ArticleList from '@/components/articleList/index.vue'
 import AsideArticleRec from '@/components//widgets/asideArticleRec'
 
+import { jssdkConfig } from '@/util/wx'
+// import wx from 'weixin-js-sdk'
 export default {
   components: {
     Cover,
@@ -75,6 +77,31 @@ export default {
     }
 
     return state
+  },
+  mounted () {
+    jssdkConfig().then(res => {
+      const wx = require('weixin-js-sdk')
+      console.log(res)
+      // if (res.code === 0) {
+      // }
+      console.log(wx)
+      wx.config({
+        debug: true,
+        ...res,
+        jsApiList: ['updateAppMessageShareData']
+      })
+      wx.ready(function () {
+        wx.updateAppMessageShareData({
+          title: '111', // 分享标题
+          desc: '2222', // 分享描述
+          link: location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+          imgUrl: '', // 分享图标
+          success: function () {
+            // 设置成功
+          }
+        })
+      })
+    })
   },
   middleware: ['hotArticleRec', 'newArticleRec']
 }

@@ -49,4 +49,7 @@ router.get('/comment/getChildReplieds', controllers.comment.getChildReplieds)
 router.get('/comment/support/:repliedId', controllers.comment.support)
 router.get('/comment/unsupport/:repliedId', controllers.comment.unsupport)
 
+// --- 微信相关接口 --- //
+router.get('/wx/jsapi-config', controllers.wx.jssdkConfig)
+
 module.exports = router

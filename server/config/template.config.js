@@ -25,6 +25,10 @@ const CONF = {
     host: 'smtp.qq.com',
     user: '346461062@qq.com',
     pass: '您的密码'
+  },
+  wx: {
+    appId: 'xxx',
+    appSecret: 'xxx'
   }
 
 }

@@ -4,7 +4,7 @@ const CONF = {
   // rootPathname: '',
   // create database cAuth
   mysql: {
-    host: '47.98.202.148',
+    host: '127.0.0.1',
     port: 3306,
     user: 'root',
     db: 'myapps',
@@ -26,6 +26,10 @@ const CONF = {
     host: 'smtp.qq.com',
     user: '346461062@qq.com',
     pass: 'kisnbkorppawcbef'
+  },
+  wx: {
+    appId: 'wxa096d32094e784ce',
+    appSecret: '69ffa17cb1c3cc130ef1b8dea702ee22'
   }
 
 }

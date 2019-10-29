@@ -39,8 +39,7 @@
     "mysql": "^2.16.0",
     "nodemailer": "^4.6.8",
     "nuxt": "^2.10.2",
-    "passport-local": "^1.0.0",
-    "weixin-js-sdk": "^1.4.0-test"
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

@@ -8,7 +8,7 @@
           <h2 id="articleHeader0">关于我</h2>
           <!-- 我叫王嘉炀 -->
           <p>hello，大家好。很高心躲在这里被你发现了！<!-- <a href="#">让我知道下你是如何找到我的>></a> --></p>
-          <p>我也没什么牛逼的经历，<!-- 前端、后端都会搞搞，这里就不献丑了；-->但是我和你一样，拥有一颗爱进取的初心~~</p>
+          <p>我也没什么牛逼的经历，但是我和你一样，拥有一颗爱进取的初心~~</p>
 
           <h2 id="articleHeader1">关于本博客</h2>
           <!-- <blockquote>写在最前：本博客前端门户采用nuxt构建的项目（vue2.x+koa2），文章发布平台采用的springBoot+reactjs。<br/><a href="#">本博客的前端静态代码github开源,有兴趣的随意fork，欢迎指正。</a>不过请记得给我挂个友情链接。</blockquote> -->
@@ -64,6 +64,7 @@ import AsideNav from '@/components/widgets/asideNav'
 import AsideArticleRec from '@/components//widgets/asideArticleRec'
 import Zan from '@/components/widgets/zan'
 import ArticleComment from '@/components/comment/index.vue'
+import { jssdkConfig, updateappmessagesharedata } from '@/util/wx'
 
 export default {
   components: {
@@ -106,6 +107,25 @@ export default {
       }
     }
     return state
+  },
+  mounted () {
+    jssdkConfig().then(res => {
+      if (!res) return
+      wx.config({
+        // debug: true,
+        ...res,
+        jsApiList: [
+          'onMenuShareTimeline',
+          'onMenuShareAppMessage',
+          'onMenuShareQQ',
+          'onMenuShareWeibo',
+          'onMenuShareQZone'
+        ]
+      })
+      wx.ready(function () {
+        updateappmessagesharedata()
+      })
+    })
   }
 }
 </script>

@@ -37,6 +37,7 @@ import AsideNav from '@/components/widgets/asideNav'
 import AsideArticleRec from '@/components//widgets/asideArticleRec'
 import ArticleList from '@/components/articleList/index.vue'
 import CreateUrl from '@/util/createUrl'
+import { jssdkConfig, updateappmessagesharedata } from '@/util/wx'
 
 export default {
   components: {
@@ -158,7 +159,26 @@ export default {
       }
     }
   },
-  middleware: ['hotArticleRec', 'newArticleRec']
+  middleware: ['hotArticleRec', 'newArticleRec'],
+  mounted () {
+    jssdkConfig().then(res => {
+      if (!res) return
+      wx.config({
+        // debug: true,
+        ...res,
+        jsApiList: [
+          'onMenuShareTimeline',
+          'onMenuShareAppMessage',
+          'onMenuShareQQ',
+          'onMenuShareWeibo',
+          'onMenuShareQZone'
+        ]
+      })
+      wx.ready(function () {
+        updateappmessagesharedata()
+      })
+    })
+  }
 }
 </script>
 

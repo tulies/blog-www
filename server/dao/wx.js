@@ -12,7 +12,7 @@ const gettoken = async () => {
     return wxtoken
   }
   const res = await axios.get(`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${configs.wx.appId}&secret=${configs.wx.appSecret}`)
-  console.log(res)
+  // console.log(res)
   if (res.status !== 200 || res.data.errcode) {
     return ''
   }
@@ -27,8 +27,8 @@ const getticket = async () => {
   // 先从redis中获取
   const rediskey = `blogwww:wxticket`
   let wxticket = await redis.get(rediskey)
+
   if (wxticket) {
-    console.log(wxticket)
     return wxticket
   }
   const wxtoken = await gettoken()
@@ -52,9 +52,12 @@ const createNonceStr = (length = 16) => {
 }
 
 const jssdkConfig = async ({ url }) => {
+  console.log(url)
+  url = decodeURIComponent(url)
   const wxticket = await getticket()
   const timestamp = Math.floor(new Date().getTime() / 1000)
   const nonceStr = createNonceStr()
+
   // 这里参数的顺序要按照 key 值 ASCII 码升序排序
   const rawString = `jsapi_ticket=${wxticket}&noncestr=${nonceStr}&timestamp=${timestamp}&url=${url}`
   // console.log(rawString)

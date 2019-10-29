@@ -37,6 +37,7 @@ import ArticleDetail from '@/components/article/detail.vue'
 import ArticleRecomment from '@/components/article/recomment.vue'
 import AsideArticleRec from '@/components//widgets/asideArticleRec'
 import ArticleComment from '@/components/comment/index.vue'
+import { jssdkConfig, updateappmessagesharedata } from '@/util/wx'
 
 import CreateUrl from '@/util/createUrl'
 
@@ -108,11 +109,38 @@ export default {
       title: this.article.title + ' - 王嘉炀·个人博客',
       meta: [
         { hid: 'description', name: 'description', content: this.article.description.substring(0, 120) },
-        { hid: 'keywords', name: 'keywords', content: this.article.tags + ',个人博客,王嘉炀个人博客，个人网站' }
+        { hid: 'keywords', name: 'keywords', content: this.article.tags + ',个人博客,王嘉炀个人博客，个人网站' },
+        { hid: 'itemprop-name', itemprop: 'name', content: this.article.title },
+        { hid: 'itemprop-description', itemprop: 'description', content: this.article.description.substring(0, 120) },
+        { hid: 'itemprop-image', itemprop: 'image', content: 'http://stc.wangjiayang.cn/blog/logo.jpg' }
       ]
     }
   },
   middleware: ['hotArticleRec', 'newArticleRec'],
+  mounted () {
+    jssdkConfig().then(res => {
+      if (!res) return
+      wx.config({
+        // debug: true,
+        ...res,
+        jsApiList: [
+          'onMenuShareTimeline',
+          'onMenuShareAppMessage',
+          'onMenuShareQQ',
+          'onMenuShareWeibo',
+          'onMenuShareQZone'
+        ]
+      })
+      wx.ready(() => {
+        updateappmessagesharedata({
+          title: this.article.title,
+          desc: this.article.description,
+          link: location.href,
+          imgUrl: this.article.poster
+        })
+      })
+    })
+  },
   methods: {
     tocinit (data) {
       this.tocdata = data

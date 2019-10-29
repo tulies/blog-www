@@ -12,14 +12,19 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' },
-      { hid: 'description', name: 'description', content: '王嘉炀·个人博客 - 一个有理想的码农的个人博客，专注前沿技术的研究和学习，一直在快乐学习的路上。' }
+      { hid: 'description', name: 'description', content: '一个有理想的码农的个人博客，专注前沿技术的研究和学习，一直在快乐学习的路上。 - 王嘉炀·个人博客' },
+      { hid: 'itemprop-name', itemprop: 'name', content: '王嘉炀·个人博客' },
+      { hid: 'itemprop-description', itemprop: 'description', content: '一个有理想的码农的个人博客，专注前沿技术的研究和学习，一直在快乐学习的路上。 - 王嘉炀·个人博客' },
+      { hid: 'itemprop-image', itemprop: 'image', content: 'http://stc.wangjiayang.cn/blog/logo.jpg' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ],
     script: [
-      { src: 'https://hm.baidu.com/hm.js?4ad4bbdc6358179dcaa8730e908d407a' } /* 引入百度统计的js */
+      { src: 'https://hm.baidu.com/hm.js?4ad4bbdc6358179dcaa8730e908d407a' }, /* 引入百度统计的js */
+      { src: 'http://res.wx.qq.com/open/js/jweixin-1.4.0.js' } /* 微信js-sdk */
     ]
+
   },
 
   /*

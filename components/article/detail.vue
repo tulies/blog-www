@@ -124,7 +124,7 @@ export default {
                 }
               }
             } else {
-              console.log(h1set)
+              // console.log(h1set)
               h1set.children.push(element)
               h2set = element
               h3set = null

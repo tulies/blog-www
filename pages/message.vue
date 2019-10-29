@@ -34,6 +34,7 @@ import AsideNav from '@/components/widgets/asideNav'
 import AsideArticleRec from '@/components//widgets/asideArticleRec'
 import ArticleComment from '@/components/comment/index.vue'
 import Zan from '@/components/widgets/zan'
+import { jssdkConfig, updateappmessagesharedata } from '@/util/wx'
 
 export default {
   components: {
@@ -73,14 +74,31 @@ export default {
           size: 10
         }
       })
-      console.log(status3, data3)
       if (status3 === 200 && data3.code === 0) {
         state.comments = data3.data
       }
     }
 
-    console.log(state)
     return state
+  },
+  mounted () {
+    jssdkConfig().then(res => {
+      if (!res) return
+      wx.config({
+        // debug: true,
+        ...res,
+        jsApiList: [
+          'onMenuShareTimeline',
+          'onMenuShareAppMessage',
+          'onMenuShareQQ',
+          'onMenuShareWeibo',
+          'onMenuShareQZone'
+        ]
+      })
+      wx.ready(function () {
+        updateappmessagesharedata()
+      })
+    })
   }
 }
 </script>

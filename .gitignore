@@ -82,4 +82,4 @@ dist
 
 # 排除配置文件
 server/config/dev.config.js
-server/config/pro.config.js
+server/config/prod.config.js

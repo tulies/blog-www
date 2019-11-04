@@ -1,46 +1,75 @@
 <template>
-<div class="default-page-container">
-  <section class="default-page-main">
-    <main-breadcrumb :breadcrumb="breadcrumb"  v-if="breadcrumb.length>0"/>
-      <h2 class="page-title">常用标签</h2>
+  <div class="default-page-container">
+    <section class="default-page-main">
+      <main-breadcrumb
+        v-if="breadcrumb.length>0"
+        :breadcrumb="breadcrumb"
+      />
+      <h2 class="page-title">
+        常用标签
+      </h2>
       <div class="tags-page">
         <div class="tags-row">
-          <div class="tags-col" v-for="group in list" :key="group.title">
+          <div
+            v-for="group in list"
+            :key="group.title"
+            class="tags-col"
+          >
             <dl class="tag-list">
-              <dt class="title">{{group.title}}</dt>
-              <dd v-for="tag in group.tags" :key="tag.name"><a :href="createTagUrl(tag.name)" class="article-tag">{{tag.name}}</a></dd>
+              <dt class="title">
+                {{ group.title }}
+              </dt>
+              <dd
+                v-for="tag in group.tags"
+                :key="tag.name"
+              >
+                <a
+                  :href="createTagUrl(tag.name)"
+                  class="article-tag"
+                >{{ tag.name }}</a>
+              </dd>
             </dl>
           </div>
+        </div>
       </div>
-    </div>
-  </section>
-  <aside class="default-page-aside">
-    <!-- <aside-nav/> -->
-    <aside-article-rec
-      title="热门文章"
-      :list="$store.state.article.hotrec"/>
-    <div style="padding: 15px 0 0 0" ><a href="https://s.click.taobao.com/Kb3GbKw"><img src="http://tp.nty.tv189.com/h5/bl/adv-aliyun-463-224-2.jpg" style="width:100%;border-radius:4px"/></a></div>
-    <aside-article-rec
-      title="最新文章"
-      :list="$store.state.article.newrec"
-      style="margin-top: 15px;"/>
-  </aside>
-</div>
+    </section>
+    <aside class="default-page-aside">
+      <!-- <aside-nav/> -->
+      <aside-article-rec
+        title="热门文章"
+        :list="$store.state.article.hotrec"
+      />
+      <div style="padding: 15px 0 0 0">
+        <a href="https://s.click.taobao.com/Kb3GbKw"><img
+          src="http://tp.nty.tv189.com/h5/bl/adv-aliyun-463-224-2.jpg"
+          style="width:100%;border-radius:4px"
+        ></a>
+      </div>
+      <aside-article-rec
+        title="最新文章"
+        :list="$store.state.article.newrec"
+        style="margin-top: 15px;"
+      />
+    </aside>
+  </div>
 </template>
 
 <script>
 import MainBreadcrumb from '@/components/widgets/mainBreadcrumb'
-import AsideNav from '@/components/widgets/asideNav'
 import AsideArticleRec from '@/components//widgets/asideArticleRec'
 import CreateUrl from '@/util/createUrl'
 
 export default {
+  components: {
+    MainBreadcrumb,
+    AsideArticleRec
+  },
   data () {
     return {
       list: [
         {
-          'title': '前端开发',
-          'tags': [
+          title: '前端开发',
+          tags: [
             { name: 'html' },
             { name: 'css' },
             { name: 'javascript' },
@@ -51,8 +80,8 @@ export default {
           ]
         },
         {
-          'title': '开发语言',
-          'tags': [
+          title: '开发语言',
+          tags: [
             { name: 'java' },
             { name: 'php' },
             { name: 'javascript' },
@@ -61,8 +90,8 @@ export default {
           ]
         },
         {
-          'title': 'java开发',
-          'tags': [
+          title: 'java开发',
+          tags: [
             { name: 'java' },
             { name: 'springboot' },
             { name: 'mybatis' },
@@ -73,8 +102,8 @@ export default {
           ]
         },
         {
-          'title': '数据库',
-          'tags': [
+          title: '数据库',
+          tags: [
             { name: 'mysql' },
             { name: '数据库' },
             { name: 'redis' },
@@ -83,16 +112,6 @@ export default {
           ]
         }
       ]
-    }
-  },
-  components: {
-    MainBreadcrumb,
-    AsideNav,
-    AsideArticleRec
-  },
-  methods: {
-    createTagUrl (tag) {
-      return CreateUrl.tag(tag)
     }
   },
   async asyncData (ctx) {
@@ -105,11 +124,16 @@ export default {
       {
         id: 1,
         name: '标签',
-        url: `/tag`
+        url: '/tag'
       }
     ]
     state = { ...state, breadcrumb }
     return state
+  },
+  methods: {
+    createTagUrl (tag) {
+      return CreateUrl.tag(tag)
+    }
   },
   middleware: ['hotArticleRec', 'newArticleRec']
 }

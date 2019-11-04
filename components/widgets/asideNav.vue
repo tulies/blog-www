@@ -1,5 +1,5 @@
 <template>
-<!-- <el-card class="aside-box-card" shadow="hover"> -->
+  <!-- <el-card class="aside-box-card" shadow="hover"> -->
   <!-- <div slot="header" class="clearfix">
     <span>{{title}}</span>
   </div>
@@ -10,8 +10,8 @@
     </el-col>
   </el-row> -->
 
-<!-- </el-card> -->
- <div>
+  <!-- </el-card> -->
+  <div>
     <!-- <img src="http://tp.nty.tv189.com/h5/bl/adv-aliyun-600-300.jpg" width="100%" /> -->
   </div>
 </template>

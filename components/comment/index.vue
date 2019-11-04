@@ -1,19 +1,40 @@
 <template>
   <div class="article-comment">
     <dl class="titlebar">
-      <dt>{{topic.replied_count?`${topic.replied_count}条评论`:'评论'}}</dt>
+      <dt>{{ topic.replied_count?`${topic.replied_count}条评论`:'评论' }}</dt>
       <dd>
-        <el-radio-group  v-model="defaultSort" size="mini" @change="sortChange">
-          <el-radio-button label="default">默认排序</el-radio-button>
-          <el-radio-button label="create">时间排序</el-radio-button>
+        <el-radio-group
+          v-model="defaultSort"
+          size="mini"
+          @change="sortChange"
+        >
+          <el-radio-button label="default">
+            默认排序
+          </el-radio-button>
+          <el-radio-button label="create">
+            时间排序
+          </el-radio-button>
         </el-radio-group>
       </dd>
     </dl>
     <div class="comments-container">
-       <div class="comments-box" id="goToReplyEditor">
+      <div
+        id="goToReplyEditor"
+        class="comments-box"
+      >
         <div class="pull-left">
-          <img class="avatar-32" v-if="$store.state.user.userinfo.avatar" :src="$store.state.user.userinfo.avatar" alt="">
-          <img class="avatar-32 " v-else src="http://stc.wangjiayang.cn/blog/avatar/2018/11/default.jpg" alt="">
+          <img
+            v-if="$store.state.user.userinfo.avatar"
+            class="avatar-32"
+            :src="$store.state.user.userinfo.avatar"
+            alt=""
+          >
+          <img
+            v-else
+            class="avatar-32 "
+            src="http://stc.wangjiayang.cn/blog/avatar/2018/11/default.jpg"
+            alt=""
+          >
         </div>
         <div class="comments-box-content">
           <el-form
@@ -23,20 +44,26 @@
             label-width="80px"
             label-position="top"
             size="medium"
-            >
-          <!-- <form action="/api/article/1190000016756466/comments/add"> -->
+          >
+            <!-- <form action="/api/article/1190000016756466/comments/add"> -->
             <div class="form-group mb0">
-              <el-form-item prop="content" >
+              <el-form-item prop="content">
                 <el-input
-                  @focus="focusCommetInput"
                   v-model="replyForm.content"
                   type="textarea"
                   :autosize="{ minRows: 4, maxRows: 6}"
-                  placeholder="文明社会，理性评论">
-                </el-input>
+                  placeholder="文明社会，理性评论"
+                  @focus="focusCommetInput"
+                />
               </el-form-item>
               <div class="mt15 text-right">
-                <el-button type="primary" @click="onReply('replyForm')" size="small">发布评论</el-button>
+                <el-button
+                  type="primary"
+                  size="small"
+                  @click="onReply('replyForm')"
+                >
+                  发布评论
+                </el-button>
               </div>
             </div>
           <!-- </form> -->
@@ -44,11 +71,28 @@
         </div>
       </div>
       <div class="comments-list">
-        <root-reply v-for="reply in comments.list" :key="reply.id" :reply="reply" @on-reply-success="onReplySuccess"></root-reply>
+        <root-reply
+          v-for="reply in comments.list"
+          :key="reply.id"
+          :reply="reply"
+          @on-reply-success="onReplySuccess"
+        />
       </div>
-      <div class="comments-loading" v-if="showLoading">载入中...</div>
-      <div class="comments-more" v-if="showMore"><a href="javascript:;" @click="loadmore">显示更多评论</a></div>
-
+      <div
+        v-if="showLoading"
+        class="comments-loading"
+      >
+        载入中...
+      </div>
+      <div
+        v-if="showMore"
+        class="comments-more"
+      >
+        <a
+          href="javascript:;"
+          @click="loadmore"
+        >显示更多评论</a>
+      </div>
     </div>
   </div>
 </template>
@@ -56,6 +100,9 @@
 import axios from 'axios'
 import RootReply from '@/components/comment/rootReply.vue'
 export default {
+  components: {
+    RootReply
+  },
   props: {
     topic: {
       type: Object,
@@ -90,8 +137,10 @@ export default {
       }
     }
   },
-  components: {
-    RootReply
+  computed: {
+    showMore () {
+      return (this.comments.total > this.comments.list.length) && !this.showLoading
+    }
   },
   methods: {
     focusCommetInput (event) {
@@ -155,7 +204,7 @@ export default {
       }
       this.showLoading = true
       // 查询评论列表
-      const { status: status3, data: data3 } = await axios.get(`/api/comment/getReplieds`, {
+      const { status: status3, data: data3 } = await axios.get('/api/comment/getReplieds', {
         params: {
           tid: self.topic.tid,
           page: page + 1,
@@ -165,7 +214,7 @@ export default {
       })
       this.showLoading = false
       if (status3 === 200 && data3.code === 0) {
-        let list = this.comments.list || []
+        const list = this.comments.list || []
         list.push.apply(list, data3.data.list)
         this.comments.total = data3.data.total
         this.comments.page = data3.data.page
@@ -191,7 +240,7 @@ export default {
       }
       this.showLoading = true
       // 查询评论列表
-      const { status: status3, data: data3 } = await axios.get(`/api/comment/getReplieds`, {
+      const { status: status3, data: data3 } = await axios.get('/api/comment/getReplieds', {
         params: {
           tid: self.topic.tid,
           page,
@@ -211,11 +260,6 @@ export default {
       this.topic.replied_count = this.topic.replied_count + 1
     }
 
-  },
-  computed: {
-    showMore () {
-      return (this.comments.total > this.comments.list.length) && !this.showLoading
-    }
   }
 }
 </script>

@@ -1,51 +1,87 @@
 <template>
-<div class="default-header">
-  <div class="container">
-    <div class="logo">
-      <span class="logo-icon">
-        <a href="/"><img src="../../../assets/logo.jpg" /></a>
-      </span>
-      <span class="desc">致力做一个有理想的码农</span></div>
-    <div class="header-right">
-      <div style="topnav"><top-nav/></div>
-      <el-dropdown @command="handleCommand" :trigger="trigger">
-        <div class="user">
-          <i class="avatar" v-if="$store.state.user.userinfo.avatar"><img :src="$store.state.user.userinfo.avatar" /></i>
-          <i class="avatar icon iconfont icon-people" v-else style="font-size:20px;"></i>
+  <div class="default-header">
+    <div class="container">
+      <div class="logo">
+        <span class="logo-icon">
+          <a href="/"><img src="../../../assets/logo.jpg"></a>
+        </span>
+        <span class="desc">致力做一个有理想的码农</span>
+      </div>
+      <div class="header-right">
+        <div style="topnav">
+          <top-nav />
         </div>
-        <el-dropdown-menu slot="dropdown" v-if="$store.state.user.userinfo.nickname">
-          <el-dropdown-item command="logout">注销</el-dropdown-item>
-        </el-dropdown-menu>
-        <el-dropdown-menu slot="dropdown" v-else>
-          <el-dropdown-item command="login">登录</el-dropdown-item>
-          <el-dropdown-item command="register">注册</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
+        <el-dropdown
+          :trigger="trigger"
+          @command="handleCommand"
+        >
+          <div class="user">
+            <i
+              v-if="$store.state.user.userinfo.avatar"
+              class="avatar"
+            ><img :src="$store.state.user.userinfo.avatar"></i>
+            <i
+              v-else
+              class="avatar icon iconfont icon-people"
+              style="font-size:20px;"
+            />
+          </div>
+          <el-dropdown-menu
+            v-if="$store.state.user.userinfo.nickname"
+            slot="dropdown"
+          >
+            <el-dropdown-item command="logout">
+              注销
+            </el-dropdown-item>
+          </el-dropdown-menu>
+          <el-dropdown-menu
+            v-else
+            slot="dropdown"
+          >
+            <el-dropdown-item command="login">
+              登录
+            </el-dropdown-item>
+            <el-dropdown-item command="register">
+              注册
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
     </div>
+    <div class="line" />
+    <el-dialog
+      :width="dialogWidth"
+      :title="dialogLoginVisible ? '登录' : '注册'"
+      :visible.sync="$store.state.user.showLogin"
+      :close-on-click-modal="false"
+      :before-close="handleDialogClose"
+    >
+      <div style="margin-top:10px;">
+        <login-form
+          v-if="dialogLoginVisible"
+          :goto-register="gotoRegister"
+          :login-callback="loginCallback"
+        />
+        <register-form
+          v-if="dialogRegisterVisible"
+          :goto-login="gotoLogin"
+          :register-callback="registerCallback"
+        />
+      </div>
+    </el-dialog>
   </div>
-  <div class="line"></div>
-  <el-dialog
-  :width="dialogWidth"
-  :title="dialogLoginVisible ? '登录' : '注册'"
-  :visible.sync="$store.state.user.showLogin"
-  :close-on-click-modal="false"
-  :before-close="handleDialogClose">
-    <div style="margin-top:10px;">
-      <login-form :gotoRegister="gotoRegister" :loginCallback="loginCallback" v-if="dialogLoginVisible"></login-form>
-      <register-form :gotoLogin="gotoLogin" :registerCallback="registerCallback" v-if="dialogRegisterVisible"/>
-    </div>
-  </el-dialog>
-
-
-</div>
 </template>
 <script>
-import Logo from './logo.vue'
 import TopNav from './nav'
 import LoginForm from '@/components/user/loginForm.vue'
 import RegisterForm from '@/components/user/registerForm'
 import axios from 'axios'
 export default {
+  components: {
+    TopNav,
+    LoginForm,
+    RegisterForm
+  },
   data () {
     return {
       trigger: 'click',
@@ -53,12 +89,6 @@ export default {
       dialogRegisterVisible: false,
       dialogWidth: '320px'
     }
-  },
-  components: {
-    Logo,
-    TopNav,
-    LoginForm,
-    RegisterForm
   },
   computed: {
     // 计算属性的 getter
@@ -248,11 +278,6 @@ export default {
     padding: 10px 10px
   }
 
-
 }
 
-
-
-
 </style>
-

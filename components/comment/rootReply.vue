@@ -1,81 +1,147 @@
 <template>
-<div class="comments-item" :data-id="reply.id">
-  <div class="pull-left">
-      <a target="_blank" href="###"><img class="avatar-32 " :src="`/stc/avatar/${reply.userid}`" alt=""></a>
-  </div>
-  <div class="comments-content">
-    <div class="comment-trigger">
+  <div
+    class="comments-item"
+    :data-id="reply.id"
+  >
+    <div class="pull-left">
+      <a
+        target="_blank"
+        href="###"
+      ><img
+        class="avatar-32 "
+        :src="`/stc/avatar/${reply.userid}`"
+        alt=""
+      ></a>
+    </div>
+    <div class="comments-content">
+      <div class="comment-trigger">
         <div class="pull-right comment-option">
-            <a class="hide" href="javascript:;"><span class="ml10 comment-edit-btn"><span class="iconfont icon-brush_fill" aria-hidden="true"></span></span>
-            </a>
-            <!-- <a href="#911" class="hide ml10 report" title="举报">
+          <a
+            class="hide"
+            href="javascript:;"
+          ><span class="ml10 comment-edit-btn"><span
+            class="iconfont icon-brush_fill"
+            aria-hidden="true"
+          /></span>
+          </a>
+          <!-- <a href="#911" class="hide ml10 report" title="举报">
               <span class="iconfont icon-flag_fill" aria-hidden="true"></span>
             </a> -->
-            <a class="hide" href="javascript:;"><span class="ml10 comment-delete-btn"><span class="iconfont icon-trash_fill" aria-hidden="true"></span></span>
-            </a>
+          <a
+            class="hide"
+            href="javascript:;"
+          ><span class="ml10 comment-delete-btn"><span
+            class="iconfont icon-trash_fill"
+            aria-hidden="true"
+          /></span>
+          </a>
         </div>
-        <strong><a target="_blank" href="###">{{reply.username}}</a></strong>
+        <strong><a
+          target="_blank"
+          href="###"
+        >{{ reply.username }}</a></strong>
 
-        <span class="comments-isAuthor" v-if="reply.is_author">作者</span> <span>  ·  {{reply.create_time}}</span>
-    </div>
-    <div class="fmt mb10 markdown-body" v-html="markedContent(reply.content)"></div>
-    <p class="comment-ops not-reply">
-        <span class="comments-zan" :class="{'comments-zan--active': reply.is_support}" @click="handleZan">
-            <i class="comments-zan-icon iconfont icon-praise_fill" aria-hidden="true"></i>
-            <span class="comments-zan-text">{{reply.is_support?'已赞':'赞'}}</span>
-            <span class="comments-zan-value" v-if="reply.support_count>0">+{{reply.support_count}}</span>
-        </span>
-        <span class="ml15 comments-reply-btn" @click="gotoReply">回复</span>
-    </p>
-    <div class="reply-list" >
-      <template v-if="reply.replyList && reply.replyList.total>0">
-        <child-reply
-        v-for="childreply in reply.replyList.list"
-        :key="childreply.id"
-        :reply="childreply"
-        :atReply="gotoAtReply"
-        ></child-reply>
-      </template>
-      <div class="reply-item reply-item--ops"  v-if="!showReplyForm && reply.replyList && reply.replyList.total > 0">
-          <a class="reply-inner-btn" href="javascript:;" @click="gotoReply">添加回复</a>
-          <span class="reply-more" v-if="showMore"><span class="text-muted-plus-plus mr5 ml5">|</span>
-            <a class="reply-more-btn" href="javascript:;" @click="loadmore">显示更多</a>
-          </span>
+        <span
+          v-if="reply.is_author"
+          class="comments-isAuthor"
+        >作者</span> <span>  ·  {{ reply.create_time }}</span>
       </div>
-      <el-form
-        v-else-if="showReplyForm"
-        class="reply-form"
-        ref="replyForm"
-        :model="replyForm"
-        :rules="rules"
-        label-width="80px"
-        label-position="top"
-        size="small"
+      <div
+        class="fmt mb10 markdown-body"
+        v-html="markedContent(reply.content)"
+      />
+      <p class="comment-ops not-reply">
+        <span
+          class="comments-zan"
+          :class="{'comments-zan--active': reply.is_support}"
+          @click="handleZan"
         >
-        <el-button size="small" class="pull-right reply-btn" @click="onSubmitReply('replyForm')" >添加回复</el-button>
-        <div class="form-group">
-          <el-form-item prop="content" >
-            <el-input
-              @focus="focusCommetInput"
-              v-model="replyForm.content"
-              class="reply-text"
-              type="textarea"
-              autosize
-              :placeholder="placeholder"
-            >
-            </el-input>
-          </el-form-item>
+          <i
+            class="comments-zan-icon iconfont icon-praise_fill"
+            aria-hidden="true"
+          />
+          <span class="comments-zan-text">{{ reply.is_support?'已赞':'赞' }}</span>
+          <span
+            v-if="reply.support_count>0"
+            class="comments-zan-value"
+          >+{{ reply.support_count }}</span>
+        </span>
+        <span
+          class="ml15 comments-reply-btn"
+          @click="gotoReply"
+        >回复</span>
+      </p>
+      <div class="reply-list">
+        <template v-if="reply.replyList && reply.replyList.total>0">
+          <child-reply
+            v-for="childreply in reply.replyList.list"
+            :key="childreply.id"
+            :reply="childreply"
+            :at-reply="gotoAtReply"
+          />
+        </template>
+        <div
+          v-if="!showReplyForm && reply.replyList && reply.replyList.total > 0"
+          class="reply-item reply-item--ops"
+        >
+          <a
+            class="reply-inner-btn"
+            href="javascript:;"
+            @click="gotoReply"
+          >添加回复</a>
+          <span
+            v-if="showMore"
+            class="reply-more"
+          ><span class="text-muted-plus-plus mr5 ml5">|</span>
+            <a
+              class="reply-more-btn"
+              href="javascript:;"
+              @click="loadmore"
+            >显示更多</a>
+          </span>
         </div>
-      </el-form>
+        <el-form
+          v-else-if="showReplyForm"
+          ref="replyForm"
+          class="reply-form"
+          :model="replyForm"
+          :rules="rules"
+          label-width="80px"
+          label-position="top"
+          size="small"
+        >
+          <el-button
+            size="small"
+            class="pull-right reply-btn"
+            @click="onSubmitReply('replyForm')"
+          >
+            添加回复
+          </el-button>
+          <div class="form-group">
+            <el-form-item prop="content">
+              <el-input
+                v-model="replyForm.content"
+                class="reply-text"
+                type="textarea"
+                autosize
+                :placeholder="placeholder"
+                @focus="focusCommetInput"
+              />
+            </el-form-item>
+          </div>
+        </el-form>
+      </div>
     </div>
   </div>
-</div>
 </template>
 <script>
 import axios from 'axios'
 import marked from 'marked'
 import ChildReply from './childReply'
 export default {
+  components: {
+    ChildReply
+  },
   props: {
     reply: {
       type: Object,
@@ -83,9 +149,6 @@ export default {
         return null
       }
     }
-  },
-  components: {
-    ChildReply
   },
   data () {
     return {
@@ -209,7 +272,7 @@ export default {
       }
       this.showLoading = true
       // 查询评论列表
-      const { status: status3, data: data3 } = await axios.get(`/api/comment/getChildReplieds`, {
+      const { status: status3, data: data3 } = await axios.get('/api/comment/getChildReplieds', {
         params: {
           tid: self.tid,
           rootid: this.reply.id,
@@ -220,7 +283,7 @@ export default {
 
       this.showLoading = false
       if (status3 === 200 && data3.code === 0) {
-        let list = this.reply.replyList.list || []
+        const list = this.reply.replyList.list || []
         list.push.apply(list, data3.data.list)
         this.reply.replyList.total = data3.data.total
         this.reply.replyList.page = data3.data.page
@@ -231,4 +294,3 @@ export default {
   }
 }
 </script>
-

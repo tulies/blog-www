@@ -1,20 +1,30 @@
 <template>
-<div class="title-bar">
-  <dl class="pull-left">
-    <dt>{{title}}</dt>
-    <dd v-for="k in keywords" :key="k.name"><a :href="k.url">{{k.name}}</a></dd>
-  </dl>
-  <dl class="pull-right">
-    <dd v-for="m in mores" :key="m.name"><a :href="m.url">{{m.name}}</a></dd>
-  </dl>
-</div>
-
+  <div class="title-bar">
+    <dl class="pull-left">
+      <dt>{{ title }}</dt>
+      <dd
+        v-for="k in keywords"
+        :key="k.name"
+      >
+        <a :href="k.url">{{ k.name }}</a>
+      </dd>
+    </dl>
+    <dl class="pull-right">
+      <dd
+        v-for="m in mores"
+        :key="m.name"
+      >
+        <a :href="m.url">{{ m.name }}</a>
+      </dd>
+    </dl>
+  </div>
 </template>
 <script>
 export default {
   props: {
     title: {
-      type: String
+      type: String,
+      default: ''
     },
     keywords: {
       type: Array,
@@ -66,5 +76,3 @@ export default {
   }
 }
 </style>
-
-

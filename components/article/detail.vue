@@ -1,23 +1,33 @@
 <template>
-<div class="article-detail">
-  <h3 class="article-title">{{article.title}}</h3>
-  <dl class="extinfo">
-    <dt>
-      <span><i class="el-icon-date"></i> {{article.create_time}}发布 </span>
-      <a class="ml5 article-tag" v-for="tag in article.tags.split(',')" :key="tag" :href="`/tag/${tag}`">{{tag}}</a>
-      <span><i class="el-icon-view ml5"></i> {{article.pv}}次阅读</span>
-    </dt>
+  <div class="article-detail">
+    <h3 class="article-title">
+      {{ article.title }}
+    </h3>
+    <dl class="extinfo">
+      <dt>
+        <span><i class="el-icon-date" /> {{ article.create_time }}发布 </span>
+        <a
+          v-for="tag in article.tags.split(',')"
+          :key="tag"
+          class="ml5 article-tag"
+          :href="`/tag/${tag}`"
+        >{{ tag }}</a>
+        <span><i class="el-icon-view ml5" /> {{ article.pv }}次阅读</span>
+      </dt>
     <!-- <dd>
       <el-badge :value="200" :max="99">
             <el-button size="mini">评论</el-button>
       </el-badge>
     </dd> -->
-  </dl>
-  <div class="article-content">
-    <div class="markdown-body" v-html="markedContent(article.content)"></div>
+    </dl>
+    <div class="article-content">
+      <div
+        class="markdown-body"
+        v-html="markedContent(article.content)"
+      />
+    </div>
+    <zan />
   </div>
-  <zan/>
-</div>
 </template>
 <script>
 import marked from 'marked'
@@ -25,43 +35,19 @@ import Zan from '../widgets/zan'
 // import utils from '@/util/utils'
 import pinyin from 'js-pinyin'
 export default {
-  props: {
-    article: {
-      type: Object,
-      default: {}
-    }
-  },
   components: {
     Zan
   },
-  methods: {
-    markedContent (content) {
-      // Get reference
-      const renderer = new marked.Renderer()
-
-      // Override function
-      renderer.heading = function (text, level) {
-        // var escapedText = text.toLowerCase().replace(/[^\w]+/g, '-')
-        let escapedText = text.toLowerCase().replace(/[^(\u4e00-\u9fa5A-Z0-9a-z)]+/g, '')
-        escapedText = pinyin.getFullChars(escapedText).substring(0, 32)
-        // const rd = utils.getUUID()
-        // const aname = escapedText
-        return `
-          <h${level} data-id="${escapedText}" title="${text}">
-            <a name="${escapedText}" class="heading-anchor" href="#${escapedText}">
-              <span class="header-link"></span>
-            </a>
-            ${text}
-          </h${level}>`
-      }
-      marked.setOptions({ breaks: true, renderer: renderer })
-      return marked(content)
+  props: {
+    article: {
+      type: Object,
+      default: () => ({})
     }
   },
   mounted () {
     const domlist = document.querySelector('.article-detail .markdown-body').querySelectorAll('h1, h2, h3, h4, h5')
     // document.querySelector('.article-detail .markdown-body').escapedText
-    let nodelist = []
+    const nodelist = []
     let i = 1
     domlist.forEach(element => {
       nodelist.push({
@@ -73,7 +59,7 @@ export default {
       })
       i++
     })
-    let treelist = []
+    const treelist = []
     let h1set = null
     let h2set = null
     let h3set = null
@@ -138,6 +124,30 @@ export default {
       }
     })
     this.$emit('tocinit', treelist)
+  },
+  methods: {
+    markedContent (content) {
+      // Get reference
+      const renderer = new marked.Renderer()
+
+      // Override function
+      renderer.heading = function (text, level) {
+        // var escapedText = text.toLowerCase().replace(/[^\w]+/g, '-')
+        let escapedText = text.toLowerCase().replace(/[^(\u4e00-\u9fa5A-Z0-9a-z)]+/g, '')
+        escapedText = pinyin.getFullChars(escapedText).substring(0, 32)
+        // const rd = utils.getUUID()
+        // const aname = escapedText
+        return `
+          <h${level} data-id="${escapedText}" title="${text}">
+            <a name="${escapedText}" class="heading-anchor" href="#${escapedText}">
+              <span class="header-link"></span>
+            </a>
+            ${text}
+          </h${level}>`
+      }
+      marked.setOptions({ breaks: true, renderer: renderer })
+      return marked(content)
+    }
   }
 }
 </script>
@@ -175,4 +185,3 @@ export default {
 }
 
 </style>
-

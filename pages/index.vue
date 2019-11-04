@@ -1,35 +1,32 @@
 <template>
-
-<div class="default-page-container">
-  <section class="default-page-main">
-    <!-- <cover/> -->
-    <!-- :keywords="keywords" -->
-    <main-title-bar
-      title="文章推荐"
-      :mores="mores"
+  <div class="default-page-container">
+    <section class="default-page-main">
+      <!-- <cover/> -->
+      <!-- :keywords="keywords" -->
+      <main-title-bar
+        title="文章推荐"
+        :mores="mores"
       />
-    <article-list :list="articleList"/>
-
-  </section>
-  <aside class="default-page-aside">
-    <!-- <aside-nav/> -->
-    <aside-article-rec
-      title="热门文章"
-      :list="$store.state.article.hotrec"/>
-    <!-- <div style="padding: 15px 0 0 0" ><a href="https://s.click.taobao.com/Kb3GbKw"><img src="http://tp.nty.tv189.com/h5/bl/adv-aliyun-463-224-2.jpg" style="width:100%;border-radius:4px"/></a></div> -->
-    <aside-article-rec
-      title="最新文章"
-      :list="$store.state.article.newrec"
-      style="margin-top: 15px;"/>
-
-  </aside>
-</div>
+      <article-list :list="articleList" />
+    </section>
+    <aside class="default-page-aside">
+      <!-- <aside-nav/> -->
+      <aside-article-rec
+        title="热门文章"
+        :list="$store.state.article.hotrec"
+      />
+      <!-- <div style="padding: 15px 0 0 0" ><a href="https://s.click.taobao.com/Kb3GbKw"><img src="http://tp.nty.tv189.com/h5/bl/adv-aliyun-463-224-2.jpg" style="width:100%;border-radius:4px"/></a></div> -->
+      <aside-article-rec
+        title="最新文章"
+        :list="$store.state.article.newrec"
+        style="margin-top: 15px;"
+      />
+    </aside>
+  </div>
 </template>
 
 <script>
-import Cover from '@/components/index/cover.vue'
 import MainTitleBar from '@/components/widgets/mainTitleBar'
-import AsideNav from '@/components/widgets/asideNav'
 import ArticleList from '@/components/articleList/index.vue'
 import AsideArticleRec from '@/components//widgets/asideArticleRec'
 
@@ -37,10 +34,8 @@ import { jssdkConfig, updateappmessagesharedata } from '@/util/wx'
 // import wx from 'weixin-js-sdk'
 export default {
   components: {
-    Cover,
     ArticleList,
     MainTitleBar,
-    AsideNav,
     AsideArticleRec
   },
   data () {
@@ -65,7 +60,7 @@ export default {
     let state = {
       articleList: []
     }
-    const { status, data } = await ctx.$axios.get(`/api/article/list`, {
+    const { status, data } = await ctx.$axios.get('/api/article/list', {
       params: {
         page: 0,
         size: 16,

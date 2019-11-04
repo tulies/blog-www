@@ -1,25 +1,33 @@
 <template>
-<div class="article-item">
-  <div class="article-cover" v-if="item.poster">
-    <div class="imgcont">
-      <img :src="item.poster">
+  <div class="article-item">
+    <div
+      v-if="item.poster"
+      class="article-cover"
+    >
+      <div class="imgcont">
+        <img :src="item.poster">
+      </div>
+    </div>
+    <div class="article-detail">
+      <h3>{{ item.title }}</h3>
+      <p class="desc">
+        {{ item.description }}
+      </p>
+      <dl class="extinfo">
+        <dt>
+          <span><i class="el-icon-date" /> {{ item.create_time }} </span>
+          <a
+            v-for="tag in item.tags.split(',')"
+            :key="tag"
+            class="article-tag ml5"
+            :href="createTagUrl(tag)"
+          >{{ tag }}</a>
+        </dt>
+        <!-- <span><i class="el-icon-edit-outline"></i> 评论(<a href="">200</a>)   </span> -->
+        <span class="ml5"><i class="el-icon-view" /> 浏览(<a href="javascript:;">{{ item.pv }}</a>)</span>
+      </dl>
     </div>
   </div>
-  <div class="article-detail">
-    <h3>{{item.title}}</h3>
-    <p class="desc">{{item.description}}</p>
-    <dl class="extinfo">
-      <dt>
-        <span><i class="el-icon-date"></i> {{item.create_time}} </span>
-        <a class="article-tag ml5" v-for="tag in item.tags.split(',')" :key="tag" :href="createTagUrl(tag)">{{tag}}</a>
-      </dt>
-      <dd>
-        <!-- <span><i class="el-icon-edit-outline"></i> 评论(<a href="">200</a>)   </span> -->
-        <span class="ml5"><i class="el-icon-view"></i> 浏览(<a href="javascript:;">{{item.pv}}</a>)</span>
-      </dd>
-    </dl>
-  </div>
-</div>
 </template>
 <script>
 import CreateUrl from '@/util/createUrl'
@@ -27,7 +35,7 @@ export default {
   props: {
     item: {
       type: Object,
-      default: {}
+      default: () => ([])
     }
   },
   data () {

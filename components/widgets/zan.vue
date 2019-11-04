@@ -5,14 +5,25 @@
         placement="top"
         title=""
         width="150"
-        :trigger="trigger">
-          <div style="display:flex;  overflow:hidden">
-            <span style="flex:1; padding: 5px;"><img src="../../assets/img/ewm_wx.png" style="width:100%"/></span>
-            <!-- <span style="flex:1; padding: 5px;"><img src="../../assets/img/ewm_zfb.png"  style="width:100%" /></span> -->
-          </div>
-          <el-button type="primary" plain style="width:100%" slot="reference">赞赏支持</el-button>
+        :trigger="trigger"
+      >
+        <div style="display:flex;  overflow:hidden">
+          <span style="flex:1; padding: 5px;"><img
+            src="../../assets/img/ewm_wx.png"
+            style="width:100%"
+          ></span>
+          <!-- <span style="flex:1; padding: 5px;"><img src="../../assets/img/ewm_zfb.png"  style="width:100%" /></span> -->
+        </div>
+        <el-button
+          slot="reference"
+          type="primary"
+          plain
+          style="width:100%"
+        >
+          赞赏支持
+        </el-button>
       </el-popover>
-      </dt>
+    </dt>
     <dd>如果觉得我的文章对你有用，请随意赞赏</dd>
   </dl>
 </template>
@@ -46,4 +57,3 @@ export default {
     }
   }
 </style>
-

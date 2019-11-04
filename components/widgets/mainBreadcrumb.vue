@@ -1,31 +1,54 @@
 <template>
-
-<div class="title-bar">
-  <el-breadcrumb class="pull-left left-breadcrumb" separator-class="el-icon-arrow-right">
-    <el-breadcrumb-item><a href="/">首页</a></el-breadcrumb-item>
-    <el-breadcrumb-item v-for="item in breadcrumb" :key="item.name"><a :href="item.url">{{item.name}}</a></el-breadcrumb-item>
-  </el-breadcrumb>
-  <dl :class="{'pull-right mores': true,'mores-open': mores.length>1}" v-if="mores && mores.length > 0">
-    <dd v-for="item in mores" :key="item.name"><a :href="item.url">{{item.name}}</a></dd>
-  </dl>
-  <div class="pull-right mores mores-close" v-if="mores.length>1">
-    <el-dropdown >
-      <span class="el-dropdown-link">
-        全部<i class="el-icon-arrow-down el-icon--right"></i>
-      </span>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item v-for="item in mores" :key="item.name"><a :href="item.url">{{item.name}}</a></el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown>
+  <div class="title-bar">
+    <el-breadcrumb
+      class="pull-left left-breadcrumb"
+      separator-class="el-icon-arrow-right"
+    >
+      <el-breadcrumb-item><a href="/">首页</a></el-breadcrumb-item>
+      <el-breadcrumb-item
+        v-for="item in breadcrumb"
+        :key="item.name"
+      >
+        <a :href="item.url">{{ item.name }}</a>
+      </el-breadcrumb-item>
+    </el-breadcrumb>
+    <dl
+      v-if="mores && mores.length > 0"
+      :class="{'pull-right mores': true,'mores-open': mores.length>1}"
+    >
+      <dd
+        v-for="item in mores"
+        :key="item.name"
+      >
+        <a :href="item.url">{{ item.name }}</a>
+      </dd>
+    </dl>
+    <div
+      v-if="mores.length>1"
+      class="pull-right mores mores-close"
+    >
+      <el-dropdown>
+        <span class="el-dropdown-link">
+          全部<i class="el-icon-arrow-down el-icon--right" />
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item
+            v-for="item in mores"
+            :key="item.name"
+          >
+            <a :href="item.url">{{ item.name }}</a>
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </div>
   </div>
-</div>
 </template>
 <script>
 export default {
   props: {
     breadcrumb: {
       type: Array,
-      default: []
+      default: () => ([])
     },
     mores: {
       type: Array,
@@ -92,5 +115,3 @@ export default {
   }
 }
 </style>
-
-

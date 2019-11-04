@@ -1,14 +1,32 @@
 <template>
-<el-card class="aside-box-card" shadow="hover">
-  <div slot="header" class="clearfix">
-    <span>{{title}}</span>
-    <el-button v-if="more" style="float: right; padding: 0" type="text">{{more.title}}</el-button>
-  </div>
-  <dl v-for="item in list" :key="item.id" class="item">
-    <dt><a :href="createArticleUrl(item.id)">{{item.title}}</a></dt>
-    <dd v-if="item.desc">{{item.desc}}</dd>
-  </dl>
-</el-card>
+  <el-card
+    class="aside-box-card"
+    shadow="hover"
+  >
+    <div
+      slot="header"
+      class="clearfix"
+    >
+      <span>{{ title }}</span>
+      <el-button
+        v-if="more"
+        style="float: right; padding: 0"
+        type="text"
+      >
+        {{ more.title }}
+      </el-button>
+    </div>
+    <dl
+      v-for="item in list"
+      :key="item.id"
+      class="item"
+    >
+      <dt><a :href="createArticleUrl(item.id)">{{ item.title }}</a></dt>
+      <dd v-if="item.desc">
+        {{ item.desc }}
+      </dd>
+    </dl>
+  </el-card>
 </template>
 <script>
 import CreateUrl from '@/util/createUrl'
@@ -16,14 +34,16 @@ import CreateUrl from '@/util/createUrl'
 export default {
   props: {
     title: {
-      type: String
+      type: String,
+      default: ''
     },
     more: {
       type: Object,
       default: null
     },
     list: {
-      type: Array
+      type: Array,
+      default: () => ([])
     }
   },
   methods: {

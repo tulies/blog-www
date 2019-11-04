@@ -1,19 +1,29 @@
 <template>
-<el-card class="aside-box-card" shadow="hover">
-  <div slot="header" class="clearfix">
-    <span>文章目录</span>
-  </div>
-  <el-tree
-    class="toctree"
-    :data="tocdata"
-    node-key="id"
-    default-expand-all
-    :expand-on-click-node="false">
-    <span class="custom-tree-node" slot-scope="{ node, data }">
-      <a :href="'#'+data.hash">{{ node.label }}</a>
-    </span>
-  </el-tree>
-</el-card>
+  <el-card
+    class="aside-box-card"
+    shadow="hover"
+  >
+    <div
+      slot="header"
+      class="clearfix"
+    >
+      <span>文章目录</span>
+    </div>
+    <el-tree
+      class="toctree"
+      :data="tocdata"
+      node-key="id"
+      default-expand-all
+      :expand-on-click-node="false"
+    >
+      <span
+        slot-scope="{ node, data }"
+        class="custom-tree-node"
+      >
+        <a :href="'#'+data.hash">{{ node.label }}</a>
+      </span>
+    </el-tree>
+  </el-card>
 </template>
 <script>
 
@@ -28,7 +38,6 @@ export default {
   }
 }
 </script>
-
 
 <style lang="scss">
 // @import '@/assets/css/config.scss';
@@ -47,5 +56,3 @@ export default {
   }
 }
 </style>
-
-

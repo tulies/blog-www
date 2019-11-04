@@ -1,14 +1,27 @@
 <template>
-<div class="article-recomment">
-  <h2>你可能感兴趣的</h2>
-  <ul class="widget-links">
-    <li v-for="item in list" :key="item.id" >
-      <a :href="createArticleUrl(item.id)" :title="item.title" target="_blank">{{item.title}}</a>
-      <a v-for="t in item.tags.split(',')" :key="t" class="article-tag ml5" taget="_blank" :href="createTagUrl(t)">{{t}}</a>
-      <span class="text-muted">· {{item.create_time.substring(0, 10)}}</span>
-    </li>
-  </ul>
-</div>
+  <div class="article-recomment">
+    <h2>你可能感兴趣的</h2>
+    <ul class="widget-links">
+      <li
+        v-for="item in list"
+        :key="item.id"
+      >
+        <a
+          :href="createArticleUrl(item.id)"
+          :title="item.title"
+          target="_blank"
+        >{{ item.title }}</a>
+        <a
+          v-for="t in item.tags.split(',')"
+          :key="t"
+          class="article-tag ml5"
+          taget="_blank"
+          :href="createTagUrl(t)"
+        >{{ t }}</a>
+        <span class="text-muted">· {{ item.create_time.substring(0, 10) }}</span>
+      </li>
+    </ul>
+  </div>
 </template>
 <script>
 import CreateUrl from '@/util/createUrl'
@@ -17,7 +30,7 @@ export default {
   props: {
     list: {
       type: Array,
-      default: []
+      default: () => ([])
     }
   },
   data () {
@@ -37,7 +50,6 @@ export default {
   }
 }
 </script>
-
 
 <style lang="scss" scoped>
 @import '@/assets/css/config.scss';
@@ -70,4 +82,3 @@ export default {
   }
 }
 </style>
-

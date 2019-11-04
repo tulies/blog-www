@@ -1,17 +1,25 @@
 <template>
-<div>
-  <div class="panel-header">
-    <div class="desc">欢迎来到王嘉炀个人博客</div>
+  <div>
+    <div class="panel-header">
+      <div class="desc">
+        欢迎来到王嘉炀个人博客
+      </div>
     <!-- <div class="logo"><img src="../../assets/logo.jpg" /></div> -->
-  </div>
-  <el-card class="panel-login">
-    <div slot="header" class="clearfix">
-      <span class="panel-title">登录</span>
-      <!-- <el-button style="float: right; padding: 3px 0" type="text">注册</el-button> -->
     </div>
-    <login-form :gotoRegister="gotoRegister" :loginCallback="loginCallback"></login-form>
-  </el-card>
-</div>
+    <el-card class="panel-login">
+      <div
+        slot="header"
+        class="clearfix"
+      >
+        <span class="panel-title">登录</span>
+      <!-- <el-button style="float: right; padding: 3px 0" type="text">注册</el-button> -->
+      </div>
+      <login-form
+        :goto-register="gotoRegister"
+        :login-callback="loginCallback"
+      />
+    </el-card>
+  </div>
 </template>
 
 <script>

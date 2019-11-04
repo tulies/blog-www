@@ -1,12 +1,19 @@
 <template>
-<el-menu
-  :default-active="active"
-  class="el-menu-demo"
-  mode="horizontal"
-  hide-on-click="true"
-  @select="handleSelect">
-  <el-menu-item v-for="nav in navs" :index="nav.index" :key="nav.index">{{nav.name}}</el-menu-item>
-</el-menu>
+  <el-menu
+    :default-active="active"
+    class="el-menu-demo"
+    mode="horizontal"
+    hide-on-click="true"
+    @select="handleSelect"
+  >
+    <el-menu-item
+      v-for="nav in navs"
+      :key="nav.index"
+      :index="nav.index"
+    >
+      {{ nav.name }}
+    </el-menu-item>
+  </el-menu>
 </template>
 <script>
 export default {
@@ -49,13 +56,6 @@ export default {
       ]
     }
   },
-
-  methods: {
-    handleSelect (index) {
-      window.location.href = this.navs[index].url
-    }
-
-  },
   // computed: {
   //   active () {
   //     if (this.activeIndex !== undefined) {
@@ -78,6 +78,13 @@ export default {
         this.active = curnav[0].index
       }
     }
+  },
+
+  methods: {
+    handleSelect (index) {
+      window.location.href = this.navs[index].url
+    }
+
   }
 
 }

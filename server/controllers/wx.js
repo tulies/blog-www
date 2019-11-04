@@ -16,8 +16,8 @@ const jssdkConfig = async (ctx, next) => {
 // 重定向
 const authorize = (ctx, next) => {
   // const wxticket = await wxDAO.getticket()
-  const { protocol, host, query: { backurl } } = ctx.request
-  const redirectUri = encodeURIComponent(`${protocol}://${host}/api/wx/authorize-callback`)
+  const { origin, query: { backurl } } = ctx.request
+  const redirectUri = encodeURIComponent(`${origin}/api/wx/authorize-callback`)
   const scope = 'snsapi_base'
   // const scope = 'snsapi_userinfo'
   const state = backurl

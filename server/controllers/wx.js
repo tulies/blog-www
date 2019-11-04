@@ -19,8 +19,8 @@ const authorize = (ctx, next) => {
   const { origin, query: { backurl } } = ctx.request
   console.log(origin)
   const redirectUri = encodeURIComponent(`${origin}/api/wx/authorize-callback`)
-  const scope = 'snsapi_base'
-  // const scope = 'snsapi_userinfo'
+  // const scope = 'snsapi_base'
+  const scope = 'snsapi_userinfo'
   const state = backurl
   const url = wxDAO.authorize({
     redirectUri,

@@ -87,6 +87,7 @@ const authorizeCallback = async ({ code }) => {
 }
 const snsuserinfo = async ({ accessToken, openid }) => {
   const res = await axios.get(`https://api.weixin.qq.com/sns/userinfo?access_token=${accessToken}&openid=${openid}&lang=zh_CN`)
+  console.log(res)
   if (res.status !== 200) {
     return null
   }
@@ -95,6 +96,7 @@ const snsuserinfo = async ({ accessToken, openid }) => {
 
 const wxuserinfo = async ({ accessToken, openid }) => {
   const res = await axios.get(`https://api.weixin.qq.com/sns/userinfo?access_token=${accessToken}&openid=${openid}&lang=zh_CN`)
+  console.log(res)
   if (res.status !== 200) {
     return null
   }

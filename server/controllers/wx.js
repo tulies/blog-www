@@ -17,7 +17,6 @@ const jssdkConfig = async (ctx, next) => {
 const authorize = (ctx, next) => {
   // const wxticket = await wxDAO.getticket()
   const { origin, query: { backurl } } = ctx.request
-  console.log(origin)
   const redirectUri = encodeURIComponent(`${origin}/api/wx/authorize-callback`)
   // const scope = 'snsapi_base'
   const scope = 'snsapi_userinfo'
@@ -63,12 +62,17 @@ const authorizeCallback = async (ctx, next) => {
 const userinfo = async (ctx, next) => {
   const wxUserinfo = ctx.session.wxUserinfo
   if (!wxUserinfo) {
+    console.log({
+      code: -1,
+      msg: '无微信授权的登录信息'
+    })
     ctx.body = {
       code: -1,
       msg: '无微信授权的登录信息'
     }
     return
   }
+  console.log(ctx.session.wxUserinfo)
   ctx.body = {
     code: 0,
     msg: 'ok',

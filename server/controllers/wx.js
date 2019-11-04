@@ -17,6 +17,7 @@ const jssdkConfig = async (ctx, next) => {
 const authorize = (ctx, next) => {
   // const wxticket = await wxDAO.getticket()
   const { origin, query: { backurl } } = ctx.request
+  console.log(origin)
   const redirectUri = encodeURIComponent(`${origin}/api/wx/authorize-callback`)
   const scope = 'snsapi_base'
   // const scope = 'snsapi_userinfo'

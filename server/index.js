@@ -22,11 +22,11 @@ const redis = new Redis({
 })
 
 // Import and Set Nuxt.js options
-let config = require('../nuxt.config.js')
+const config = require('../nuxt.config.js')
 config.dev = !(app.env === 'production')
 
 app.keys = ['blog', 'keyskeys']
-app.proxy = true
+// app.proxy = true
 // 启用session +redis
 app.use(session({ key: 'blog', prefix: 'blog:uid', store: redis }))
 app.use(json())

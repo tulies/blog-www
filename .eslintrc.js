@@ -26,6 +26,7 @@ module.exports = {
 
   globals: {
     'wx': true,
+    '$':true
   },
 
    // add your custom rules here

@@ -6,8 +6,8 @@ const CryptoJS = require('crypto-js')
 
 const gettoken = async () => {
   // 先从redis中获取
-  const rediskey = `blogwww:wxtoken`
-  let wxtoken = await redis.get(rediskey)
+  const rediskey = 'blogwww:wxtoken'
+  const wxtoken = await redis.get(rediskey)
   if (wxtoken) {
     return wxtoken
   }
@@ -25,8 +25,8 @@ const gettoken = async () => {
 
 const getticket = async () => {
   // 先从redis中获取
-  const rediskey = `blogwww:wxticket`
-  let wxticket = await redis.get(rediskey)
+  const rediskey = 'blogwww:wxticket'
+  const wxticket = await redis.get(rediskey)
 
   if (wxticket) {
     return wxticket
@@ -70,6 +70,41 @@ const jssdkConfig = async ({ url }) => {
     rawString
   }
 }
+
+const authorize = ({ backurl, redirectUri, scope, state }) => {
+  // const signature = CryptoJS.SHA1(rawString).toString()
+  const rediskey = CryptoJS.MD5(state).toString()
+  redis.set(rediskey, state)
+  redis.expire(rediskey, 60)
+  return `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${configs.wx.appId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&state=${rediskey}#wechat_redirect`
+}
+const authorizeCallback = async ({ code }) => {
+  const res = await axios.get(`https://api.weixin.qq.com/sns/oauth2/access_token?appid=${configs.wx.appId}&secret=${configs.wx.appSecret}&code=${code}&grant_type=authorization_code`)
+  if (res.status !== 200) {
+    return null
+  }
+  return res.data
+}
+const snsuserinfo = async ({ accessToken, openid }) => {
+  const res = await axios.get(`https://api.weixin.qq.com/sns/userinfo?access_token=${accessToken}&openid=${openid}&lang=zh_CN`)
+  if (res.status !== 200) {
+    return null
+  }
+  return res.data
+}
+
+const wxuserinfo = async ({ accessToken, openid }) => {
+  const res = await axios.get(`https://api.weixin.qq.com/sns/userinfo?access_token=${accessToken}&openid=${openid}&lang=zh_CN`)
+  if (res.status !== 200) {
+    return null
+  }
+  return res.data
+}
+
 module.exports = {
-  jssdkConfig
+  jssdkConfig,
+  authorize,
+  authorizeCallback,
+  snsuserinfo,
+  wxuserinfo
 }

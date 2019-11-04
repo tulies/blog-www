@@ -9,7 +9,7 @@ const redis = new Redis().client
 const _ = require('lodash')
 
 const verify = async (ctx, next) => {
-  let username = ctx.request.body.username
+  const username = ctx.request.body.username
   if (!username) {
     ctx.body = { code: -1, msg: '缺少账号' }
     return false
@@ -23,19 +23,19 @@ const verify = async (ctx, next) => {
     }
     return false
   }
-  let transporter = nodemailer.createTransport({
+  const transporter = nodemailer.createTransport({
     service: 'qq',
     auth: {
       user: configs.smtp.user,
       pass: configs.smtp.pass
     }
   })
-  let ko = {
+  const ko = {
     code: Math.random().toString(16).slice(2, 6).toUpperCase(),
     expire: new Date().getTime() + 15 * 60 * 1000,
     username: ctx.request.body.username
   }
-  let mailOptions = {
+  const mailOptions = {
     from: `"认证邮件" <${configs.smtp.user}>`,
     to: ko.username,
     subject: '《王嘉炀·个人博客》注册码',

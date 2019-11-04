@@ -16,14 +16,16 @@ canvas.style.width = canvasWeight + 'px'
 canvas.style.height = canvasHeight + 'px'
 
 context.scale(ratio, ratio)
-
 var image = new Image()
-// image.crossOrigin="anonymous"
-image.src = 'img/headicon.jpeg'
-image.onload = function () {
-  // console.log(image)
-  document.getElementById('avatar').src = image.src
-  initCanvas()
+
+function imageOnload (imgurl) {
+  // image.crossOrigin="anonymous"
+  image.src = imgurl
+  image.onload = function () {
+    // console.log(image)
+    $('#avatar').attr('src', image.src)
+    initCanvas()
+  }
 }
 function initCanvas () {
   context.clearRect(0, 0, canvasWeight, canvasHeight)
@@ -34,7 +36,6 @@ function draw () {
   context.drawImage(image, 0, 0, canvasWeight, canvasHeight)
   // context.restore()
 }
-
 // 保存成png格式的图片
 function saveAsPNG () {
   return canvas.toDataURL('image/png')
@@ -49,19 +50,34 @@ function downLoad (url) {
   oA.remove() // 下载之后把创建的元素删除
 }
 
-document.getElementById('headfixed').onclick = function () {
-  console.log(this)
-  initCanvas()
-  context.drawImage(this, 0, 0, canvasWeight, canvasHeight)
-  document.getElementById('avatar').src = saveAsPNG()
-}
-document.getElementById('headfixed2').onclick = function () {
-  console.log(this)
-  initCanvas()
-  context.drawImage(this, 0, 0, canvasWeight, canvasHeight)
-  document.getElementById('avatar').src = saveAsPNG()
-}
+$(function () {
+  $.get('/api/wx/userinfo').then(function (res) {
+    console.log(res)
+    if (res.code === -1) {
+      // 未登录
+      window.location.href = 'http://www.wangjiayang.cn/api/wx/authorize?backurl=' + encodeURIComponent(window.location.href)
+    } else if (res.code === 0) {
+      var avatar = res.data.headimgurl + 'wangjiayang'
+      avatar = avatar.replace('/46wangjiayang', '/0')
+      avatar = avatar.replace('/64wangjiayang', '/0')
+      avatar = avatar.replace('/96wangjiayang', '/0')
+      avatar = avatar.replace('/132wangjiayang', '/0')
+      imageOnload(avatar)
+    }
+  })
+  $('#headfixed').on('click', function () {
+    initCanvas()
+    context.drawImage(this, 0, 0, canvasWeight, canvasHeight)
+    $('#avatar').attr('src', saveAsPNG())
+  })
 
-document.getElementById('saveimg').onclick = function () {
-  downLoad(saveAsPNG(canvas))
-}
+  $('#headfixed2').on('click', function () {
+    initCanvas()
+    context.drawImage(this, 0, 0, canvasWeight, canvasHeight)
+    $('#avatar').attr('src', saveAsPNG())
+  })
+
+  $('#saveimg').on('click', function () {
+    downLoad(saveAsPNG(canvas))
+  })
+})

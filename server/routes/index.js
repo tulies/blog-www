@@ -51,5 +51,8 @@ router.get('/comment/unsupport/:repliedId', controllers.comment.unsupport)
 
 // --- 微信相关接口 --- //
 router.get('/wx/jsapi-config', controllers.wx.jssdkConfig)
+router.get('/wx/authorize', controllers.wx.authorize)
+router.get('/wx/authorize-callback', controllers.wx.authorizeCallback)
+router.get('/wx/userinfo', controllers.wx.userinfo)
 
 module.exports = router

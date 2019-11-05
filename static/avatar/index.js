@@ -68,12 +68,14 @@ $(function () {
   $('#headfixed').on('click', function () {
     initCanvas()
     context.drawImage(this, 0, 0, canvasWeight, canvasHeight)
+    alert(saveAsPNG())
     $('#avatar').attr('src', saveAsPNG())
   })
 
   $('#headfixed2').on('click', function () {
     initCanvas()
     context.drawImage(this, 0, 0, canvasWeight, canvasHeight)
+    alert(saveAsPNG())
     $('#avatar').attr('src', saveAsPNG())
   })
 

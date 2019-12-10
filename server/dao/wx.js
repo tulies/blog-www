@@ -9,13 +9,14 @@ const gettoken = async () => {
   const rediskey = 'blogwww:wxtoken'
   const wxtoken = await redis.get(rediskey)
   if (wxtoken) {
-    return wxtoken
+    // return wxtoken
   }
   const res = await axios.get(`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${configs.wx.appId}&secret=${configs.wx.appSecret}`)
   // console.log(res)
   if (res.status !== 200 || res.data.errcode) {
     return ''
   }
+  console.log(res.data)
   // 设置token到redis中
   redis.set(rediskey, res.data.access_token)
   redis.expire(rediskey, res.data.expires_in - 60)
@@ -27,15 +28,16 @@ const getticket = async () => {
   // 先从redis中获取
   const rediskey = 'blogwww:wxticket'
   const wxticket = await redis.get(rediskey)
-
   if (wxticket) {
-    return wxticket
+    // return wxticket
   }
   const wxtoken = await gettoken()
   const res = await axios.get(`https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=${wxtoken}&type=jsapi`)
   if (res.status !== 200 || res.data.errcode !== 0) {
     return ''
   }
+  console.log(res.data)
+
   // 设置token到redis中
   redis.set(rediskey, res.data.ticket)
   redis.expire(rediskey, res.data.expires_in - 60)

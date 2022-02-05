@@ -20,9 +20,9 @@
 </template>
 
 <script>
-import MainTitleBar from '@/components/widgets/mainTitleBar';
-import ArticleList from '@/components/articleList/index.vue';
-import AsideArticleRec from '@/components//widgets/asideArticleRec';
+import MainTitleBar from '@/components/widgets/mainTitleBar'
+import ArticleList from '@/components/articleList/index.vue'
+import AsideArticleRec from '@/components//widgets/asideArticleRec'
 
 import { jssdkConfig, updateappmessagesharedata } from '@/util/wx'
 
@@ -31,7 +31,7 @@ export default {
   components: {
     ArticleList,
     MainTitleBar,
-    AsideArticleRec
+    AsideArticleRec,
   },
 
   // middleware: ['hotArticleRec', 'newArticleRec'],

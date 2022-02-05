@@ -1,40 +1,24 @@
-
 module.exports = {
   root: true,
   env: {
-    es6: true,
     browser: true,
     node: true,
-    worker: true,
-    mocha: true,
-    phantomjs: true,
-    serviceworker: true
-  },
-  extends: [
-    'standard',
-    'plugin:vue/recommended'
-  ],
-  rules: {
-    'vue/no-v-html': 'off',
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
   },
   parserOptions: {
-    parser: 'babel-eslint',
-    sourceType: 'module',
+    parser: '@babel/eslint-parser',
+    requireConfigFile: false,
   },
-
+  extends: ['@nuxtjs', 'plugin:nuxt/recommended', 'prettier'],
+  plugins: [],
   globals: {
-    'wx': true,
-    '$':true
+    wx: true,
+    $: true,
   },
-
-   // add your custom rules here
-   rules: {
-    'no-new': 'off',
-    'vue/no-v-html': 'off'
-    // 'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    // 'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
-  }
-};
-
+  // add your custom rules here
+  rules: {
+    'vue/multi-word-component-names': 'off',
+    'vue/no-v-html': 'off',
+    'no-console': 'off',
+    'vue/no-mutating-props': 'off',
+  },
+}

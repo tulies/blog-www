@@ -2,23 +2,24 @@
   <div class="article-recomment">
     <h2>你可能感兴趣的</h2>
     <ul class="widget-links">
-      <li
-        v-for="item in list"
-        :key="item.id"
-      >
+      <li v-for="item in list" :key="item.id">
         <a
           :href="createArticleUrl(item.id)"
           :title="item.title"
           target="_blank"
-        >{{ item.title }}</a>
+          >{{ item.title }}</a
+        >
         <a
           v-for="t in item.tags.split(',')"
           :key="t"
           class="article-tag ml5"
           taget="_blank"
           :href="createTagUrl(t)"
-        >{{ t }}</a>
-        <span class="text-muted">· {{ item.create_time.substring(0, 10) }}</span>
+          >{{ t }}</a
+        >
+        <span class="text-muted"
+          >· {{ item.create_time.substring(0, 10) }}</span
+        >
       </li>
     </ul>
   </div>
@@ -30,24 +31,23 @@ export default {
   props: {
     list: {
       type: Array,
-      default: () => ([])
-    }
+      default: () => [],
+    },
   },
-  data () {
-    return {
-    }
+  data() {
+    return {}
   },
   methods: {
-    createTagUrl (tag) {
+    createTagUrl(tag) {
       return CreateUrl.tag(tag)
     },
-    createArticleUrl (id) {
+    createArticleUrl(id) {
       return CreateUrl.article(id)
     },
-    clickgo (article) {
+    clickgo(article) {
       window.location.href = CreateUrl.article(article.id)
-    }
-  }
+    },
+  },
 }
 </script>
 

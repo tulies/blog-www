@@ -1,12 +1,11 @@
 export default {
-  article (id) {
+  article(id) {
     return `/article/${id}`
   },
-  tag (name) {
+  tag(name) {
     return `/tag/${encodeURIComponent(name)}`
   },
-  cate (id) {
+  cate(id) {
     return `/cate/${id}`
-  }
-
+  },
 }

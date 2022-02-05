@@ -1,36 +1,36 @@
 // import articleDAO from '../dao/article'
 const articleDAO = require('../dao/article')
 module.exports = {
-  async getArticleList (ctx) {
+  async getArticleList(ctx) {
     // console.log(ctx.request.query)
     const { page, size, categoryId } = ctx.request.query
     // 这边调用数据库的操作方法
     const list = await articleDAO.getArticleList({
       page: Number(page),
       size: Number(size),
-      categoryId: Number(categoryId)
+      categoryId: Number(categoryId),
     })
     ctx.body = {
       code: 0,
       msg: '成功',
-      data: list
+      data: list,
     }
   },
-  async getArticleByTag (ctx) {
+  async getArticleByTag(ctx) {
     const { page, size, tag } = ctx.request.query
     // 这边调用数据库的操作方法
     const list = await articleDAO.getArticleByTag({
       page: Number(page),
       size: Number(size),
-      tag: tag
+      tag,
     })
     ctx.body = {
       code: 0,
       msg: '成功',
-      data: list
+      data: list,
     }
   },
-  async getArticleByTags (ctx) {
+  async getArticleByTags(ctx) {
     const { page, size, tags, sortProp, sortOrder } = ctx.request.query
     // 这边调用数据库的操作方法
     const list = await articleDAO.getArticleByTags({
@@ -38,52 +38,52 @@ module.exports = {
       size: Number(size),
       tags,
       sortProp,
-      sortOrder
+      sortOrder,
     })
     ctx.body = {
       code: 0,
       msg: '成功',
-      data: list
+      data: list,
     }
   },
-  async hot (ctx) {
+  async hot(ctx) {
     const { page, size, sortProp, sortOrder } = ctx.request.query
     // 这边调用数据库的操作方法
     const list = await articleDAO.getArticleList({
       page: page || 0,
       size: size || 6,
       sortProp: sortProp || 'pv',
-      sortOrder: sortOrder || 'descending'
+      sortOrder: sortOrder || 'descending',
     })
 
     ctx.body = {
       code: 0,
       msg: '成功',
-      data: list.list
+      data: list.list,
     }
   },
-  async new (ctx) {
+  async new(ctx) {
     const { page, size, sortProp, sortOrder } = ctx.request.query
     // 这边调用数据库的操作方法
     const list = await articleDAO.getArticleList({
       page: page || 0,
       size: size || 6,
       sortProp: sortProp || 'id',
-      sortOrder: sortOrder || 'descending'
+      sortOrder: sortOrder || 'descending',
     })
 
     ctx.body = {
       code: 0,
       msg: '成功',
-      data: list.list
+      data: list.list,
     }
   },
-  async getArticle (ctx) {
+  async getArticle(ctx) {
     const { id } = ctx.params
     if (!id) {
       ctx.body = {
         code: -1,
-        msg: '缺少内容id'
+        msg: '缺少内容id',
       }
       return false
     }
@@ -92,7 +92,7 @@ module.exports = {
     if (!res) {
       ctx.body = {
         code: -1,
-        msg: '数据不存在'
+        msg: '数据不存在',
       }
       return false
     }
@@ -101,7 +101,7 @@ module.exports = {
     if (!article) {
       ctx.body = {
         code: -1,
-        msg: '数据不存在'
+        msg: '数据不存在',
       }
       return false
     }
@@ -109,15 +109,15 @@ module.exports = {
     ctx.body = {
       code: 0,
       msg: '成功',
-      data: article
+      data: article,
     }
   },
-  async getCategory (ctx) {
+  async getCategory(ctx) {
     const { id } = ctx.params
     if (!id) {
       ctx.body = {
         code: -1,
-        msg: '缺少分类id'
+        msg: '缺少分类id',
       }
       return false
     }
@@ -126,22 +126,22 @@ module.exports = {
     if (!category) {
       ctx.body = {
         code: -1,
-        msg: '数据不存在'
+        msg: '数据不存在',
       }
       return false
     }
     ctx.body = {
       code: 0,
       msg: '成功',
-      data: category
+      data: category,
     }
   },
-  async getCategoryChild (ctx) {
+  async getCategoryChild(ctx) {
     const { id } = ctx.params
     if (!id) {
       ctx.body = {
         code: -1,
-        msg: '缺少分类id'
+        msg: '缺少分类id',
       }
       return false
     }
@@ -150,15 +150,15 @@ module.exports = {
     ctx.body = {
       code: 0,
       msg: '成功',
-      data: categorys
+      data: categorys,
     }
   },
-  async getCategoryUp (ctx) {
+  async getCategoryUp(ctx) {
     const { id } = ctx.params
     if (!id) {
       ctx.body = {
         code: -1,
-        msg: '缺少分类id'
+        msg: '缺少分类id',
       }
       return false
     }
@@ -167,22 +167,22 @@ module.exports = {
     if (!category) {
       ctx.body = {
         code: -1,
-        msg: '数据不存在'
+        msg: '数据不存在',
       }
       return false
     }
     ctx.body = {
       code: 0,
       msg: '成功',
-      data: category
+      data: category,
     }
   },
-  async getCategoryTree (ctx) {
+  async getCategoryTree(ctx) {
     const { id } = ctx.params
     if (!id) {
       ctx.body = {
         code: -1,
-        msg: '缺少分类id'
+        msg: '缺少分类id',
       }
       return false
     }
@@ -191,22 +191,22 @@ module.exports = {
     if (!category) {
       ctx.body = {
         code: -1,
-        msg: '数据不存在'
+        msg: '数据不存在',
       }
       return false
     }
     ctx.body = {
       code: 0,
       msg: '成功',
-      data: category
+      data: category,
     }
   },
-  async getCategoryLeaf (ctx) {
+  async getCategoryLeaf(ctx) {
     const { id } = ctx.params
     if (!id) {
       ctx.body = {
         code: -1,
-        msg: '缺少分类id'
+        msg: '缺少分类id',
       }
       return false
     }
@@ -215,14 +215,14 @@ module.exports = {
     if (!category) {
       ctx.body = {
         code: -1,
-        msg: '数据不存在'
+        msg: '数据不存在',
       }
       return false
     }
     ctx.body = {
       code: 0,
       msg: '成功',
-      data: category
+      data: category,
     }
-  }
+  },
 }

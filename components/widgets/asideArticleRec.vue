@@ -1,27 +1,15 @@
 <template>
-  <el-card
-    class="aside-box-card"
-    shadow="hover"
-  >
-    <div
-      slot="header"
-      class="clearfix"
-    >
+  <el-card class="aside-box-card" shadow="hover">
+    <div slot="header" class="clearfix">
       <span>{{ title }}</span>
-      <el-button
-        v-if="more"
-        style="float: right; padding: 0"
-        type="text"
-      >
+      <el-button v-if="more" style="float: right; padding: 0" type="text">
         {{ more.title }}
       </el-button>
     </div>
-    <dl
-      v-for="item in list"
-      :key="item.id"
-      class="item"
-    >
-      <dt><a :href="createArticleUrl(item.id)">{{ item.title }}</a></dt>
+    <dl v-for="item in list" :key="item.id" class="item">
+      <dt>
+        <a :href="createArticleUrl(item.id)">{{ item.title }}</a>
+      </dt>
       <dd v-if="item.desc">
         {{ item.desc }}
       </dd>
@@ -35,22 +23,22 @@ export default {
   props: {
     title: {
       type: String,
-      default: ''
+      default: '',
     },
     more: {
       type: Object,
-      default: null
+      default: null,
     },
     list: {
       type: Array,
-      default: () => ([])
-    }
+      default: () => [],
+    },
   },
   methods: {
-    createArticleUrl (id) {
+    createArticleUrl(id) {
       return CreateUrl.article(id)
-    }
-  }
+    },
+  },
   // data () {
   //   return {
   //     // title: '热门文章',
@@ -69,18 +57,18 @@ export default {
     font-size: 14px;
     margin-bottom: 10px;
     line-height: 20px;
-    >dt a{
+    > dt a {
       color: #303133;
 
-      &:hover{
+      &:hover {
         color: $mainColor;
       }
     }
-    >dd{
+    > dd {
       color: #888888;
       font-size: 12px;
     }
-    &:last-of-type{
+    &:last-of-type {
       margin-bottom: 0;
     }
   }

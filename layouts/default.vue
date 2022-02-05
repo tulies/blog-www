@@ -8,19 +8,23 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-col
-        :span="24"
-        style="min-height:200px;"
-      >
+      <el-col :span="24" style="min-height: 200px">
         <div class="layout-default-maxarea body-content">
           <el-alert
-            style="margin-bottom:8px;"
+            style="margin-bottom: 8px"
             :closable="closeable"
             type="warning"
             title=""
             show-icon
           >
-            <slot><span style="font-size:13px;">欢迎您的访问，本博客持续建设中~~ 若有不适，请多多见谅，欢迎给我<a href="/message">留言反馈</a>！</span> -- 2019.10.10</slot>
+            <slot
+              ><span style="font-size: 13px"
+                >欢迎您的访问，本博客持续建设中~~
+                若有不适，请多多见谅，欢迎给我<a href="/message">留言反馈</a
+                >！</span
+              >
+              -- 2019.10.10</slot
+            >
           </el-alert>
           <nuxt />
         </div>
@@ -42,15 +46,13 @@ import MyFooter from '@/components/public/footer/index.vue'
 export default {
   components: {
     MyHeader,
-    MyFooter
+    MyFooter,
   },
-  data () {
+  data() {
     return {
-      closeable: true
+      closeable: true,
     }
-  }
+  },
 }
 </script>
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>

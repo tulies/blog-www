@@ -11,15 +11,23 @@
             href="https://www.upyun.com/"
             title="又拍云"
             target="_blank"
-            style="line-height:35px;"
-          ><img
-            src="@/assets/img/upyun_logo.png"
-            height="35px"
-            style="vertical-align: middle;"
-          ><span style="display:inline-block;padding-top:2px;">提供cdn支持</span></a>
+            style="line-height: 35px"
+            ><img
+              src="@/assets/img/upyun_logo.png"
+              height="35px"
+              style="vertical-align: middle"
+            /><span style="display: inline-block; padding-top: 2px"
+              >提供cdn支持</span
+            ></a
+          >
         </div>
         <div class="footer-copyright-right">
-          <p><a href="http://www.miitbeian.gov.cn/publish/query/indexFirst.action">沪ICP备18041792号</a></p>
+          <p>
+            <a
+              href="http://www.miitbeian.gov.cn/publish/query/indexFirst.action"
+              >沪ICP备18041792号</a
+            >
+          </p>
         </div>
         <!-- <div class="footer-copyright-right">
           <div class="footer-copyright-cert"><a
@@ -33,5 +41,5 @@
 </template>
 
 <style lang="scss">
-  @import "@/assets/css/public/footer/footer.scss";
+@import '@/assets/css/public/footer/footer.scss';
 </style>

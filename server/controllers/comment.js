@@ -9,7 +9,7 @@ const initTopic = async (ctx) => {
     ctx.body = {
       code: 0,
       msg: '初始化评论主题成功',
-      data: topic
+      data: topic,
     }
     return
   }
@@ -17,7 +17,7 @@ const initTopic = async (ctx) => {
   ctx.body = {
     code: 0,
     msg: '初始化评论主题成功',
-    data: result
+    data: result,
   }
 }
 
@@ -25,7 +25,7 @@ const addRootReplied = async (ctx) => {
   if (!ctx.isAuthenticated()) {
     ctx.body = {
       code: -1,
-      msg: '未登录'
+      msg: '未登录',
     }
     return false
   }
@@ -42,18 +42,22 @@ const addRootReplied = async (ctx) => {
 
   // 执行以下 评论数加1
   await commentDAO.incrementRepliedCount({ tid })
-  reply = { ...reply, is_support: 0, is_author: reply.userid === configs.author.uid }
+  reply = {
+    ...reply,
+    is_support: 0,
+    is_author: reply.userid === configs.author.uid,
+  }
   ctx.body = {
     code: 0,
     msg: '发表评论成功',
-    data: reply
+    data: reply,
   }
 }
 const addChildReplied = async (ctx) => {
   if (!ctx.isAuthenticated()) {
     ctx.body = {
       code: 998,
-      msg: '未登录'
+      msg: '未登录',
     }
     return false
   }
@@ -65,17 +69,34 @@ const addChildReplied = async (ctx) => {
   if (!replied) {
     ctx.body = {
       code: -1,
-      msg: '回复的评论id不存在'
+      msg: '回复的评论id不存在',
     }
     return false
   }
-  const { id, tid, grade, userid: relateUserid, username: relateUsername, rootid } = replied
+  const {
+    id,
+    tid,
+    grade,
+    userid: relateUserid,
+    username: relateUsername,
+    rootid,
+  } = replied
 
   let rootid2 = rootid
   if (rootid2 === 0) {
     rootid2 = id
   }
-  const result = await commentDAO.addReplied({ tid, content, grade: grade + 1, userid, username, relateUserid, relateUsername, parentid, rootid: rootid2 })
+  const result = await commentDAO.addReplied({
+    tid,
+    content,
+    grade: grade + 1,
+    userid,
+    username,
+    relateUserid,
+    relateUsername,
+    parentid,
+    rootid: rootid2,
+  })
 
   const newid = result[0]
   let reply = await commentDAO.getReplied({ id: newid })
@@ -87,11 +108,15 @@ const addChildReplied = async (ctx) => {
   // 执行以下 评论数加1
   await commentDAO.incrementRepliedCount({ tid })
 
-  reply = { ...reply, is_support: 0, is_author: reply.userid === configs.author.uid }
+  reply = {
+    ...reply,
+    is_support: 0,
+    is_author: reply.userid === configs.author.uid,
+  }
   ctx.body = {
     code: 0,
     msg: '发表评论成功',
-    data: reply
+    data: reply,
   }
 }
 const getReplieds = async (ctx) => {
@@ -108,7 +133,14 @@ const getReplieds = async (ctx) => {
     sortOrder = 'desc'
   }
   // 先查询出主评论
-  const result = await commentDAO.getReplieds({ tid, page, size, sortProp, sortOrder, parentid: 0 })
+  const result = await commentDAO.getReplieds({
+    tid,
+    page,
+    size,
+    sortProp,
+    sortOrder,
+    parentid: 0,
+  })
   let islogin = false
   let uid = 0
   if (ctx.isAuthenticated()) {
@@ -121,31 +153,52 @@ const getReplieds = async (ctx) => {
   // 然后再遍历出子评论
   if (result.total > 0 && result.list.length > 0) {
     // 先统一赋值成未👍
-    result.list = result.list.map(v => ({ ...v, is_support: false, is_author: v.userid === configs.author.uid }))
+    result.list = result.list.map((v) => ({
+      ...v,
+      is_support: false,
+      is_author: v.userid === configs.author.uid,
+    }))
     // 如果是登录用户
     if (islogin) {
       // 再根据ids查询下是否点赞过。
-      const ids = result.list.map(v => v.id)
+      const ids = result.list.map((v) => v.id)
       const suplist = await commentDAO.queryMySupport({ uid, ids })
       if (suplist && suplist.length > 0) {
-        const supids = suplist.map(v => v.replied_id)
-        result.list = result.list.map(v => ({ ...v, is_support: supids.indexOf(v.id) >= 0 }))
+        const supids = suplist.map((v) => v.replied_id)
+        result.list = result.list.map((v) => ({
+          ...v,
+          is_support: supids.includes(v.id),
+        }))
       }
     }
 
     for (let i = 0; i < result.list.length; i++) {
-      const childs = await commentDAO.getReplieds({ tid, page: 0, size: 5, sortProp: 'id', sortOrder: 'asc', rootid: result.list[i].id })
+      const childs = await commentDAO.getReplieds({
+        tid,
+        page: 0,
+        size: 5,
+        sortProp: 'id',
+        sortOrder: 'asc',
+        rootid: result.list[i].id,
+      })
       if (childs.total > 0 && childs.list.length > 0) {
         // 先统一赋值成未👍
-        childs.list = childs.list.map(v => ({ ...v, is_support: false, is_author: v.userid === configs.author.uid }))
+        childs.list = childs.list.map((v) => ({
+          ...v,
+          is_support: false,
+          is_author: v.userid === configs.author.uid,
+        }))
         // 如果是登录用户
         if (islogin) {
           // 再根据ids查询下是否点赞过。
-          const ids = childs.list.map(v => v.id)
+          const ids = childs.list.map((v) => v.id)
           const suplist = await commentDAO.queryMySupport({ uid, ids })
           if (suplist && suplist.length > 0) {
-            const supids = suplist.map(v => v.replied_id)
-            childs.list = childs.list.map(v => ({ ...v, is_support: supids.indexOf(v.id) >= 0 }))
+            const supids = suplist.map((v) => v.replied_id)
+            childs.list = childs.list.map((v) => ({
+              ...v,
+              is_support: supids.includes(v.id),
+            }))
           }
         }
       }
@@ -162,7 +215,7 @@ const getReplieds = async (ctx) => {
     if (!commentTopic) {
       ctx.body = {
         code: 401,
-        msg: '当前评论主题暂未创建过'
+        msg: '当前评论主题暂未创建过',
       }
       return
     }
@@ -170,7 +223,7 @@ const getReplieds = async (ctx) => {
   ctx.body = {
     code: 0,
     msg: '查询评论列表成功',
-    data: result
+    data: result,
   }
 }
 const getChildReplieds = async (ctx) => {
@@ -185,9 +238,16 @@ const getChildReplieds = async (ctx) => {
   //   sortProp = 'id'
   //   sortOrder = 'desc'
   // }
-  let sortProp = 'id'
-  let sortOrder = 'asc'
-  const result = await commentDAO.getReplieds({ tid, page, size, sortProp, sortOrder, rootid })
+  const sortProp = 'id'
+  const sortOrder = 'asc'
+  const result = await commentDAO.getReplieds({
+    tid,
+    page,
+    size,
+    sortProp,
+    sortOrder,
+    rootid,
+  })
   let islogin = false
   let uid = 0
   if (ctx.isAuthenticated()) {
@@ -200,22 +260,29 @@ const getChildReplieds = async (ctx) => {
   // 然后再遍历出子评论
   if (result.total > 0 && result.list.length > 0) {
     // 先统一赋值成未👍
-    result.list = result.list.map(v => ({ ...v, is_support: false, is_author: v.userid === configs.author.uid }))
+    result.list = result.list.map((v) => ({
+      ...v,
+      is_support: false,
+      is_author: v.userid === configs.author.uid,
+    }))
     // 如果是登录用户
     if (islogin) {
       // 再根据ids查询下是否点赞过。
-      const ids = result.list.map(v => v.id)
+      const ids = result.list.map((v) => v.id)
       const suplist = await commentDAO.queryMySupport({ uid, ids })
       if (suplist && suplist.length > 0) {
-        const supids = suplist.map(v => v.replied_id)
-        result.list = result.list.map(v => ({ ...v, is_support: supids.indexOf(v.id) >= 0 }))
+        const supids = suplist.map((v) => v.replied_id)
+        result.list = result.list.map((v) => ({
+          ...v,
+          is_support: supids.includes(v.id),
+        }))
       }
     }
   }
   ctx.body = {
     code: 0,
     msg: '查询评论列表成功',
-    data: result
+    data: result,
   }
 }
 const support = async (ctx) => {
@@ -224,7 +291,7 @@ const support = async (ctx) => {
   if (!ctx.isAuthenticated()) {
     ctx.body = {
       code: -1,
-      msg: '未登录'
+      msg: '未登录',
     }
     return false
   }
@@ -244,7 +311,7 @@ const support = async (ctx) => {
   if (supportRecord && supportRecord.is_valid === 0) {
     ctx.body = {
       code: 1,
-      msg: '您重复点赞了'
+      msg: '您重复点赞了',
     }
     return false
   }
@@ -262,7 +329,7 @@ const support = async (ctx) => {
   }
   ctx.body = {
     code: 0,
-    msg: '支持成功'
+    msg: '支持成功',
   }
 }
 const unsupport = async (ctx) => {
@@ -271,7 +338,7 @@ const unsupport = async (ctx) => {
   if (!ctx.isAuthenticated()) {
     ctx.body = {
       code: -1,
-      msg: '未登录'
+      msg: '未登录',
     }
     return false
   }
@@ -311,7 +378,7 @@ const unsupport = async (ctx) => {
 
   ctx.body = {
     code: 0,
-    msg: '取消点赞成功'
+    msg: '取消点赞成功',
   }
 }
 
@@ -322,5 +389,5 @@ module.exports = {
   addRootReplied,
   addChildReplied,
   support,
-  unsupport
+  unsupport,
 }

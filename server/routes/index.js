@@ -2,7 +2,7 @@
  * ajax 服务路由集合
  */
 const router = require('koa-router')({
-  prefix: '/api'
+  prefix: '/api',
 })
 
 // xxx.com/weapp/demo

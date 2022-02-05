@@ -1,11 +1,8 @@
 <template>
   <div class="article-item">
-    <div
-      v-if="item.poster"
-      class="article-cover"
-    >
+    <div v-if="item.poster" class="article-cover">
       <div class="imgcont">
-        <img :src="item.poster">
+        <img :src="item.poster" />
       </div>
     </div>
     <div class="article-detail">
@@ -21,10 +18,16 @@
             :key="tag"
             class="article-tag ml5"
             :href="createTagUrl(tag)"
-          >{{ tag }}</a>
+            >{{ tag }}</a
+          >
         </dt>
         <!-- <span><i class="el-icon-edit-outline"></i> 评论(<a href="">200</a>)   </span> -->
-        <span class="ml5"><i class="el-icon-view" /> 浏览(<a href="javascript:;">{{ item.pv }}</a>)</span>
+        <span class="ml5"
+          ><i class="el-icon-view" /> 浏览(<a href="javascript:;">{{
+            item.pv
+          }}</a
+          >)</span
+        >
       </dl>
     </div>
   </div>
@@ -35,60 +38,56 @@ export default {
   props: {
     item: {
       type: Object,
-      default: () => ([])
-    }
+      default: () => ({}),
+    },
   },
-  data () {
-    return {
-
-    }
+  data() {
+    return {}
   },
   methods: {
-    createTagUrl (tag) {
+    createTagUrl(tag) {
       return CreateUrl.tag(tag)
-    }
-  }
+    },
+  },
 }
 </script>
 <style lang="scss" scoped>
 .article-item {
   padding: 10px 2px;
-  border-bottom: 1px solid #E5E5E5;
+  border-bottom: 1px solid #e5e5e5;
   display: flex;
 
-  >.article-cover {
+  > .article-cover {
     margin: 3px 10px 0 0;
     overflow: hidden;
     position: relative;
     width: 20%;
     width: 150px;
     // flex: 1;
-    @media screen and  (max-width:900px){
+    @media screen and (max-width: 900px) {
       flex: 0;
-      display: none
+      display: none;
     }
     // @media screen and  (max-width:768px){
     //   flex: 0;
     //   display: none
     // }
-    >.imgcont{
+    > .imgcont {
       width: 100%;
-      padding-top:56.25%;
+      padding-top: 56.25%;
       border-radius: 4px;
       overflow: hidden;
-      >img {
+      > img {
         width: 100%;
         vertical-align: middle;
-        position:absolute;
+        position: absolute;
         top: 0;
         left: 0;
         z-index: 2;
       }
-
     }
-
   }
-  >.article-detail {
+  > .article-detail {
     flex: 1;
     overflow: hidden;
     // @media screen and  (max-width:768px){
@@ -99,10 +98,10 @@ export default {
       color: #000000;
       font-size: 16px;
       line-height: 24px;
-      cursor:pointer;
+      cursor: pointer;
       display: inline-block;
     }
-    .desc{
+    .desc {
       color: #888888;
       font-size: 13px;
       line-height: 20px;
@@ -113,9 +112,8 @@ export default {
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 2;
       text-overflow: ellipsis;
-
     }
-    >.extinfo{
+    > .extinfo {
       color: #444444;
       padding-top: 5px;
       overflow: hidden;
@@ -124,12 +122,12 @@ export default {
       dt {
         float: left;
       }
-      dd{
+      dd {
         float: right;
       }
-      .tag{
+      .tag {
         margin-left: 5px;
-        cursor: pointer
+        cursor: pointer;
       }
     }
   }

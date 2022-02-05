@@ -1,6 +1,5 @@
-
-const wxDAO = require('../dao/wx')
 const Redis = require('koa-redis')
+const wxDAO = require('../dao/wx')
 const redis = new Redis().client
 
 const jssdkConfig = async (ctx, next) => {
@@ -9,14 +8,17 @@ const jssdkConfig = async (ctx, next) => {
   const jssdkConfig = await wxDAO.jssdkConfig({ url })
   ctx.body = {
     code: 0,
-    data: jssdkConfig
+    data: jssdkConfig,
   }
 }
 
 // 重定向
 const authorize = (ctx, next) => {
   // const wxticket = await wxDAO.getticket()
-  const { origin, query: { backurl } } = ctx.request
+  const {
+    origin,
+    query: { backurl },
+  } = ctx.request
   const redirectUri = encodeURIComponent(`${origin}/api/wx/authorize-callback`)
   // const scope = 'snsapi_base'
   const scope = 'snsapi_userinfo'
@@ -24,7 +26,7 @@ const authorize = (ctx, next) => {
   const url = wxDAO.authorize({
     redirectUri,
     scope,
-    state
+    state,
   })
   ctx.response.redirect(url)
   // ctx.body = {
@@ -36,20 +38,20 @@ const authorize = (ctx, next) => {
 const authorizeCallback = async (ctx, next) => {
   const { code, state } = ctx.query
   const res = await wxDAO.authorizeCallback({
-    code
+    code,
   })
 
   const snsuserinfo = await wxDAO.snsuserinfo({
     openid: res.openid,
-    accessToken: res.access_token
+    accessToken: res.access_token,
   })
 
   ctx.session.wxUserinfo = snsuserinfo
-  console.log(ctx.session.wxUserinfo)
+  // console.log(ctx.session.wxUserinfo)
 
   // 根据redis获取backurl。
   const backurl = await redis.get(state)
-  console.log(backurl)
+  // console.log(backurl)
   ctx.response.redirect(backurl)
 
   // ctx.body = {
@@ -59,24 +61,24 @@ const authorizeCallback = async (ctx, next) => {
 }
 
 // 获取微信信息
-const userinfo = async (ctx, next) => {
+const userinfo = (ctx, next) => {
   const wxUserinfo = ctx.session.wxUserinfo
   if (!wxUserinfo) {
-    console.log({
-      code: -1,
-      msg: '无微信授权的登录信息'
-    })
+    // console.log({
+    //   code: -1,
+    //   msg: '无微信授权的登录信息',
+    // })
     ctx.body = {
       code: -1,
-      msg: '无微信授权的登录信息'
+      msg: '无微信授权的登录信息',
     }
     return
   }
-  console.log(ctx.session.wxUserinfo)
+  // console.log(ctx.session.wxUserinfo)
   ctx.body = {
     code: 0,
     msg: 'ok',
-    data: ctx.session.wxUserinfo
+    data: ctx.session.wxUserinfo,
   }
 }
 
@@ -84,5 +86,5 @@ module.exports = {
   jssdkConfig,
   authorize,
   authorizeCallback,
-  userinfo
+  userinfo,
 }

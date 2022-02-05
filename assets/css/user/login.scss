@@ -1,4 +1,3 @@
-
 // 登录注册页面
 .form-user-sign {
   width: 280px;
@@ -25,7 +24,7 @@
   }
   .widget-login {
     text-align: center;
-    [class*="icon-sn-"] {
+    [class*='icon-sn-'] {
       display: inline-block;
       // background-image: url(../../assets/img/login-other.png);
       background-repeat: no-repeat;
@@ -45,7 +44,7 @@
       background-position: 0 0;
     }
   }
- .el-form-item {
+  .el-form-item {
     // margin-bottom: 10px;
   }
   .el-form--label-top .el-form-item__label {

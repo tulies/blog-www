@@ -1,17 +1,12 @@
-
 <template>
   <div class="default-page-container">
     <section class="default-page-main">
       <main-breadcrumb
-        v-if="breadcrumb.length>0"
+        v-if="breadcrumb.length > 0"
         :breadcrumb="breadcrumb"
         :mores="categoryChilds"
       />
-      <article-list
-        :list="list"
-        :total="total"
-        :page-size="pageSize"
-      />
+      <article-list :list="list" :total="total" :page-size="pageSize" />
       <div class="article-pagination">
         <el-pagination
           background
@@ -25,15 +20,12 @@
     </section>
     <aside class="default-page-aside">
       <!-- <aside-nav/> -->
-      <aside-article-rec
-        title="热门文章"
-        :list="$store.state.article.hotrec"
-      />
+      <aside-article-rec title="热门文章" :list="$store.state.article.hotrec" />
       <!-- <div style="padding: 15px 0 0 0" ><a href="https://s.click.taobao.com/Kb3GbKw"><img src="http://tp.nty.tv189.com/h5/bl/adv-aliyun-463-224-2.jpg" style="width:100%;border-radius:4px"/></a></div> -->
       <aside-article-rec
         title="最新文章"
         :list="$store.state.article.newrec"
-        style="margin-top: 15px;"
+        style="margin-top: 15px"
       />
     </aside>
   </div>
@@ -52,9 +44,10 @@ export default {
   components: {
     ArticleList,
     MainBreadcrumb,
-    AsideArticleRec
+    AsideArticleRec,
   },
-  async asyncData (ctx) {
+  middleware: ['hotArticleRec', 'newArticleRec'],
+  async asyncData(ctx) {
     const { id } = ctx.params
     let state = {
       id,
@@ -63,15 +56,15 @@ export default {
       pageSize: 10,
       pageNum: 0,
       breadcrumb: [],
-      categoryChilds: []
+      categoryChilds: [],
     }
     // 获取文章列表
     const { status, data } = await ctx.$axios.get('/api/article/list', {
       params: {
         page: 0,
         size: 10,
-        categoryId: id
-      }
+        categoryId: id,
+      },
     })
     if (status === 200 && data.code === 0) {
       state = {
@@ -79,7 +72,7 @@ export default {
         list: data.data.list,
         total: data.data.total,
         pageSize: data.data.size,
-        pageNum: data.data.page + 1
+        pageNum: data.data.page + 1,
       }
     }
 
@@ -92,7 +85,7 @@ export default {
       breadcrumb.push({
         id: data2.data.id,
         name: data2.data.name,
-        url: CreateUrl.cate(data2.data.id)
+        url: CreateUrl.cate(data2.data.id),
       })
       // 因为我们最多分3层，所以我这里就简单点写了。
       if (data2.data.parent) {
@@ -100,7 +93,7 @@ export default {
           breadcrumb.unshift({
             id: data2.data.parent.id,
             name: data2.data.parent.name,
-            url: CreateUrl.cate(data2.data.parent.id)
+            url: CreateUrl.cate(data2.data.parent.id),
           })
 
           if (data2.data.parent.parent) {
@@ -108,7 +101,7 @@ export default {
               breadcrumb.unshift({
                 id: data2.data.parent.parent.id,
                 name: data2.data.parent.parent.name,
-                url: CreateUrl.cate(data2.data.parent.parent.id)
+                url: CreateUrl.cate(data2.data.parent.parent.id),
               })
             }
           }
@@ -132,16 +125,16 @@ export default {
             return 0
           }
         })
-        .map(v => ({
+        .map((v) => ({
           name: v.name,
-          url: CreateUrl.cate(v.id)
+          url: CreateUrl.cate(v.id),
         }))
       if (!categoryChilds || categoryChilds.length <= 0) {
         categoryChilds = [
           {
             name: '查看更多>>',
-            url: '/'
-          }
+            url: '/',
+          },
         ]
       }
       state = { ...state, categoryChilds }
@@ -149,8 +142,8 @@ export default {
 
     return state
   },
-  mounted () {
-    jssdkConfig().then(res => {
+  mounted() {
+    jssdkConfig().then((res) => {
       if (!res) return
       wx.config({
         // debug: true,
@@ -160,8 +153,8 @@ export default {
           'onMenuShareAppMessage',
           'onMenuShareQQ',
           'onMenuShareWeibo',
-          'onMenuShareQZone'
-        ]
+          'onMenuShareQZone',
+        ],
       })
       wx.ready(function () {
         updateappmessagesharedata()
@@ -169,24 +162,23 @@ export default {
     })
   },
   methods: {
-    async handleCurrentChange (val) {
+    async handleCurrentChange(val) {
       const self = this
 
       const { status, data } = await axios.get('/api/article/list', {
         params: {
           page: val - 1,
           size: self.pageSize,
-          categoryId: self.id
-        }
+          categoryId: self.id,
+        },
       })
       if (status === 200 && data.code === 0) {
         self.list = data.data.list
         self.total = data.data.total
         self.pageNum = data.data.page + 1
       }
-    }
+    },
   },
-  middleware: ['hotArticleRec', 'newArticleRec']
 }
 </script>
 

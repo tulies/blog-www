@@ -6,9 +6,9 @@ export const jssdkConfig = async () => {
   }
   const res = await axios.get('/api/wx/jsapi-config', {
     params: {
-      url: encodeURIComponent(location.href.split('#')[0])
+      url: encodeURIComponent(location.href.split('#')[0]),
       // url: encodeURIComponent('http://www.baidu.com/sad/sdasd?xsjh=你好呀&haha=哈哈')
-    }
+    },
   })
   if (!(res.status === 200 && res.data.code === 0)) {
     return null
@@ -22,30 +22,30 @@ export const updateappmessagesharedata = (shareData) => {
     desc: '一个有理想的码农的个人博客，专注前沿技术的研究和学习，一直在快乐学习的路上。',
     link: location.href,
     imgUrl: 'http://stc.wangjiayang.cn/blog/logo.jpg',
-    ...shareData
+    ...shareData,
   }
   wx.onMenuShareAppMessage({
     title: shareData.title,
     desc: shareData.desc,
     link: shareData.link,
-    imgUrl: shareData.imgUrl
+    imgUrl: shareData.imgUrl,
   })
   wx.onMenuShareTimeline({
     title: shareData.title,
     desc: shareData.desc,
     link: shareData.link,
-    imgUrl: shareData.imgUrl
+    imgUrl: shareData.imgUrl,
   })
   wx.onMenuShareQQ({
     title: shareData.title,
     desc: shareData.desc,
     link: shareData.link,
-    imgUrl: shareData.imgUrl
+    imgUrl: shareData.imgUrl,
   })
   wx.onMenuShareWeibo({
     title: shareData.title,
     desc: shareData.desc,
     link: shareData.link,
-    imgUrl: shareData.imgUrl
+    imgUrl: shareData.imgUrl,
   })
 }

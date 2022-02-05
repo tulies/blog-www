@@ -22,9 +22,9 @@
 // import incoNav4 from '../../assets/img/ico_nav4.jpg'
 
 export default {
-  data () {
+  data() {
     return {
-      title: '关注我们'
+      title: '关注我们',
       // list: [
       //   {
       //     id: '3993',
@@ -48,7 +48,7 @@ export default {
       //   }
       // ]
     }
-  }
+  },
 }
 </script>
 <style lang="scss" scoped>
@@ -58,11 +58,10 @@ export default {
     img {
       width: 50px;
     }
-    h3{
+    h3 {
       font-size: 14px;
       line-height: 24px;
     }
-
   }
 }
 </style>

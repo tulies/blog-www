@@ -6,11 +6,7 @@
     hide-on-click="true"
     @select="handleSelect"
   >
-    <el-menu-item
-      v-for="nav in navs"
-      :key="nav.index"
-      :index="nav.index"
-    >
+    <el-menu-item v-for="nav in navs" :key="nav.index" :index="nav.index">
       {{ nav.name }}
     </el-menu-item>
   </el-menu>
@@ -20,10 +16,10 @@ export default {
   porps: {
     activeIndex: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
-  data () {
+  data() {
     return {
       // activeIndex: '0',
       active: '',
@@ -31,31 +27,32 @@ export default {
         {
           index: '0',
           name: '首页',
-          url: '/'
+          url: '/',
         },
         {
           index: '1',
           name: '技术频道',
-          url: '/cate/1'
+          url: '/cate/1',
         },
         {
           index: '2',
           name: '杂记',
-          url: '/cate/22'
+          url: '/cate/2',
         },
         {
           index: '3',
           name: '留言板',
-          url: '/message'
+          url: '/message',
         },
         {
           index: '4',
           name: '关于',
-          url: '/about'
-        }
-      ]
+          url: '/about',
+        },
+      ],
     }
   },
+
   // computed: {
   //   active () {
   //     if (this.activeIndex !== undefined) {
@@ -67,13 +64,17 @@ export default {
   //     return '0'
   //   }
   // },
-  mounted () {
+  mounted() {
     // if (!window.navigator.userAgent.match(/AppleWebKit.*Mobile.*/)) {
     //   this.trigger = 'hover'
     // }
     this.active = this.activeIndex
     if (this.active === undefined) {
-      const curnav = this.navs.filter(v => (window.location.href.indexOf(v.url) !== -1 && v.url !== '/') || (window.location.pathname === '/' && v.url === '/'))
+      const curnav = this.navs.filter(
+        (v) =>
+          (window.location.href.includes(v.url) && v.url !== '/') ||
+          (window.location.pathname === '/' && v.url === '/')
+      )
       if (curnav && curnav.length > 0) {
         this.active = curnav[0].index
       }
@@ -81,11 +82,9 @@ export default {
   },
 
   methods: {
-    handleSelect (index) {
+    handleSelect(index) {
       window.location.href = this.navs[index].url
-    }
-
-  }
-
+    },
+  },
 }
 </script>

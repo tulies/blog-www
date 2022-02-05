@@ -1,8 +1,8 @@
 const axios = require('axios')
 const Redis = require('koa-redis')
 const redis = new Redis().client
-const configs = require('../config')
 const CryptoJS = require('crypto-js')
+const configs = require('../config')
 
 const gettoken = async () => {
   // 先从redis中获取
@@ -11,12 +11,14 @@ const gettoken = async () => {
   if (wxtoken) {
     // return wxtoken
   }
-  const res = await axios.get(`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${configs.wx.appId}&secret=${configs.wx.appSecret}`)
+  const res = await axios.get(
+    `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${configs.wx.appId}&secret=${configs.wx.appSecret}`
+  )
   // console.log(res)
   if (res.status !== 200 || res.data.errcode) {
     return ''
   }
-  console.log(res.data)
+  // console.log(res.data)
   // 设置token到redis中
   redis.set(rediskey, res.data.access_token)
   redis.expire(rediskey, res.data.expires_in - 60)
@@ -32,11 +34,13 @@ const getticket = async () => {
     // return wxticket
   }
   const wxtoken = await gettoken()
-  const res = await axios.get(`https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=${wxtoken}&type=jsapi`)
+  const res = await axios.get(
+    `https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=${wxtoken}&type=jsapi`
+  )
   if (res.status !== 200 || res.data.errcode !== 0) {
     return ''
   }
-  console.log(res.data)
+  // console.log(res.data)
 
   // 设置token到redis中
   redis.set(rediskey, res.data.ticket)
@@ -69,7 +73,7 @@ const jssdkConfig = async ({ url }) => {
     timestamp,
     url,
     signature,
-    rawString
+    rawString,
   }
 }
 
@@ -81,15 +85,19 @@ const authorize = ({ backurl, redirectUri, scope, state }) => {
   return `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${configs.wx.appId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&state=${rediskey}#wechat_redirect`
 }
 const authorizeCallback = async ({ code }) => {
-  const res = await axios.get(`https://api.weixin.qq.com/sns/oauth2/access_token?appid=${configs.wx.appId}&secret=${configs.wx.appSecret}&code=${code}&grant_type=authorization_code`)
+  const res = await axios.get(
+    `https://api.weixin.qq.com/sns/oauth2/access_token?appid=${configs.wx.appId}&secret=${configs.wx.appSecret}&code=${code}&grant_type=authorization_code`
+  )
   if (res.status !== 200) {
     return null
   }
   return res.data
 }
 const snsuserinfo = async ({ accessToken, openid }) => {
-  const res = await axios.get(`https://api.weixin.qq.com/sns/userinfo?access_token=${accessToken}&openid=${openid}&lang=zh_CN`)
-  console.log(res)
+  const res = await axios.get(
+    `https://api.weixin.qq.com/sns/userinfo?access_token=${accessToken}&openid=${openid}&lang=zh_CN`
+  )
+  // console.log(res)
   if (res.status !== 200) {
     return null
   }
@@ -97,8 +105,10 @@ const snsuserinfo = async ({ accessToken, openid }) => {
 }
 
 const wxuserinfo = async ({ accessToken, openid }) => {
-  const res = await axios.get(`https://api.weixin.qq.com/sns/userinfo?access_token=${accessToken}&openid=${openid}&lang=zh_CN`)
-  console.log(res)
+  const res = await axios.get(
+    `https://api.weixin.qq.com/sns/userinfo?access_token=${accessToken}&openid=${openid}&lang=zh_CN`
+  )
+  // console.log(res)
   if (res.status !== 200) {
     return null
   }
@@ -110,5 +120,5 @@ module.exports = {
   authorize,
   authorizeCallback,
   snsuserinfo,
-  wxuserinfo
+  wxuserinfo,
 }

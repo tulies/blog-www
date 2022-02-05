@@ -1,7 +1,7 @@
 // const moment = require('moment')
+const CryptoJS = require('crypto-js')
 const mysql = require('../lib/mysql')
 // const configs = require('../config')
-const CryptoJS = require('crypto-js')
 const configs = require('../config')
 
 const register = async ({ nickname, username, password, avatar }) => {
@@ -13,7 +13,7 @@ const register = async ({ nickname, username, password, avatar }) => {
     username,
     password: pwd,
     salt,
-    avatar
+    avatar,
   })
   return result
 }
@@ -22,14 +22,18 @@ const register = async ({ nickname, username, password, avatar }) => {
 const queryUser = async ({ uid, username }) => {
   let result
   if (uid) {
-    result = await mysql('sso_user').first(['uid', 'nickname', 'username', 'password', 'salt', 'avatar']).where('uid', uid)
+    result = await mysql('sso_user')
+      .first(['uid', 'nickname', 'username', 'password', 'salt', 'avatar'])
+      .where('uid', uid)
   } else if (username) {
-    result = await mysql('sso_user').first(['uid', 'nickname', 'username', 'password', 'salt', 'avatar']).where('username', username)
+    result = await mysql('sso_user')
+      .first(['uid', 'nickname', 'username', 'password', 'salt', 'avatar'])
+      .where('username', username)
   }
   if (result) {
     result = {
       ...result,
-      avatar: configs.hosts.fileUrlHost + result.avatar
+      avatar: configs.hosts.fileUrlHost + result.avatar,
     }
   }
   return result
@@ -37,5 +41,5 @@ const queryUser = async ({ uid, username }) => {
 
 module.exports = {
   register,
-  queryUser
+  queryUser,
 }

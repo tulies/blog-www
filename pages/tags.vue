@@ -1,32 +1,19 @@
 <template>
   <el-container class="default-page-container">
     <el-main class="default-page-main">
-      <main-breadcrumb
-        v-if="breadcrumb.length>0"
-        :breadcrumb="breadcrumb"
-      />
-      <h2 class="page-title">
-        常用标签
-      </h2>
+      <main-breadcrumb v-if="breadcrumb.length > 0" :breadcrumb="breadcrumb" />
+      <h2 class="page-title">常用标签</h2>
       <div class="tags-page">
         <div class="tags-row">
-          <div
-            v-for="group in list"
-            :key="group.title"
-            class="tags-col"
-          >
+          <div v-for="group in list" :key="group.title" class="tags-col">
             <dl class="tag-list">
               <dt class="title">
                 {{ group.title }}
               </dt>
-              <dd
-                v-for="tag in group.tags"
-                :key="tag.name"
-              >
-                <a
-                  :href="`/tag?tag=${tag.name}`"
-                  class="article-tag"
-                >{{ tag.name }}</a>
+              <dd v-for="tag in group.tags" :key="tag.name">
+                <a :href="`/tag?tag=${tag.name}`" class="article-tag">{{
+                  tag.name
+                }}</a>
               </dd>
             </dl>
           </div>
@@ -35,20 +22,18 @@
     </el-main>
     <el-aside class="default-page-aside">
       <!-- <aside-nav/> -->
-      <aside-article-rec
-        title="热门文章"
-        :list="$store.state.article.hotrec"
-      />
+      <aside-article-rec title="热门文章" :list="$store.state.article.hotrec" />
       <div style="padding: 15px 0 0 0">
-        <a href="https://s.click.taobao.com/Kb3GbKw"><img
-          src="http://tp.nty.tv189.com/h5/bl/adv-aliyun-463-224-2.jpg"
-          style="width:100%;border-radius:4px"
-        ></a>
+        <a href="https://s.click.taobao.com/Kb3GbKw"
+          ><img
+            src="http://tp.nty.tv189.com/h5/bl/adv-aliyun-463-224-2.jpg"
+            style="width: 100%; border-radius: 4px"
+        /></a>
       </div>
       <aside-article-rec
         title="最新文章"
         :list="$store.state.article.newrec"
-        style="margin-top: 15px;"
+        style="margin-top: 15px"
       />
     </el-aside>
   </el-container>
@@ -62,9 +47,26 @@ import { jssdkConfig, updateappmessagesharedata } from '@/util/wx'
 export default {
   components: {
     MainBreadcrumb,
-    AsideArticleRec
+    AsideArticleRec,
   },
-  data () {
+  middleware: ['hotArticleRec', 'newArticleRec'],
+  asyncData(ctx) {
+    let state = {
+      breadcrumb: [],
+    }
+
+    // 获取面包屑导航--- 根据分类节点id获取父亲节点
+    const breadcrumb = [
+      {
+        id: 1,
+        name: '标签',
+        url: '/tags',
+      },
+    ]
+    state = { ...state, breadcrumb }
+    return state
+  },
+  data() {
     return {
       list: [
         {
@@ -76,8 +78,8 @@ export default {
             { name: 'webpack' },
             { name: 'vue' },
             { name: 'angular' },
-            { name: 'reactjs' }
-          ]
+            { name: 'reactjs' },
+          ],
         },
         {
           title: '开发语言',
@@ -86,8 +88,8 @@ export default {
             { name: 'php' },
             { name: 'javascript' },
             { name: 'nodejs' },
-            { name: 'python' }
-          ]
+            { name: 'python' },
+          ],
         },
         {
           title: 'java开发',
@@ -98,8 +100,8 @@ export default {
             { name: 'tomcat' },
             { name: 'jpa' },
             { name: '注解' },
-            { name: '多线程' }
-          ]
+            { name: '多线程' },
+          ],
         },
         {
           title: '数据库',
@@ -108,31 +110,14 @@ export default {
             { name: '数据库' },
             { name: 'redis' },
             { name: 'mongodb' },
-            { name: 'sqlite' }
-          ]
-        }
-      ]
+            { name: 'sqlite' },
+          ],
+        },
+      ],
     }
   },
-  async asyncData (ctx) {
-    let state = {
-      breadcrumb: []
-    }
-
-    // 获取面包屑导航--- 根据分类节点id获取父亲节点
-    const breadcrumb = [
-      {
-        id: 1,
-        name: '标签',
-        url: '/tags'
-      }
-    ]
-    state = { ...state, breadcrumb }
-    return state
-  },
-  middleware: ['hotArticleRec', 'newArticleRec'],
-  mounted () {
-    jssdkConfig().then(res => {
+  mounted() {
+    jssdkConfig().then((res) => {
       if (!res) return
       wx.config({
         // debug: true,
@@ -142,49 +127,48 @@ export default {
           'onMenuShareAppMessage',
           'onMenuShareQQ',
           'onMenuShareWeibo',
-          'onMenuShareQZone'
-        ]
+          'onMenuShareQZone',
+        ],
       })
       wx.ready(function () {
         updateappmessagesharedata()
       })
     })
-  }
+  },
 }
 </script>
 
 <style scoped lang="scss">
-.page-title{
-padding:20px 0 0 0;
-font-weight: bold
+.page-title {
+  padding: 20px 0 0 0;
+  font-weight: bold;
 }
-.tags-page{
+.tags-page {
   margin-left: -7px;
   margin-right: -7px;
-  .tags-row{
+  .tags-row {
     display: flex;
     flex-wrap: wrap;
-    .tags-col{
+    .tags-col {
       flex-basis: 100%;
     }
   }
-  .tag-list{
+  .tag-list {
     padding: 20px 0 10px 0;
     margin: 0 7px;
-    dt{
+    dt {
       line-height: 34px;
       font-size: 16px;
-      border-bottom: 1px solid #EEE;
+      border-bottom: 1px solid #eee;
       // font-weight: bold;
       margin-bottom: 10px;
-
     }
-    dd{
+    dd {
       display: inline-block;
-      margin: 5px 5px 0 0
+      margin: 5px 5px 0 0;
     }
   }
-  .article-tag{
+  .article-tag {
     font-size: 13px;
     height: 22px;
     line-height: 22px;

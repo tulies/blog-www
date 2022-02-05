@@ -4,7 +4,7 @@ const knex = require('knex')
 const configs = require('../../config')
 
 module.exports = knex({
-  // debug: 'true',
+  debug: 'true',
   client: 'mysql',
   connection: {
     host: configs.mysql.host,
@@ -12,6 +12,7 @@ module.exports = knex({
     user: configs.mysql.user,
     password: configs.mysql.pass,
     database: configs.mysql.db,
-    charset: configs.mysql.char
-  }
+    charset: configs.mysql.char,
+  },
+  pool: { min: 0, max: 7 },
 })

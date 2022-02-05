@@ -3,16 +3,16 @@
 .article-comment {
   padding: 10px 0;
 
-  >.titlebar {
-    >dt {
+  > .titlebar {
+    > dt {
       color: #000000;
       font-weight: bold;
       padding: 10px 0;
       font-size: 16px;
-      display: inline-block
+      display: inline-block;
     }
 
-    >dd {
+    > dd {
       float: right;
     }
   }
@@ -38,13 +38,12 @@
     border-top: 1px solid rgba(0, 0, 0, 0.09);
 
     .comments-list {
-
       // padding: 10px 0 0 0;
       .comments-item {
         padding: 15px 20px;
         border-bottom: 1px solid rgba(0, 0, 0, 0.09);
 
-        @media screen and (max-width:768px) {
+        @media screen and (max-width: 768px) {
           padding: 15px 5px;
         }
 
@@ -58,16 +57,16 @@
             }
           }
 
-          .comments-content>.comment-ops .comments-zan,
-          .comments-content>.comment-ops .comments-zan-value,
-          .comments-content>.comment-ops .comments-reply-btn {
+          .comments-content > .comment-ops .comments-zan,
+          .comments-content > .comment-ops .comments-zan-value,
+          .comments-content > .comment-ops .comments-reply-btn {
             color: #666666;
             /* #66b1ff */
           }
         }
         .comments-content {
           padding-left: 47px;
-          @media screen and (max-width:768px) {
+          @media screen and (max-width: 768px) {
             padding-left: 40px;
           }
 
@@ -87,12 +86,12 @@
 
                 &:focus,
                 &:hover {
-                  color: $mainColor
-                    /* #66b1ff */
+                  color: $mainColor;
+                  /* #66b1ff */
                 }
 
                 &:active {
-                  color: #09529f
+                  color: #09529f;
                 }
               }
             }
@@ -103,12 +102,12 @@
             word-wrap: break-word;
 
             &:before {
-              content: " ";
+              content: ' ';
               display: table;
             }
 
             &:after {
-              content: " ";
+              content: ' ';
               display: table;
               clear: both;
             }
@@ -126,7 +125,7 @@
             }
 
             .comments-zan.comments-zan--active {
-              color: $mainColor
+              color: $mainColor;
             }
 
             .comments-zan-value {
@@ -134,15 +133,14 @@
             }
 
             .comments-zan-icon {
-
               &:focus,
               &:hover {
-                color: $mainColor
-                  /* #66b1ff */
+                color: $mainColor;
+                /* #66b1ff */
               }
 
               &:active {
-                color: #09529f
+                color: #09529f;
               }
             }
 
@@ -151,12 +149,12 @@
 
               &:focus,
               &:hover {
-                color: $mainColor
-                  /* #66b1ff */
+                color: $mainColor;
+                /* #66b1ff */
               }
 
               &:active {
-                color: #09529f
+                color: #09529f;
               }
             }
 
@@ -178,7 +176,7 @@
               color: #999;
 
               &:hover {
-                color: $mainColor
+                color: $mainColor;
               }
             }
           }
@@ -204,7 +202,7 @@
                 display: inline-block;
                 color: #666666;
 
-                >p {
+                > p {
                   margin-bottom: 5px;
                 }
               }
@@ -220,7 +218,6 @@
               }
 
               &:hover {
-
                 .comment-ops,
                 .commentTools {
                   visibility: visible !important;
@@ -231,12 +228,12 @@
 
                     &:focus,
                     &:hover {
-                      color: $mainColor
-                        /* #66b1ff */
+                      color: $mainColor;
+                      /* #66b1ff */
                     }
 
                     &:active {
-                      color: #09529f
+                      color: #09529f;
                     }
                   }
                 }
@@ -282,7 +279,7 @@
       padding: 15px 20px;
       border-top: 1px solid rgba(0, 0, 0, 0.09);
       margin-top: -1px;
-      @media screen and (max-width:768px) {
+      @media screen and (max-width: 768px) {
         padding: 15px 5px;
       }
 

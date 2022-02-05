@@ -1,14 +1,7 @@
 <template>
-  <section
-    ref="articlelist"
-    class="m-article-list"
-  >
-    <ul v-if="list && list.length>0">
-      <li
-        v-for="it in list"
-        :key="it.id"
-        @click="click(it)"
-      >
+  <section ref="articlelist" class="m-article-list">
+    <ul v-if="list && list.length > 0">
+      <li v-for="it in list" :key="it.id" @click="click(it)">
         <item :item="it" />
       </li>
     </ul>
@@ -29,21 +22,20 @@ import createUrl from '@/util/createUrl'
 
 export default {
   components: {
-    Item
+    Item,
   },
   props: {
     list: {
       type: Array,
-      default: () => ([])
-    }
+      default: () => [],
+    },
   },
-  mounted () {
-  },
+  mounted() {},
   methods: {
-    click (item) {
+    click(item) {
       window.location.href = createUrl.article(item.id)
-    }
-  }
+    },
+  },
 }
 </script>
 

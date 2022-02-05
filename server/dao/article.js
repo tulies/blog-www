@@ -16,7 +16,13 @@ const formatTags = (tags) => {
 }
 
 // 查询文章列表 asc descending
-const getArticleList = async ({ page, size, categoryId, sortProp, sortOrder }) => {
+const getArticleList = async ({
+  page,
+  size,
+  categoryId,
+  sortProp,
+  sortOrder,
+}) => {
   page = page || 0
   size = size || 10
   page = Number(page)
@@ -27,7 +33,7 @@ const getArticleList = async ({ page, size, categoryId, sortProp, sortOrder }) =
   let categoryIds = []
   if (categoryId) {
     categoryIds = await getCategoryLeaf({ id: categoryId })
-    categoryIds = categoryIds.map(v => v.id)
+    categoryIds = categoryIds.map((v) => v.id)
   }
   const whereBuilder = (builder) => {
     builder.where('status', 1)
@@ -36,26 +42,30 @@ const getArticleList = async ({ page, size, categoryId, sortProp, sortOrder }) =
     }
   }
 
-  var model = mysql('blog_article').where(whereBuilder)
+  const model = mysql('blog_article').where(whereBuilder)
 
   const totalCount = await model.clone().count('id as count')
-  let list = await model.clone()
+  const list = await model
+    .clone()
     .limit(size)
     .offset(page * size)
     .orderBy(sortProp || 'id', sortOrder === 'asc' ? 'asc' : 'desc')
-    .map(row => ({
+    .map((row) => ({
       ...row,
       tags: formatTags(row.tags),
-      poster: row.poster && !row.poster.startsWith('http') ? configs.hosts.fileUrlHost + row.poster : row.poster,
+      poster:
+        row.poster && !row.poster.startsWith('http')
+          ? configs.hosts.fileUrlHost + row.poster
+          : row.poster,
       update_time: moment(row.update_time).format('YYYY-MM-DD HH:mm:ss'),
-      create_time: moment(row.create_time).format('YYYY-MM-DD HH:mm:ss')
+      create_time: moment(row.create_time).format('YYYY-MM-DD HH:mm:ss'),
     }))
 
   return {
-    total: totalCount[0]['count'],
+    total: totalCount[0].count,
     page,
     size,
-    list
+    list,
   }
 }
 
@@ -71,26 +81,30 @@ const getArticleByTag = async ({ page, size, tag, sortProp, sortOrder }) => {
     builder.where('tags', 'like', `%,${tag},%`)
   }
 
-  var model = mysql('blog_article').where(whereBuilder)
+  const model = mysql('blog_article').where(whereBuilder)
 
   const totalCount = await model.clone().count('id as count')
-  let list = await model.clone()
+  const list = await model
+    .clone()
     .limit(size)
     .offset(page * size)
     .orderBy(sortProp || 'id', sortOrder === 'asc' ? 'asc' : 'desc')
-    .map(row => ({
+    .map((row) => ({
       ...row,
       tags: formatTags(row.tags),
-      poster: row.poster && !row.poster.startsWith('http') ? configs.hosts.fileUrlHost + row.poster : row.poster,
+      poster:
+        row.poster && !row.poster.startsWith('http')
+          ? configs.hosts.fileUrlHost + row.poster
+          : row.poster,
       update_time: moment(row.update_time).format('YYYY-MM-DD HH:mm:ss'),
-      create_time: moment(row.create_time).format('YYYY-MM-DD HH:mm:ss')
+      create_time: moment(row.create_time).format('YYYY-MM-DD HH:mm:ss'),
     }))
 
   return {
-    total: totalCount[0]['count'],
+    total: totalCount[0].count,
     page,
     size,
-    list
+    list,
   }
 }
 
@@ -106,7 +120,7 @@ const getArticleByTags = async ({ page, size, tags, sortProp, sortOrder }) => {
   }
   const tagsBuilder = (builder) => {
     let i = 0
-    tags.split(',').forEach(tag => {
+    tags.split(',').forEach((tag) => {
       if (i === 0) {
         builder.where('tags', 'like', `%,${tag},%`)
       } else {
@@ -117,26 +131,30 @@ const getArticleByTags = async ({ page, size, tags, sortProp, sortOrder }) => {
     })
   }
 
-  var model = mysql('blog_article').where(whereBuilder).andWhere(tagsBuilder)
+  const model = mysql('blog_article').where(whereBuilder).andWhere(tagsBuilder)
 
   const totalCount = await model.clone().count('id as count')
-  let list = await model.clone()
+  const list = await model
+    .clone()
     .limit(size)
     .offset(page * size)
     .orderBy(sortProp || 'id', sortOrder === 'asc' ? 'asc' : 'desc')
-    .map(row => ({
+    .map((row) => ({
       ...row,
       tags: formatTags(row.tags),
-      poster: row.poster && !row.poster.startsWith('http') ? configs.hosts.fileUrlHost + row.poster : row.poster,
+      poster:
+        row.poster && !row.poster.startsWith('http')
+          ? configs.hosts.fileUrlHost + row.poster
+          : row.poster,
       update_time: moment(row.update_time).format('YYYY-MM-DD HH:mm:ss'),
-      create_time: moment(row.create_time).format('YYYY-MM-DD HH:mm:ss')
+      create_time: moment(row.create_time).format('YYYY-MM-DD HH:mm:ss'),
     }))
 
   return {
-    total: totalCount[0]['count'],
+    total: totalCount[0].count,
     page,
     size,
-    list
+    list,
   }
 }
 
@@ -146,9 +164,13 @@ const getArticle = async ({ id }) => {
     .first([
       'blog_article.*',
       'blog_article_ext.content',
-      { 'category_name': 'blog_category.name' }
+      { category_name: 'blog_category.name' },
     ])
-    .leftJoin('blog_article_ext', 'blog_article.id', 'blog_article_ext.article_id')
+    .leftJoin(
+      'blog_article_ext',
+      'blog_article.id',
+      'blog_article_ext.article_id'
+    )
     .leftJoin('blog_category', 'blog_article.category_id', 'blog_category.id')
     .where({ 'blog_article.id': id, 'blog_article.status': 1 })
 
@@ -156,9 +178,12 @@ const getArticle = async ({ id }) => {
     article = {
       ...article,
       tags: formatTags(article.tags),
-      poster: article.poster && !article.poster.startsWith('http') ? configs.hosts.fileUrlHost + article.poster : article.poster,
+      poster:
+        article.poster && !article.poster.startsWith('http')
+          ? configs.hosts.fileUrlHost + article.poster
+          : article.poster,
       update_time: moment(article.update_time).format('YYYY-MM-DD HH:mm:ss'),
-      create_time: moment(article.create_time).format('YYYY-MM-DD HH:mm:ss')
+      create_time: moment(article.create_time).format('YYYY-MM-DD HH:mm:ss'),
     }
   }
 
@@ -166,22 +191,21 @@ const getArticle = async ({ id }) => {
 }
 // 增加文章的点击pv
 const incrementArticlePv = async ({ id }) => {
-  let result = await mysql('blog_article')
-    .where('id', id)
-    .increment('pv', 1)
+  const result = await mysql('blog_article').where('id', id).increment('pv', 1)
   return result
 }
 
 // 根据id查询单个category信息
 const getCategory = async ({ id }) => {
-  let category = await mysql('blog_category').first().where('id', id)
+  const category = await mysql('blog_category').first().where('id', id)
   return category
 }
 
 // 根据id查询单个category信息
 const getCategoryChild = async ({ id }) => {
   // let category = await mysql('blog_category').first().where('id', id)
-  let categorys = await mysql('blog_category').where('parent_id', id)
+  const categorys = await mysql('blog_category')
+    .where('parent_id', id)
     .orderBy('sort', 'desc')
 
   return categorys
@@ -215,17 +239,26 @@ const getCategoryTree = async ({ id, parentIds }) => {
 }
 
 const findChildCategory = async (parentId, parentIds, childrens) => {
-  parentIds = parentIds || await mysql('blog_category').distinct('parent_id').select().map(row => row.parent_id)
+  parentIds =
+    parentIds ||
+    (await mysql('blog_category')
+      .distinct('parent_id')
+      .select()
+      .map((row) => row.parent_id))
   childrens = childrens || []
 
   // 判断parentid在不在里面,不在父节点下，说明是子节点。
-  if (parentIds.indexOf(parentId) === -1) {
+  if (!parentIds.includes(parentId)) {
     return { tree: null, childrens: null }
   }
 
-  let categorys = await mysql('blog_category').where('parent_id', parentId)
+  const categorys = await mysql('blog_category').where('parent_id', parentId)
   for (let i = 0; i < categorys.length; i++) {
-    const { tree } = await findChildCategory(categorys[i].id, parentIds, childrens)
+    const { tree } = await findChildCategory(
+      categorys[i].id,
+      parentIds,
+      childrens
+    )
     if (tree === null) {
       childrens.push(categorys[i])
     }
@@ -236,7 +269,7 @@ const findChildCategory = async (parentId, parentIds, childrens) => {
 
 // 根据id级联查询所有父category信息
 const getCategoryUp = async ({ id }) => {
-  let category = await mysql('blog_category').first().where('id', id)
+  const category = await mysql('blog_category').first().where('id', id)
   if (category && category.parent_id !== 0) {
     category.parent = await getCategoryUp({ id: category.parent_id })
   }
@@ -253,5 +286,5 @@ module.exports = {
   getArticleByTag,
   getCategoryChild,
   getArticleByTags,
-  incrementArticlePv
+  incrementArticlePv,
 }

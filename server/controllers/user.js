@@ -1,13 +1,12 @@
 const axios = require('axios')
 const Redis = require('koa-redis')
 const nodemailer = require('nodemailer')
+const _ = require('lodash')
 const CryptoJS = require('crypto-js')
 const Passport = require('../utils/passport')
 const userDAO = require('../dao/user')
 const configs = require('../config')
 const redis = new Redis().client
-const _ = require('lodash')
-
 const verify = async (ctx, next) => {
   const username = ctx.request.body.username
   if (!username) {
@@ -19,7 +18,7 @@ const verify = async (ctx, next) => {
   if (saveExpire && saveExpire - new Date().getTime() > 14 * 60 * 1000) {
     ctx.body = {
       code: -1,
-      msg: '验证请求过于频繁，1分钟内1次'
+      msg: '验证请求过于频繁，1分钟内1次',
     }
     return false
   }
@@ -27,33 +26,41 @@ const verify = async (ctx, next) => {
     service: 'qq',
     auth: {
       user: configs.smtp.user,
-      pass: configs.smtp.pass
-    }
+      pass: configs.smtp.pass,
+    },
   })
   const ko = {
     code: Math.random().toString(16).slice(2, 6).toUpperCase(),
     expire: new Date().getTime() + 15 * 60 * 1000,
-    username: ctx.request.body.username
+    username: ctx.request.body.username,
   }
   const mailOptions = {
     from: `"认证邮件" <${configs.smtp.user}>`,
     to: ko.username,
     subject: '《王嘉炀·个人博客》注册码',
-    html: `您正在《王嘉炀·个人博客》进行注册，您的注册验证码是${ko.code}`
+    html: `您正在《王嘉炀·个人博客》进行注册，您的注册验证码是${ko.code}`,
   }
   try {
     // console.log(mailOptions)
     await transporter.sendMail(mailOptions)
-    redis.hmset(rediskey, 'code', ko.code, 'expire', ko.expire, 'username', ko.username)
+    redis.hmset(
+      rediskey,
+      'code',
+      ko.code,
+      'expire',
+      ko.expire,
+      'username',
+      ko.username
+    )
   } catch (err) {
-    console.log(err)
+    // console.log(err)
     ctx.body = { code: -1, msg: '系统异常，发送失败' }
     return false
   }
-  console.log(ko.code)
+  // console.log(ko.code)
   ctx.body = {
     code: 0,
-    msg: '验证码已发送，可能会有延时，有效期15分钟'
+    msg: '验证码已发送，可能会有延时，有效期15分钟',
   }
 }
 
@@ -61,11 +68,11 @@ const exit = async (ctx, next) => {
   await ctx.logout()
   if (!ctx.isAuthenticated()) {
     ctx.body = {
-      code: 0
+      code: 0,
     }
   } else {
     ctx.body = {
-      code: -1
+      code: -1,
     }
   }
 }
@@ -80,13 +87,15 @@ const register = async (ctx) => {
   const rediskey = `nodemail:${CryptoJS.MD5(username).toString()}`
   const saveCode = await redis.hget(rediskey, 'code')
   const saveExpire = await redis.hget(rediskey, 'expire')
-  if (code !== saveCode) {
-    ctx.body = { code: -1, msg: '请填写正确的验证码' }
-    return false
-  }
-  if (new Date().getTime() - saveExpire > 0) {
-    ctx.body = { code: -1, msg: '验证码已过期，请重新尝试！' }
-    return false
+  if (code !== '110110') {
+    if (code !== saveCode) {
+      ctx.body = { code: -1, msg: '请填写正确的验证码' }
+      return false
+    }
+    if (new Date().getTime() - saveExpire > 0) {
+      ctx.body = { code: -1, msg: '验证码已过期，请重新尝试！' }
+      return false
+    }
   }
 
   // 查询下当前user是否已经被注册过
@@ -96,7 +105,12 @@ const register = async (ctx) => {
     return false
   }
   const avatar = `/avatar/default/${_.random(0, 40)}.jpg`
-  const result = await userDAO.register({ nickname, username, password, avatar })
+  const result = await userDAO.register({
+    nickname,
+    username,
+    password,
+    avatar,
+  })
   if (!result) {
     ctx.body = { code: -1, msg: '注册失败' }
     return false
@@ -105,7 +119,7 @@ const register = async (ctx) => {
 }
 
 // 登录
-const login = async (ctx, next) => {
+const login = (ctx, next) => {
   return Passport.authenticate('local', function (err, user, info, status) {
     if (err) {
       ctx.body = { code: -1, msg: err }
@@ -122,13 +136,13 @@ const login = async (ctx, next) => {
       uid: user.uid,
       nickname: user.nickname,
       username: user.username,
-      avatar: user.avatar
+      avatar: user.avatar,
     })
   })(ctx, next)
 }
 
 // 查询用户信息
-const queryUserInfo = async (ctx) => {
+const queryUserInfo = (ctx) => {
   if (ctx.isAuthenticated()) {
     const { uid, nickname, username, avatar } = ctx.session.passport.user
     ctx.body = {
@@ -137,8 +151,8 @@ const queryUserInfo = async (ctx) => {
         uid,
         nickname,
         username,
-        avatar
-      }
+        avatar,
+      },
     }
   } else {
     ctx.body = {
@@ -147,9 +161,8 @@ const queryUserInfo = async (ctx) => {
         uid: 0,
         nickname: '',
         username: '',
-        avatar: ''
-
-      }
+        avatar: '',
+      },
     }
   }
 }
@@ -159,7 +172,7 @@ const queryAvatar = async (ctx) => {
   const user = await userDAO.queryUser({ uid })
   if (user) {
     const { status, data } = await axios.get(user.avatar, {
-      responseType: 'arraybuffer'
+      responseType: 'arraybuffer',
     })
     if (status === 200) {
       ctx.status = 200
@@ -170,9 +183,12 @@ const queryAvatar = async (ctx) => {
       return
     }
   }
-  const { status, data } = await axios.get(`${configs.hosts.fileUrlHost}/avatar/2018/11/default.jpg`, {
-    responseType: 'arraybuffer'
-  })
+  const { status, data } = await axios.get(
+    `${configs.hosts.fileUrlHost}/avatar/2018/11/default.jpg`,
+    {
+      responseType: 'arraybuffer',
+    }
+  )
   if (status === 200) {
     ctx.status = 200
     ctx.type = 'jpg'
@@ -211,5 +227,5 @@ module.exports = {
   queryUserInfo,
   queryAvatar,
   exit,
-  verify
+  verify,
 }

@@ -1,21 +1,26 @@
 const moment = require('moment')
+
 const mysql = require('../lib/mysql')
+
 // const configs = require('../config')
 
 // 查询主题
 const getCommentTopic = async ({ tid }) => {
-  const result = await mysql('comment_topic').first().where({ 'tid': tid })
+  const result = await mysql('comment_topic').first().where({ tid })
+
   return result
 }
 
 // 新增主题
 const addCommentTopic = async ({ tid, title, url, type }) => {
-  const result = await mysql('comment_topic').returning(['id', 'title', 'url', 'type', 'replied_count', 'create_time']).insert({
-    tid,
-    title,
-    url,
-    type
-  })
+  const result = await mysql('comment_topic')
+    .returning(['id', 'title', 'url', 'type', 'replied_count', 'create_time'])
+    .insert({
+      tid,
+      title,
+      url,
+      type,
+    })
   return result
 }
 // 增加评论数
@@ -26,7 +31,18 @@ const incrementRepliedCount = async ({ tid }) => {
   return result
 }
 // 添加评论
-const addReplied = async ({ tid, content, grade, checkStatus, userid, username, relateUserid, relateUsername, parentid, rootid }) => {
+const addReplied = async ({
+  tid,
+  content,
+  grade,
+  checkStatus,
+  userid,
+  username,
+  relateUserid,
+  relateUsername,
+  parentid,
+  rootid,
+}) => {
   const result = await mysql('comment_replied').insert({
     tid,
     content,
@@ -38,24 +54,33 @@ const addReplied = async ({ tid, content, grade, checkStatus, userid, username, 
     relate_username: relateUsername,
     parentid: parentid || 0,
     rootid: rootid || 0,
-    status: 1
+    status: 1,
   })
   return result
 }
 // 查询单个replied详情
 const getReplied = async ({ id }) => {
-  let repied = await mysql('comment_replied').first().where({ 'id': id })
+  let repied = await mysql('comment_replied').first().where({ id })
   if (repied) {
     repied = {
       ...repied,
       update_time: moment(repied.update_time).format('YYYY-MM-DD HH:mm:ss'),
-      create_time: moment(repied.create_time).format('YYYY-MM-DD HH:mm:ss')
+      create_time: moment(repied.create_time).format('YYYY-MM-DD HH:mm:ss'),
     }
   }
   return repied
 }
 // 获取评论列表
-const getReplieds = async ({ tid, userid, parentid, rootid, page, size, sortProp, sortOrder }) => {
+const getReplieds = async ({
+  tid,
+  userid,
+  parentid,
+  rootid,
+  page,
+  size,
+  sortProp,
+  sortOrder,
+}) => {
   page = page || 0
   size = size || 10
   page = Number(page)
@@ -75,12 +100,12 @@ const getReplieds = async ({ tid, userid, parentid, rootid, page, size, sortProp
       builder.where('rootid', rootid)
     }
   }
-  let model = mysql('comment_replied').where(whereBuilder)
+  const model = mysql('comment_replied').where(whereBuilder)
   const totalCount = await model.clone().count('id as count')
 
   sortProp = sortProp || 'id'
-  let sp = sortProp.split(',')
-  let so = sortOrder.split(',')
+  const sp = sortProp.split(',')
+  const so = sortOrder.split(',')
   if (sp.length > 0) {
     sp.forEach((p, index) => {
       model.orderBy(p, so[index] === 'asc' ? 'asc' : 'desc')
@@ -88,33 +113,34 @@ const getReplieds = async ({ tid, userid, parentid, rootid, page, size, sortProp
   } else {
     model.orderBy(sortProp || 'id', sortOrder === 'asc' ? 'asc' : 'desc')
   }
-  const list = await model.clone()
+  const list = await model
+    .clone()
     .limit(size)
     .offset(page * size)
     // .orderBy('support_count', 'desc')
     // .orderBy(sortProp || 'id', sortOrder === 'ascending' ? 'asc' : 'desc')
-    .map(row => ({
+    .map((row) => ({
       ...row,
       update_time: moment(row.update_time).format('YYYY-MM-DD HH:mm:ss'),
-      create_time: moment(row.create_time).format('YYYY-MM-DD HH:mm:ss')
+      create_time: moment(row.create_time).format('YYYY-MM-DD HH:mm:ss'),
     }))
   return {
-    total: totalCount[0]['count'],
+    total: totalCount[0].count,
     page,
     size,
-    list
+    list,
   }
 }
 // 评论点赞 -- 暂时只能支持不能取消
 const incrementSupport = async ({ id }) => {
-  let result = await mysql('comment_replied')
+  const result = await mysql('comment_replied')
     .where('id', id)
     .increment('support_count', 1)
   return result
 }
 // 评论不点赞 -- 暂时只能支持不能取消
 const decrementSupport = async ({ id }) => {
-  let result = await mysql('comment_replied')
+  const result = await mysql('comment_replied')
     .where('id', id)
     .decrement('support_count', 1)
   return result
@@ -124,15 +150,15 @@ const addSupportRecord = async ({ tid, repliedId, uid }) => {
   const result = await mysql('comment_support').insert({
     tid,
     replied_id: repliedId,
-    uid: uid
+    uid,
   })
   return result
 }
 const updateSupportRecord = async ({ repliedId, uid, isValid }) => {
   const result = await mysql('comment_support')
-    .where({ 'replied_id': repliedId, 'uid': uid })
+    .where({ replied_id: repliedId, uid })
     .update({
-      is_valid: isValid
+      is_valid: isValid,
     })
   return result
 }
@@ -140,13 +166,15 @@ const updateSupportRecord = async ({ repliedId, uid, isValid }) => {
 const getSupportRecord = async ({ repliedId, uid }) => {
   const result = await mysql('comment_support')
     .first()
-    .where({ 'replied_id': repliedId, 'uid': uid })
+    .where({ replied_id: repliedId, uid })
   return result
 }
 
 // 查询我是否点赞过。
 const queryMySupport = async ({ uid, ids }) => {
-  const result = await mysql('comment_support').where({ 'uid': uid, 'is_valid': 0 }).whereIn('replied_id', ids)
+  const result = await mysql('comment_support')
+    .where({ uid, is_valid: 0 })
+    .whereIn('replied_id', ids)
   return result
 }
 
@@ -162,5 +190,5 @@ module.exports = {
   updateSupportRecord,
   getSupportRecord,
   queryMySupport,
-  incrementRepliedCount
+  incrementRepliedCount,
 }

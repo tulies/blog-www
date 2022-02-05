@@ -2,18 +2,12 @@
   <div class="title-bar">
     <dl class="pull-left">
       <dt>{{ title }}</dt>
-      <dd
-        v-for="k in keywords"
-        :key="k.name"
-      >
+      <dd v-for="k in keywords" :key="k.name">
         <a :href="k.url">{{ k.name }}</a>
       </dd>
     </dl>
     <dl class="pull-right">
-      <dd
-        v-for="m in mores"
-        :key="m.name"
-      >
+      <dd v-for="m in mores" :key="m.name">
         <a :href="m.url">{{ m.name }}</a>
       </dd>
     </dl>
@@ -24,21 +18,21 @@ export default {
   props: {
     title: {
       type: String,
-      default: ''
+      default: '',
     },
     keywords: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     mores: {
       type: Array,
-      default: () => []
-    }
-  }
+      default: () => [],
+    },
+  },
 }
 </script>
 <style lang="scss" scoped>
-@import "@/assets/css/config.scss";
+@import '@/assets/css/config.scss';
 .title-bar {
   height: 44px;
   line-height: 44px;

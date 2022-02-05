@@ -1,12 +1,6 @@
 <template>
-  <el-card
-    class="aside-box-card"
-    shadow="hover"
-  >
-    <div
-      slot="header"
-      class="clearfix"
-    >
+  <el-card class="aside-box-card" shadow="hover">
+    <div slot="header" class="clearfix">
       <span>文章目录</span>
     </div>
     <el-tree
@@ -16,42 +10,38 @@
       default-expand-all
       :expand-on-click-node="false"
     >
-      <span
-        slot-scope="{ node, data }"
-        class="custom-tree-node"
-      >
-        <a :href="'#'+data.hash">{{ node.label }}</a>
+      <span slot-scope="{ node, data }" class="custom-tree-node">
+        <a :href="'#' + data.hash">{{ node.label }}</a>
       </span>
     </el-tree>
   </el-card>
 </template>
 <script>
-
 export default {
   props: {
     tocdata: {
       type: Array,
       default: () => {
         return []
-      }
-    }
-  }
+      },
+    },
+  },
 }
 </script>
 
 <style lang="scss">
 // @import '@/assets/css/config.scss';
 .aside-box-card {
-  .toctree{
+  .toctree {
     max-height: 350px;
     overflow-y: scroll;
-    .el-tree-node__content{
+    .el-tree-node__content {
       height: auto;
     }
-    .custom-tree-node > a{
+    .custom-tree-node > a {
       height: auto;
       white-space: normal;
-      color: #303133
+      color: #303133;
     }
   }
 }

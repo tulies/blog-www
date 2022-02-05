@@ -11,8 +11,6 @@ body * {
   padding: 0;
 }
 
-
-
 /* body {
   line-height: 1;
 } */
@@ -112,13 +110,12 @@ table {
 .clearfix:before,
 .clearfix:after {
   display: table;
-  content: "";
+  content: '';
 }
 
 .clearfix:after {
-  clear: both
+  clear: both;
 }
-
 
 .article-tag {
   font-weight: normal;
@@ -128,36 +125,30 @@ table {
   line-height: 16px;
   padding: 0 4px;
   display: inline-block;
-  color: #0375F4;
+  color: #0375f4;
   background-color: #ecf5ff;
   text-align: center;
   cursor: pointer;
-
-
 }
 
 .article-tag:focus,
 .article-tag:hover {
   color: #ffffff;
-  background-color: #0375F4;
+  background-color: #0375f4;
   /* #66b1ff */
 }
 
 .layout-default {
   -webkit-font-smoothing: antialiased;
-  font-family: "-apple-system",
-    BlinkMacSystemFont,
-    Roboto,
-    "Helvetica Neue",
-    "MIcrosoft YaHei",
-    sans-serif !important;
-  background-color: #FFFFFF;
+  font-family: '-apple-system', BlinkMacSystemFont, Roboto, 'Helvetica Neue',
+    'MIcrosoft YaHei', sans-serif !important;
+  background-color: #ffffff;
 }
 
 .layout-default-maxarea {
   max-width: $maxWeight;
   margin: 0 auto;
-  padding: 0 8px
+  padding: 0 8px;
 }
 
 .default-page-container {
@@ -177,13 +168,13 @@ table {
   padding: 0 0 0 15px;
 }
 
-@media screen and (max-width:768px) {
+@media screen and (max-width: 768px) {
   .default-page-container .default-page-aside {
     width: 250px;
   }
 }
 
-@media screen and (max-width:680px) {
+@media screen and (max-width: 680px) {
   .default-page-container .default-page-aside {
     display: none;
   }

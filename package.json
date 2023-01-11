@@ -31,7 +31,7 @@
     "element-ui": "^2.15.6",
     "github-markdown-css": "^5.1.0",
     "js-pinyin": "^0.1.9",
-    "knex": "0.15.2",
+    "knex": "2.4.0",
     "koa": "^2.13.4",
     "koa-bodyparser": "^4.3.0",
     "koa-generic-session": "^2.3.0",
